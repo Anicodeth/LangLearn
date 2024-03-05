@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,15 +15,15 @@ export default function Home() {
 
     <Card className = "w-1/5 h-fit">
   <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card Description</CardDescription>
+    <CardTitle>Lang Learn</CardTitle>
+    <CardDescription>The AI language Teacher</CardDescription>
   </CardHeader>
-  <CardContent>
-    <p>Card Content</p>
-  </CardContent>
-  <CardFooter>
-    <p>Card Footer</p>
+  <CardFooter className = "flex-col items-start">
+    <p>Join us</p>
+    <Button>Sign Up</Button>
+
   </CardFooter>
+
 </Card>
 </div>
 
