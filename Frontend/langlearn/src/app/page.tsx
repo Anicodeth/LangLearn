@@ -10,9 +10,9 @@ import {
 export default function Home() {
   return (
 
-    <div>
+    <div className = "h-screen flex items-center justify-center">
 
-    <Card className = "w-1/5">
+    <Card className = "w-1/5 h-fit">
   <CardHeader>
     <CardTitle>Card Title</CardTitle>
     <CardDescription>Card Description</CardDescription>
