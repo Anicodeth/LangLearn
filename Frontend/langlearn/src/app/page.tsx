@@ -12,7 +12,7 @@ export default function Home() {
     <div className="h-screen flex items-center justify-center">
       <Card className="w-1/5 h-fit">
         <CardHeader>
-   <CardTitle>Lang Learn</CardTitle>
+          <CardTitle>Lang Learn</CardTitle>
           <CardDescription>The AI language Teacher</CardDescription>
         </CardHeader>
         <CardFooter className="flex-col items-start">
