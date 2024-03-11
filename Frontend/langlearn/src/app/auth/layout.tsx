@@ -1,9 +1,3 @@
-
-
-
-
-
-
 export default function AuthLayout({
   children,
 }: Readonly<{
@@ -11,8 +5,13 @@ export default function AuthLayout({
 }>) {
   return (
     <div className="h-screen flex items-center justify-center">
-      <div className="border-2 w-full h-full flex justify-center items-center">Image section</div>
-      <div className="border-2 w-full h-full flex justify-center items-center"> {children}</div>
+      <div className="border-2 w-full h-full flex justify-center items-center">
+        Image section
+      </div>
+      <div className="border-2 w-full h-full flex justify-center items-center">
+        {" "}
+        {children}
+      </div>
     </div>
   );
 }
