@@ -45,15 +45,15 @@ export default function SignUp() {
           <Input id="password" placeholder="••••••••" type="password" />
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
-          <Label htmlFor="twitterpassword">Your twitter password</Label>
+          <Label htmlFor="confirmpassword">Confirm password</Label>
           <Input
-            id="twitterpassword"
+            id="confirmpassword"
             placeholder="••••••••"
-            type="twitterpassword"
+            type="confirmpassword"
           />
         </LabelInputContainer>
 
-        <Button>
+        <Button className="w-full hover:text-black font-bold">
           Sign up &rarr;
           <BottomGradient />
         </Button>
