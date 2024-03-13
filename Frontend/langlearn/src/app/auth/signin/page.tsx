@@ -36,7 +36,7 @@ export default function SignIn() {
           <BottomGradient />
         </Button>
         <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-          Sign Up to Lang Learn if you don&apos;t have an account
+          Sign Up to Lang Learn if you don&apos;t have an account yet
         </p>
 
         {/* <button
