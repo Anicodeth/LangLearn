@@ -5,7 +5,7 @@ export default function AuthLayout({
 }>) {
   return (
     <div className="h-screen flex items-center justify-center">
-      <div className="border-2 w-full h-full flex justify-center items-center">
+      <div className="border-2 w-full h-full flex justify-center items-center side-image">
         Image section
       </div>
       <div className="border-0 w-full h-full flex justify-center items-center bg-primary">
