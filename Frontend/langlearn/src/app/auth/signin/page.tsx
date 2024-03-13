@@ -9,6 +9,7 @@ import {
   IconBrandOnlyfans,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function SignIn() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,7 +37,7 @@ export default function SignIn() {
           <BottomGradient />
         </Button>
         <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-          Sign Up to Lang Learn if you don&apos;t have an account yet
+          if you don&apos;t have an account yet, <Link href = "/auth/signup" className=" text-blue-500 font-bold">Sign Up</Link>
         </p>
 
         {/* <button
