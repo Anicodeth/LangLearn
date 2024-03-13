@@ -3,12 +3,9 @@ import React from "react";
 import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
 import { cn } from "@/utils/cn";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-  IconBrandOnlyfans,
-} from "@tabler/icons-react";
+import { IconBrandGoogle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function SignUp() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,11 +43,7 @@ export default function SignUp() {
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="confirmpassword">Confirm password</Label>
-          <Input
-            id="confirmpassword"
-            placeholder="••••••••"
-            type="password"
-          />
+          <Input id="confirmpassword" placeholder="••••••••" type="password" />
         </LabelInputContainer>
 
         <Button className="w-full hover:text-black font-bold">
@@ -65,6 +58,13 @@ export default function SignUp() {
           Sign up &rarr;
           <BottomGradient />
         </button> */}
+
+        <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
+          if you already have an account yet,{" "}
+          <Link href="/auth/signin" className=" text-blue-500 font-bold">
+            Login
+          </Link>
+        </p>
 
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
 
