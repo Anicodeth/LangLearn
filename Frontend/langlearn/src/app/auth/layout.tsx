@@ -8,7 +8,7 @@ export default function AuthLayout({
       <div className="border-2 w-full h-full flex justify-center items-center">
         Image section
       </div>
-      <div className="border-2 w-full h-full flex justify-center items-center">
+      <div className="border-0 w-full h-full flex justify-center items-center bg-primary">
         {" "}
         {children}
       </div>

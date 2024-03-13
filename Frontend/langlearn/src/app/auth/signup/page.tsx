@@ -49,7 +49,7 @@ export default function SignUp() {
           <Input
             id="confirmpassword"
             placeholder="••••••••"
-            type="confirmpassword"
+            type="password"
           />
         </LabelInputContainer>
 
