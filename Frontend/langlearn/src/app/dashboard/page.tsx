@@ -1,5 +1,5 @@
 
-export default function DefaultSidebar() {
+export default function Dashboard() {
   return (
     <>HI</>
   );
