@@ -16,8 +16,21 @@ import {
   PowerIcon,
 } from "@heroicons/react/24/solid";
 
+interface ListItems{
+    icon: any;
+    text: string;
+    link: string;
+}
 
-export default function AuthLayout({
+const menuItems: ListItems[]= [
+    {
+        icon: PresentationChartBarIcon,
+        text: "Dashboard",
+        link: "/dashboard",
+    }
+]
+
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -35,42 +48,14 @@ export default function AuthLayout({
             </Typography>
           </div>
           <List placeholder={undefined}>
-            <ListItem placeholder={undefined}>
-              <ListItemPrefix placeholder={undefined}>
-                <PresentationChartBarIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Dashboard
-            </ListItem>
-            <ListItem placeholder={undefined}>
-              <ListItemPrefix placeholder={undefined}>
-                <ShoppingBagIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              E-Commerce
-            </ListItem>
-            <ListItem placeholder={undefined}>
-              <ListItemPrefix placeholder={undefined}>
-                <InboxIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Inbox
-            </ListItem>
-            <ListItem placeholder={undefined}>
-              <ListItemPrefix placeholder={undefined}>
-                <UserCircleIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Profile
-            </ListItem>
-            <ListItem placeholder={undefined}>
-              <ListItemPrefix placeholder={undefined}>
-                <Cog6ToothIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Settings
-            </ListItem>
-            <ListItem placeholder={undefined}>
-              <ListItemPrefix placeholder={undefined}>
-                <PowerIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              Log Out
-            </ListItem>
+            { menuItems.map((item, index) => (
+            <ListItem placeholder={undefined} key = {index}>
+                <ListItemPrefix placeholder={undefined}>
+                    <item.icon className="h-5 w-5" />
+                </ListItemPrefix>
+                {item.text}
+                </ListItem>
+            ))}
           </List>
         </Card>
       </div>
