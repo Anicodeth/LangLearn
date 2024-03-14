@@ -15,6 +15,7 @@ import {
   InboxIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
+import Link from "next/link";
 
 interface ListItems{
     icon: any;
@@ -25,7 +26,7 @@ interface ListItems{
 const menuItems: ListItems[] = [
   {
     icon: PresentationChartBarIcon,
-    text: "Dashboard",
+    text: "Home",
     link: "/dashboard",
   },
   {
@@ -68,13 +69,15 @@ export default function DashboardLayout({
             </Typography>
           </div>
           <List placeholder={undefined}>
-            { menuItems.map((item, index) => (
-            <ListItem placeholder={undefined} key = {index}>
-                <ListItemPrefix placeholder={undefined}>
+            {menuItems.map((item, index) => (
+              <Link href = {item.link}>
+                <ListItem placeholder={undefined} key={index}>
+                  <ListItemPrefix placeholder={undefined}>
                     <item.icon className="h-5 w-5" />
-                </ListItemPrefix>
-                {item.text}
+                  </ListItemPrefix>
+                  {item.text}
                 </ListItem>
+              </Link>
             ))}
           </List>
         </Card>

@@ -1,4 +1,4 @@
 export default function Quiz() {
-  return (<>HI</>)
+  return (<>Quiz</>)
   ;
 }
