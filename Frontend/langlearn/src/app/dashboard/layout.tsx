@@ -22,13 +22,28 @@ interface ListItems{
     link: string;
 }
 
-const menuItems: ListItems[]= [
-    {
-        icon: PresentationChartBarIcon,
-        text: "Dashboard",
-        link: "/dashboard",
-    }
-]
+const menuItems: ListItems[] = [
+  {
+    icon: PresentationChartBarIcon,
+    text: "Dashboard",
+    link: "/dashboard",
+  },
+  {
+    icon: PresentationChartBarIcon,
+    text: "dashboard",
+    link: "/dashboard",
+  },
+  {
+    icon: PresentationChartBarIcon,
+    text: "dashboard",
+    link: "/dashboard",
+  },
+  {
+    icon: PresentationChartBarIcon,
+    text: "dashboard",
+    link: "/dashboard",
+  },
+];
 
 export default function DashboardLayout({
   children,
