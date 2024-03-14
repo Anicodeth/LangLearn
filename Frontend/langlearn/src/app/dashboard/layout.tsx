@@ -30,18 +30,23 @@ const menuItems: ListItems[] = [
   },
   {
     icon: PresentationChartBarIcon,
-    text: "dashboard",
-    link: "/dashboard",
+    text: "Learn",
+    link: "/dashboard/learn",
   },
   {
     icon: PresentationChartBarIcon,
-    text: "dashboard",
-    link: "/dashboard",
+    text: "Chat",
+    link: "/dashboard/chat",
   },
   {
     icon: PresentationChartBarIcon,
-    text: "dashboard",
-    link: "/dashboard",
+    text: "Quiz",
+    link: "/dashboard/quiz",
+  },
+  {
+    icon: PresentationChartBarIcon,
+    text: "Profile",
+    link: "/dashboard/profile",
   },
 ];
 
