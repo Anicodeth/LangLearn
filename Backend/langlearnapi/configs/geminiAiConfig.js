@@ -36,12 +36,12 @@ const safetySettings = [
   },
 ];
 
-const chat = model.startChat({
+const Gemini = model.startChat({
   generationConfig,
   safetySettings,
   history: [],
 });
 
-const result = await chat.sendMessage("What is the age of John?");
-const response = result.response;
-console.log(response.text());
+
+
+module.exports = Gemini;
