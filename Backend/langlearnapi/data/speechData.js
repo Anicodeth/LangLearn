@@ -13,3 +13,6 @@ async function speech(text) {
   await fs.promises.writeFile(speechFile, buffer);
   return speechFile;
 }
+
+
+module.exports = speech;
