@@ -12,11 +12,18 @@ async function main() {
   const mp3 = await openai.audio.speech.create({
     model: "tts-1",
     voice: "alloy",
-    input: "HI Seleshi how are you doing today?",
+    input: "Hi Seleshi how are you doing today?",
     
   });
   console.log(speechFile);
   const buffer = Buffer.from(await mp3.arrayBuffer());
   await fs.promises.writeFile(speechFile, buffer);
 }
-main();
+// main();
+
+ const completion = await openai.chat.completions.create({
+   messages: [{ role: "user", content: "what is the capital of ethiopia" }],
+   model: "gpt-3.5-turbo",
+ });
+
+ console.log(completion.choices[0]);
