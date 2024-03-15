@@ -12,3 +12,7 @@ function translatePrompt(fromlanguage, toLanguage, text){
     return ;
 }
 
+function speechPrompt(text){
+    return text;
+}
+
