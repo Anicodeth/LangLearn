@@ -19,7 +19,7 @@ async function speech() {
   await fs.promises.writeFile(speechFile, buffer);
 }
 
-speech();
+// speech();
 
 async function text() {
   const completion = await openai.chat.completions.create({
@@ -27,10 +27,9 @@ async function text() {
     model: "gpt-3.5-turbo",
   });
 
-  console.log(completion.choices[0].message.content);
+  console.log(completion.choices[0]);
 }
 
 text();
 
-
-module.exports = openai ;
+module.exports = openai;

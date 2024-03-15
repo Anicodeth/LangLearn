@@ -2,11 +2,11 @@
 
 
 
-async function text() {
+async function text(prompt) {
   const completion = await openai.chat.completions.create({
-    messages: [{ role: "system", content: "what is the capital of ethiopia" }],
+    messages: [{ role: "system", content: prompt }],
     model: "gpt-3.5-turbo",
   });
 
-  console.log(completion.choices[0].message.content);
+  return completion.choices[0].message.content ;
 }
