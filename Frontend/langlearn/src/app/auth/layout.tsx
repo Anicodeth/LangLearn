@@ -1,4 +1,6 @@
 import Image from "next/image";
+import vrImage from "../../assets/vr.png";
+import kidSitting from "../../assets/kidsitting.png";
 
 export default function AuthLayout({
   children,
@@ -9,7 +11,7 @@ export default function AuthLayout({
     <div className="h-screen border-0 flex items-center justify-center">
       <div className="border-0 w-full h-full flex justify-center items-center ">
         <Image
-        src = "/vr.png"
+        src = {kidSitting}
           alt="Example Image"
           width={500} // Set width and height for the image
           height={300}
