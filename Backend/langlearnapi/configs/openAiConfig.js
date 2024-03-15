@@ -31,3 +31,6 @@ async function text() {
 }
 
 text();
+
+
+module.exports = openai ;
