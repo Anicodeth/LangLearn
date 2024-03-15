@@ -32,12 +32,11 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --main: 	#18bbec;
+    --main: #18bbec;
     --main-light: #5dcff2;
     --main-lighter: #e8f8fd;
-    --main-dark: #0c5e76 ;
+    --main-dark: #0c5e76;
     --main-darker: #073847;
-
 
     --radius: 0.5rem;
   }
@@ -74,19 +73,17 @@
 }
 
 .side-image {
-
   --s: 50px; /* control the size */
-  
-  --_g: conic-gradient(at 50% 25%,#0000 75%,var(--main) 0);
+
+  --_g: conic-gradient(at 50% 25%, #0000 75%, var(--main) 0);
   background:
-    var(--_g),var(--_g) var(--s) var(--s),
-    var(--_g) calc(2*var(--s)) calc(2*var(--s)),
-    var(--_g) calc(3*var(--s)) calc(3*var(--s)),
-    repeating-linear-gradient(135deg,#000 0 12.5%,#fff 0 25%);
-  background-size: calc(4*var(--s)) calc(4*var(--s))
+    var(--_g),
+    var(--_g) var(--s) var(--s),
+    var(--_g) calc(2 * var(--s)) calc(2 * var(--s)),
+    var(--_g) calc(3 * var(--s)) calc(3 * var(--s)),
+    repeating-linear-gradient(135deg, #000 0 12.5%, #fff 0 25%);
+  background-size: calc(4 * var(--s)) calc(4 * var(--s));
 }
-
-
 
 @layer base {
   * {
