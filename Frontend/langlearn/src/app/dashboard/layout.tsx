@@ -17,10 +17,10 @@ import {
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
-interface ListItems{
-    icon: any;
-    text: string;
-    link: string;
+interface ListItems {
+  icon: any;
+  text: string;
+  link: string;
 }
 
 const menuItems: ListItems[] = [
@@ -70,7 +70,7 @@ export default function DashboardLayout({
           </div>
           <List placeholder={undefined}>
             {menuItems.map((item, index) => (
-              <Link href = {item.link}>
+              <Link href={item.link}>
                 <ListItem placeholder={undefined} key={index}>
                   <ListItemPrefix placeholder={undefined}>
                     <item.icon className="h-5 w-5" />
