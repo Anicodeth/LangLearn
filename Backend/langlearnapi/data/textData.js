@@ -1,6 +1,4 @@
-
 const openai = require("../configs/openAiConfig");
-
 
 async function text(prompt) {
   const completion = await openai.chat.completions.create({
@@ -8,8 +6,7 @@ async function text(prompt) {
     model: "gpt-3.5-turbo",
   });
 
-  return completion.choices[0].message.content ;
+  return completion.choices[0].message.content;
 }
-
 
 module.exports = text;
