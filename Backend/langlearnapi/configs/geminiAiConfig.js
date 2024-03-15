@@ -42,10 +42,7 @@ const Gemini = model.startChat({
   history: [],
 });
 
-
-
 module.exports = Gemini;
-
 
 // Usage
 // const result = await Gemini.sendMessage("What is the age of John?");
