@@ -1,5 +1,5 @@
 
-
+const openai = require("../configs/openAiConfig");
 
 
 async function text(prompt) {
