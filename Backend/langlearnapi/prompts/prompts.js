@@ -16,10 +16,9 @@ function speechPrompt(text) {
   return text;
 }
 
-
 module.exports = {
-    quizPrompt,
-    chatPrompt,
-    translatePrompt,
-    speechPrompt
-}
+  quizPrompt,
+  chatPrompt,
+  translatePrompt,
+  speechPrompt,
+};
