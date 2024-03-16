@@ -1,5 +1,7 @@
 function quizPrompt(language, difficulty) {
-  return;
+  return
+  `Prepare a language quiz using ${language} with a difficulty of ${difficulty}. Return in the form of a list of jsons. do not include anyother text other than the list in your response.`
+  ;
 }
 
 function chatPrompt(language, question) {
