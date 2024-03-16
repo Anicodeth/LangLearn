@@ -5,7 +5,7 @@ function quizPrompt(language, difficulty) {
 }
 
 function chatPrompt(language, question) {
-  return;
+  return `reply to this question: "${question}". use only the following language: "${language}".`;
 }
 
 function translatePrompt(fromlanguage, toLanguage, text) {
