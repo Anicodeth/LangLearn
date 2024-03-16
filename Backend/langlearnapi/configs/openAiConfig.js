@@ -19,7 +19,7 @@ async function speech() {
   await fs.promises.writeFile(speechFile, buffer);
 }
 
-// speech();
+
 
 async function text() {
   const completion = await openai.chat.completions.create({
