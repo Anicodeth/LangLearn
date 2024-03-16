@@ -1,18 +1,15 @@
-
-
 function quizPrompt(language, difficulty) {
-    return ;
+  return;
 }
 
-function chatPrompt(language, question){
-    return ;
+function chatPrompt(language, question) {
+  return;
 }
 
-function translatePrompt(fromlanguage, toLanguage, text){
-    return ;
+function translatePrompt(fromlanguage, toLanguage, text) {
+  return;
 }
 
-function speechPrompt(text){
-    return text;
+function speechPrompt(text) {
+  return text;
 }
-
