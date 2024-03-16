@@ -9,7 +9,7 @@ function chatPrompt(language, question) {
 }
 
 function translatePrompt(fromlanguage, toLanguage, text) {
-  return;
+  return `Translate this text: ${text}", from ${fromlanguage} to ${toLanguage}`;
 }
 
 function speechPrompt(text) {
