@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const OpenAI = require("openai");
 
+
 const openai = new OpenAI({
   apiKey: "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",
 });
@@ -30,6 +31,5 @@ async function text() {
   console.log(completion.choices[0]);
 }
 
-text();
 
 module.exports = openai;
