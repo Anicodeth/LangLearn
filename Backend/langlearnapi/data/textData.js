@@ -10,7 +10,6 @@ async function textOpenAi(prompt) {
   return completion.choices[0].message.content;
 }
 
-
 async function textGemini(prompt) {
   const result = await gemini.sendMessage(prompt);
   const response = result.response;
