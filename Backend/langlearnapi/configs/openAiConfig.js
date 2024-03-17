@@ -2,6 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const OpenAI = require("openai");
 const {quizPrompt, chatPrompt} = require('../prompts/prompts')
+const gemini = require('./geminiAiConfig');
+
 
 const openai = new OpenAI({
   apiKey: process.env.OPEN_AI_API_KEY,
@@ -30,6 +32,9 @@ async function text() {
   // const json = JSON.parse(data)
   console.log(data);
 }
-
-text()
+async function textGemini(prompt) {
+  const response = await gemini.sendMessage(prompt);
+  return response.text();
+}
+textGemini(quizPrompt("french", "easy"));
 module.exports = openai;

@@ -44,6 +44,7 @@ const Gemini = model.startChat({
 
 module.exports = Gemini;
 
+
 // Usage
 // const result = await Gemini.sendMessage("What is the age of John?");
 // const response = result.response;
