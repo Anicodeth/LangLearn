@@ -22,9 +22,9 @@ async function speech() {
   await fs.promises.writeFile(speechFile, buffer);
 }
 
-async function text() {
+async function text(prompt) {
   const completion = await openai.chat.completions.create({
-    messages: [{ role: "system", content: chatPrompt('french', "hey how are you?") }],
+    messages: [{ role: "system", content: prompt }],
     model: "gpt-3.5-turbo",
   });
 
@@ -35,9 +35,10 @@ async function text() {
 async function textGemini(prompt) {
   const result = await gemini.sendMessage(prompt);
   const response = result.response;
+  console.log(response.text());
   return response.text();
 }
-const data = textGemini(quizPrompt("french", "easy"));
+const data = text(quizPrompt('amharic', "easy"));
 
-console.log(data);
+
 module.exports = openai;

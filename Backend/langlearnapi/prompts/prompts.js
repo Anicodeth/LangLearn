@@ -4,7 +4,8 @@ function quizPrompt(language, difficulty) {
   do not include anyother text other than the list in your response.
   they must be multiple choice questions.
   the question is always english. the choices are the specified language.
-  this are language learning questions.`;
+  this are language learning questions.
+  return the answers too.`;
 }
 
 function chatPrompt(language, question) {
