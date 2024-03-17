@@ -32,13 +32,7 @@ async function text(prompt) {
   // const json = JSON.parse(data)
   console.log(data);
 }
-async function textGemini(prompt) {
-  const result = await gemini.sendMessage(prompt);
-  const response = result.response;
-  console.log(response.text());
-  return response.text();
-}
-const data = text(quizPrompt('amharic', "easy"));
+
 
 
 module.exports = openai;
