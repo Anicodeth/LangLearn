@@ -27,8 +27,8 @@ async function text() {
   });
 
   const data = completion.choices[0].message.content;
-  const json = JSON.parse(data)
-  console.log(json);
+  // const json = JSON.parse(data)
+  console.log(data);
 }
 
 text()
