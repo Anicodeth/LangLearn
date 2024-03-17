@@ -1,4 +1,5 @@
 const openai = require("../configs/openAiConfig");
+const gemini = require("../configs/geminiAiConfig");
 
 async function textOpenAi(prompt) {
   const completion = await openai.chat.completions.create({
@@ -7,6 +8,11 @@ async function textOpenAi(prompt) {
   });
 
   return completion.choices[0].message.content;
+}
+
+
+async function textGemini(prompt) {
+  const response = await gemini.sendMessage(prompt);
 }
 
 module.exports = text;
