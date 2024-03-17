@@ -1,9 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 const OpenAI = require("openai");
+const {quizPrompt} = require('../prompts/prompts')
 
 const openai = new OpenAI({
-  apiKey: "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",
+  apiKey: process.env.OPEN_AI_API_KEY,
 });
 
 async function speech() {
@@ -21,11 +22,14 @@ async function speech() {
 
 async function text() {
   const completion = await openai.chat.completions.create({
-    messages: [{ role: "system", content: "what is the capital of ethiopia" }],
+    messages: [{ role: "system", content: quizPrompt('french', 'easy') }],
     model: "gpt-3.5-turbo",
   });
 
-  console.log(completion.choices[0]);
+  const data = completion.choices[0].message.content;
+  const json = JSON.parse(data)
+  console.log(json);
 }
 
+text()
 module.exports = openai;
