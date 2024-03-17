@@ -3,7 +3,8 @@ function quizPrompt(language, difficulty) {
   Return in the form of a list of jsons. 
   do not include anyother text other than the list in your response.
   they must be multiple choice questions.
-  the question is always english. the choices are the specified language.`;
+  the question is always english. the choices are the specified language.
+  this are language learning questions.`;
 }
 
 function chatPrompt(language, question) {
