@@ -1,7 +1,9 @@
 function quizPrompt(language, difficulty) {
   return `Prepare a language quiz using ${language} with a difficulty of ${difficulty}. 
   Return in the form of a list of jsons. 
-  do not include anyother text other than the list in your response.`;
+  do not include anyother text other than the list in your response.
+  they must be multiple choice questions.
+  the question is always english. the choices are the specified language.`;
 }
 
 function chatPrompt(language, question) {
