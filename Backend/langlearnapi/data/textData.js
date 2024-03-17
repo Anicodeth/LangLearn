@@ -16,4 +16,4 @@ async function textGemini(prompt) {
   return response.text();
 }
 
-module.exports = text;
+module.exports = { textOpenAi, textGemini};
