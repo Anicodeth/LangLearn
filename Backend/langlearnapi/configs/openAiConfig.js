@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const OpenAI = require("openai");
-const {quizPrompt} = require('../prompts/prompts')
+const {quizPrompt, chatPrompt} = require('../prompts/prompts')
 
 const openai = new OpenAI({
   apiKey: process.env.OPEN_AI_API_KEY,
@@ -22,7 +22,7 @@ async function speech() {
 
 async function text() {
   const completion = await openai.chat.completions.create({
-    messages: [{ role: "system", content: quizPrompt('french', 'hard') }],
+    messages: [{ role: "system", content: chatPrompt('french', "hey how are you?") }],
     model: "gpt-3.5-turbo",
   });
 
