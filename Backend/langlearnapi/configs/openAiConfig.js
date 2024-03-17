@@ -37,5 +37,7 @@ async function textGemini(prompt) {
   const response = result.response;
   return response.text();
 }
-textGemini(quizPrompt("french", "easy"));
+const data = textGemini(quizPrompt("french", "easy"));
+
+console.log(data);
 module.exports = openai;
