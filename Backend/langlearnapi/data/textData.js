@@ -13,6 +13,7 @@ async function textOpenAi(prompt) {
 
 async function textGemini(prompt) {
   const response = await gemini.sendMessage(prompt);
+  return response.text();
 }
 
 module.exports = text;
