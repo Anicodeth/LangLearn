@@ -22,7 +22,7 @@ async function speech() {
 
 async function text() {
   const completion = await openai.chat.completions.create({
-    messages: [{ role: "system", content: quizPrompt('french', 'easy') }],
+    messages: [{ role: "system", content: quizPrompt('french', 'hard') }],
     model: "gpt-3.5-turbo",
   });
 
