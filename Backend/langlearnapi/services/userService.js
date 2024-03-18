@@ -19,6 +19,15 @@ exports.getUser = async function (id) {
   }
 };
 
+exports.getUsers = async function () {
+  try {
+    const users = await User.find();
+    return users;
+  } catch (error) {
+    throw error;
+  }
+};
+
 exports.updateUser = async function (id, user) {
   try {
     const updatedUser = await User.findByIdAndUpdate(id, user, { new: true });
@@ -38,3 +47,10 @@ exports.deleteUser = async function (id) {
     throw error;
   }
 };
+
+module.exports =  {
+    createUser,
+    getUser,
+    updateUser,
+    deleteUser,
+}
