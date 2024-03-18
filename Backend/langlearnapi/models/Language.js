@@ -9,10 +9,8 @@ const languageSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-
-    tumbnail: {
+    languageImage: {
         type: String,
-        required: true,
     },
     courses: [
         {
