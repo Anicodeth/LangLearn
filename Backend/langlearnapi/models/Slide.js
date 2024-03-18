@@ -33,6 +33,13 @@ const slideSchema = new mongoose.Schema({
     slideExplanation: {
         type: String,
     },
+    color: {
+        type: String,
+    },
+    font : {
+        type: String,
+    },
+    
     });
 
 
