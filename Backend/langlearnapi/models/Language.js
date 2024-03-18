@@ -9,7 +9,8 @@ const languageSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    flag: {
+
+    tumbnail: {
         type: String,
         required: true,
     },
