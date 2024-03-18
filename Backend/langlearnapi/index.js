@@ -5,6 +5,7 @@ const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const mongoose = require("mongoose");
 
+app.use(express.json());
 mongoose
   .connect(
     "mongodb+srv://afmtoday:OlxwPFCF0rLMnA3e@cluster0.edrrjyh.mongodb.net/langlearn?retryWrites=true&w=majority"
@@ -13,7 +14,6 @@ mongoose
   .catch((err) => console.error("Error connecting to MongoDB", err));
 
 // App configuration
-app.use(express.json());
 app.use(
   cors({
     origin: "*",
@@ -37,12 +37,12 @@ const swaggerSpec = swaggerJsdoc({
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Route imports
-// const userRoutes = require("./routes/userRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 
 // Route definitions
-// VERSION = "v1";
-// app.use(`/api/${VERSION}/user`, userRoutes);
+VERSION = "v1";
+app.use(`/api/${VERSION}/users`, userRoutes);
 
 app.listen(4000, () => {
   console.log("Connected");

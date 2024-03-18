@@ -38,28 +38,11 @@ const router = require("express").Router();
  */
 
 
-/**
- * @swagger
- * api/v1/users:
- *  get:
- *    summary: Get all users
- *    description: Get all users
- *    responses:
- *      200:
- *        description: List of users
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/User'
- */
-router.get("/", userController.getUsers);
 
 //GET /users/:id
 /**
  * @swagger
- * api/v1/users/{id}:
+ * /api/v1/users/{id}:
  *  get:
  *    summary: Get a user by id
  *    description: Get a user by id
@@ -85,7 +68,7 @@ router.get("/:id", userController.getUser);
 //POST /users
 /**
  * @swagger
- * api/v1/users:
+ * /api/v1/users:
  *  post:
  *    summary: Create a new user
  *    description: Create a new user
@@ -111,7 +94,7 @@ router.post("/", userController.createUser);
 //PUT /users/:id
 /**
  * @swagger
- * api/v1/users/{id}:
+ * /api/v1/users/{id}:
  *  put:
  *    summary: Update a user by id
  *    description: Update a user by id
@@ -144,7 +127,7 @@ router.put("/:id", userController.updateUser);
 //DELETE /users/:id
 /**
  * @swagger
- * api/v1/users/{id}:
+ * /api/v1/users/{id}:
  *  delete:
  *    summary: Delete a user by id
  *    description: Delete a user by id
@@ -168,10 +151,31 @@ router.put("/:id", userController.updateUser);
 
 router.delete("/:id", userController.deleteUser);
 
+//Get /users
+/**
+ * @swagger
+ * /api/v1/users:
+ *  get:
+ *    summary: Get all users
+ *    description: Get all users
+ *    responses:
+ *      200:
+ *        description: A list of users
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/User'
+ *      404:
+ *        description: No users were found
+ */
+router.get("/", userController.getUsers);
+
 module.exports = router;
 
 
-//Get /users
+
 
 
 

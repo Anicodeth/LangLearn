@@ -2,8 +2,10 @@ const User = require("../models/User");
 
 exports.createUser = async function (user) {
   try {
+  
     const newUser = await User(user);
     await newUser.save();
+
     return newUser;
   } catch (error) {
     throw error;
@@ -47,10 +49,3 @@ exports.deleteUser = async function (id) {
     throw error;
   }
 };
-
-module.exports =  {
-    createUser,
-    getUser,
-    updateUser,
-    deleteUser,
-}
