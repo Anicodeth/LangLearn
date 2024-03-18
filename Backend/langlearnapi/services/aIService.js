@@ -1,5 +1,6 @@
 const { textGemini, textOpenAi } = require("../data/textData");
 const { quizPrompt } = require("../prompts/prompts");
+
 exports.getQuiz = async function (language, difficulty) {
   const prompt = quizPrompt(language, difficulty);
 
@@ -13,15 +14,9 @@ exports.getChat = async function (language, question) {
   const response = await textOpenAi(prompt);
   return response;
 };
+
 exports.getTranslate = async function (fromLanguage, toLanguage, text) {
   const prompt = translatePrompt(fromLanguage, toLanguage, text);
-
-  const response = await textOpenAi(prompt);
-  return response;
-};
-
-exports.getSpeech = async function (text) {
-  const prompt = speechPrompt(text);
 
   const response = await textOpenAi(prompt);
   return response;
