@@ -23,3 +23,7 @@ const paymentSchema = new mongoose.Schema({
         default: false
     }
     });
+
+const Payment = mongoose.model("Payment", paymentSchema);
+
+module.exports = Payment;
