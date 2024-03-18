@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 // Base schema
 const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -18,6 +22,18 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: [8, "Password must be at least 8 characters long"],
   },
+  quizzes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Quiz",
+    },
+  ],
+  progress: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Progress",
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);
