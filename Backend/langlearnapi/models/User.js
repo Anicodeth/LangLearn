@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   quizzes: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Quiz",
+      ref: "Score",
     },
   ],
   progress: [

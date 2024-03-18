@@ -1,3 +1,20 @@
 const mongoose = require('mongoose');
 
-co
+const scoreSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    quizDetails: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+    },
+    score: {
+        type: Number,
+        required: true,
+    },
+    
+    });
+
+const Score = mongoose.model("Score", scoreSchema);
+
