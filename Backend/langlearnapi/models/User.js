@@ -1,9 +1,23 @@
-const { Schema } = mongoose;
+const mongoose = require("mongoose");
 
-const userSchema = new Schema({
-  username: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
+// Base schema
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: function (value) {
+        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+      },
+      message: (props) => `${props.value} is not a valid email address!`,
+    },
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: [8, "Password must be at least 8 characters long"],
+  },
 });
 
 const User = mongoose.model("User", userSchema);
