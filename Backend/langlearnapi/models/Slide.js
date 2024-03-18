@@ -5,6 +5,10 @@ const slideSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
     },
+    slideTitle: {
+        type: String,
+        required: true,
+    },
     slideImage: {
         type: String,
     },
@@ -12,6 +16,9 @@ const slideSchema = new mongoose.Schema({
         type: String,
     },
     slideAudio: {
+        type: String,
+    },
+    slideNewWord: {
         type: String,
     },
     slideVideo: {
