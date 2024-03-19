@@ -2,7 +2,6 @@ const User = require("../models/User");
 
 exports.createUser = async function (user) {
   try {
-  
     const newUser = await User(user);
     await newUser.save();
 
