@@ -45,6 +45,7 @@ const router = require("express").Router();
  * /api/v1/users/{id}:
  *  get:
  *    summary: Get a user by id
+ *    tags: [Users]
  *    description: Get a user by id
  *    parameters:
  *      - in: path
@@ -71,6 +72,7 @@ router.get("/:id", userController.getUser);
  * /api/v1/users:
  *  post:
  *    summary: Create a new user
+ *    tags: [Users]
  *    description: Create a new user
  *    requestBody:
  *      required: true
@@ -97,6 +99,7 @@ router.post("/", userController.createUser);
  * /api/v1/users/{id}:
  *  put:
  *    summary: Update a user by id
+ *    tags: [Users]
  *    description: Update a user by id
  *    parameters:
  *      - in: path
@@ -130,6 +133,7 @@ router.put("/:id", userController.updateUser);
  * /api/v1/users/{id}:
  *  delete:
  *    summary: Delete a user by id
+ *    tags: [Users]
  *    description: Delete a user by id
  *    parameters:
  *      - in: path
@@ -157,6 +161,7 @@ router.delete("/:id", userController.deleteUser);
  * /api/v1/users:
  *  get:
  *    summary: Get all users
+ *    tags: [Users]
  *    description: Get all users
  *    responses:
  *      200:

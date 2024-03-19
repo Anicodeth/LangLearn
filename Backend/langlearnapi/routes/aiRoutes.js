@@ -1,6 +1,5 @@
-
-const aiController = require('../controllers/aiController');
-const router = require('express').Router();
+const aiController = require("../controllers/aiController");
+const router = require("express").Router();
 
 //GET /quiz/:language/:difficulty
 /**
@@ -8,6 +7,7 @@ const router = require('express').Router();
  * /api/v1/ai/quiz/{language}/{difficulty}:
  *  get:
  *    summary: Get a quiz by language and difficulty
+ *    tags: [Ai]
  *    description: Get a quiz by language and difficulty
  *    parameters:
  *      - in: path
@@ -31,11 +31,7 @@ const router = require('express').Router();
  *             type: object
  */
 
-
-router.get('/quiz/:language/:difficulty', aiController.getQuiz);
-
-
-
+router.get("/quiz/:language/:difficulty", aiController.getQuiz);
 
 //GET /chat/:language/:question
 /**
@@ -43,6 +39,7 @@ router.get('/quiz/:language/:difficulty', aiController.getQuiz);
  * /api/v1/ai/chat/{language}/{question}:
  *  get:
  *    summary: Get a chat response by language and question
+ *    tags: [Ai]
  *    description: Get a chat response by language and question
  *    parameters:
  *      - in: path
@@ -66,15 +63,14 @@ router.get('/quiz/:language/:difficulty', aiController.getQuiz);
  *             type: object
  */
 
-router.get('/chat/:language/:question', aiController.getChat);
-
-
+router.get("/chat/:language/:question", aiController.getChat);
 
 /**
  * @swagger
  * /api/v1/ai/translate/{fromLanguage}/{toLanguage}/{text}:
  *  get:
  *    summary: Get a translation by language and text
+ *    tags: [Ai]
  *    description: Get a translation by language and text
  *    parameters:
  *      - in: path
@@ -104,6 +100,9 @@ router.get('/chat/:language/:question', aiController.getChat);
  *             type: object
  */
 
-router.get('/translate/:fromLanguage/:toLanguage/:text', aiController.getTranslate);
+router.get(
+  "/translate/:fromLanguage/:toLanguage/:text",
+  aiController.getTranslate
+);
 
 module.exports = router;
