@@ -38,11 +38,13 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Route imports
 const userRoutes = require("./routes/userRoutes");
+const aiRoutes = require('./routes/aiRoutes');
 
 
 // Route definitions
 VERSION = "v1";
 app.use(`/api/${VERSION}/users`, userRoutes);
+app.use(`/api/${VERSION}/ai`, aiRoutes);
 
 app.listen(4000, () => {
   console.log("Connected");
