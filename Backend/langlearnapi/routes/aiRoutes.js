@@ -27,6 +27,8 @@ const router = require('express').Router();
  *        description: A quiz
  *        content:
  *          application/json:
+ *            schema:
+ *             type: object
  */
 
 
@@ -60,6 +62,8 @@ router.get('/quiz/:language/:difficulty', aiController.getQuiz);
  *        description: A chat response
  *        content:
  *          application/json:
+ *           schema:
+ *             type: object
  */
 
 router.get('/chat/:language/:question', aiController.getChat);
@@ -96,6 +100,8 @@ router.get('/chat/:language/:question', aiController.getChat);
  *        description: A translation
  *        content:
  *          application/json:
+ *            schema:
+ *             type: object
  */
 
 router.get('/translate/:fromLanguage/:toLanguage/:text', aiController.getTranslate);
