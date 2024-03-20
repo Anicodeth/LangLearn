@@ -82,7 +82,7 @@ export default function DashboardLayout({
               </Link>
             ))}
           </List>
-          <Image src="/bookshelf.png" alt="Logo" width={100} height={100} />
+          <Image className="fill-red-50" src="/bookShelf.svg" alt = "Book Shelf" width="100" height="100"/>
         </Card>
       </div>
       <div className="border-0 w-full h-full flex justify-center items-center ">
