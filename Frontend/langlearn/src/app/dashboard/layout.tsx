@@ -8,13 +8,12 @@ import {
   ListItemPrefix,
 } from "@material-tailwind/react";
 
-import { FaHome } from "react-icons/fa";
 import { CiPen, CiHome, CiChat1, CiUser } from "react-icons/ci";
-import { PiExam, PiExamThin } from "react-icons/pi";
+import { PiExamThin } from "react-icons/pi";
 import Image from "next/image";
 
 import Link from "next/link";
-
+import langLogo from "../../assets/langlearn2.png";
 interface ListItems {
   icon: any;
   text: string;
@@ -61,10 +60,11 @@ export default function DashboardLayout({
           className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5"
           placeholder={undefined}
         >
-          <div className="mb-2 p-4">
-            <Typography variant="h5" color="blue-gray" placeholder={undefined}>
+          <div className="mb-2 p-4 flex justify-center items-center">
+            {/* <Typography variant="h5" color="blue-gray" placeholder={undefined}>
               Lang Learn
-            </Typography>
+            </Typography> */}
+            <Image src={langLogo} alt="LangLearn" width="100" height="100" />
           </div>
           <List placeholder={undefined}>
             {menuItems.map((item, index) => (
