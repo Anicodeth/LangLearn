@@ -82,9 +82,14 @@ export default function DashboardLayout({
               </Link>
             ))}
           </List>
-          <div className = "flex justify-center items-center w-full h-30 bg-mainlighter rounded-lg">
-
-          <Image className="fill-red-50" src="/bookShelf.svg" alt = "Book Shelf" width="100" height="100"/>
+          <div className="flex justify-center items-center w-full h-30 bg-mainlighter rounded-lg">
+            <Image
+              className="fill-red-50"
+              src="/bookShelf.svg"
+              alt="Book Shelf"
+              width="100"
+              height="100"
+            />
           </div>
         </Card>
       </div>
