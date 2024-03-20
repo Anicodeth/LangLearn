@@ -8,7 +8,8 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <div className="h-screen flex items-center justify-center">
       <Card className="w-1/5 h-fit">
