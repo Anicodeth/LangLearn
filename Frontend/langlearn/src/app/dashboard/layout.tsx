@@ -70,7 +70,7 @@ export default function DashboardLayout({
           </div>
           <List placeholder={undefined}>
             {menuItems.map((item, index) => (
-              <Link href={item.link}>
+              <Link key={index} href={item.link}>
                 <ListItem placeholder={undefined} key={index}>
                   <ListItemPrefix placeholder={undefined}>
                     <item.icon className="h-5 w-5" />
