@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,7 +18,9 @@ export default function Home() {
         </CardHeader>
         <CardFooter className="flex-col items-start">
           <p>Join us</p>
+          <Link href = "/auth/signup" >
           <Button>Sign Up</Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>
