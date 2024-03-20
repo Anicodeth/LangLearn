@@ -69,7 +69,7 @@ export default function DashboardLayout({
             {menuItems.map((item, index) => (
               <Link key={index} href={item.link}>
                 <ListItem
-                  className="hover:mainlighter"
+                  className="hover:bg-mainlight"
                   placeholder={undefined}
                   key={index}
                 >
