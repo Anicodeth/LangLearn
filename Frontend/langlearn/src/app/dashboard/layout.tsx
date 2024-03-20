@@ -7,14 +7,11 @@ import {
   ListItem,
   ListItemPrefix,
 } from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
+
+import { FaHome } from "react-icons/fa";
+import { CiPen, CiHome, CiChat1, CiUser } from "react-icons/ci";
+import { PiExam, PiExamThin } from "react-icons/pi";
+
 import Link from "next/link";
 
 interface ListItems {
@@ -25,27 +22,27 @@ interface ListItems {
 
 const menuItems: ListItems[] = [
   {
-    icon: PresentationChartBarIcon,
+    icon: CiHome,
     text: "Home",
     link: "/dashboard",
   },
   {
-    icon: PresentationChartBarIcon,
+    icon: CiPen,
     text: "Learn",
     link: "/dashboard/learn",
   },
   {
-    icon: PresentationChartBarIcon,
+    icon: CiChat1,
     text: "Chat",
     link: "/dashboard/chat",
   },
   {
-    icon: PresentationChartBarIcon,
+    icon: PiExamThin,
     text: "Quiz",
     link: "/dashboard/quiz",
   },
   {
-    icon: PresentationChartBarIcon,
+    icon: CiUser,
     text: "Profile",
     link: "/dashboard/profile",
   },
@@ -71,7 +68,11 @@ export default function DashboardLayout({
           <List placeholder={undefined}>
             {menuItems.map((item, index) => (
               <Link key={index} href={item.link}>
-                <ListItem placeholder={undefined} key={index}>
+                <ListItem
+                  className="hover:mainlighter"
+                  placeholder={undefined}
+                  key={index}
+                >
                   <ListItemPrefix placeholder={undefined}>
                     <item.icon className="h-5 w-5" />
                   </ListItemPrefix>

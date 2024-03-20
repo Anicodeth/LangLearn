@@ -28,6 +28,7 @@ const config = {
       },
       colors: {
         main: "var(--main)",
+        mainlight: "var(--mainlight)",
         mainlighter: "var(--main-lighter)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
