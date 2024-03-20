@@ -11,6 +11,7 @@ import {
 import { FaHome } from "react-icons/fa";
 import { CiPen, CiHome, CiChat1, CiUser } from "react-icons/ci";
 import { PiExam, PiExamThin } from "react-icons/pi";
+import Image from "next/image";
 
 import Link from "next/link";
 
@@ -69,7 +70,7 @@ export default function DashboardLayout({
             {menuItems.map((item, index) => (
               <Link key={index} href={item.link}>
                 <ListItem
-                  className="hover:bg-mainlight"
+                  className="hover:bg-mainlighter"
                   placeholder={undefined}
                   key={index}
                 >
@@ -81,6 +82,7 @@ export default function DashboardLayout({
               </Link>
             ))}
           </List>
+          <Image src="/bookshelf.png" alt="Logo" width={100} height={100} />
         </Card>
       </div>
       <div className="border-0 w-full h-full flex justify-center items-center ">
