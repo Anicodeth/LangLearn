@@ -64,7 +64,7 @@ export default function DashboardLayout({
             {/* <Typography variant="h5" color="blue-gray" placeholder={undefined}>
               Lang Learn
             </Typography> */}
-            <Image src={langLogo} alt="LangLearn" width="100" height="100" />
+            <Image src={langLogo} alt="LangLearn" width="200" height="100" />
           </div>
           <List placeholder={undefined}>
             {menuItems.map((item, index) => (
