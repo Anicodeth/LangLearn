@@ -3,6 +3,8 @@ import { Button } from "../../components/ui/button";
 import astroLogo from "../../assets/astro.png";
 import Image from "next/image";
 import { ChartContainer, BarPlot } from "@mui/x-charts";
+import { LineChart } from "@mui/x-charts/LineChart";
+import manPng from "../../assets/man.png";
 
 const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
 const xLabels = [
@@ -26,6 +28,14 @@ export default function Home() {
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
+      </div>
+      <div className = "flex border-2 justify-between flex-row items-center">
+        <div className = "p-10">
+          <Image height={200} width={200} src={manPng} alt={""}/>
+         </div>
+         <div className ="w-2/3">
+            <BasicLineChart />
+          </div> 
       </div>
     </div>
   );
@@ -75,4 +85,21 @@ function Charts({title, numbers, color}:{title:string, numbers:string | number, 
     </div>
   );
 
+}
+
+
+
+ function BasicLineChart() {
+  return (
+    <LineChart
+      xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+      series={[
+        {
+          data: [2, 5.5, 2, 8.5, 1.5, 5],
+        },
+      ]}
+      width={600}
+      height={300}
+    />
+  );
 }
