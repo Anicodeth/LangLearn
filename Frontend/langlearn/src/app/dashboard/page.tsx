@@ -2,9 +2,7 @@
 import { Button } from "../../components/ui/button";
 import astroLogo from "../../assets/astro.png";
 import Image from "next/image";
-import { BarChart } from "@mui/x-charts/BarChart";
 import { ChartContainer, BarPlot } from "@mui/x-charts";
-import { CiPen } from "react-icons/ci";
 
 const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
 const xLabels = [
@@ -24,7 +22,7 @@ export default function Home() {
       <div className="w-full justify-between h-fit mb-3">
         <Billboard />
       </div>
-      <div className = "flex w-full justify-between">
+      <div className = "flex w-full justify-between mt-1">
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
