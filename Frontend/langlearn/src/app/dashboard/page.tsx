@@ -4,6 +4,7 @@ import astroLogo from "../../assets/astro.png";
 import Image from "next/image";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { ChartContainer, BarPlot } from "@mui/x-charts";
+import { CiPen } from "react-icons/ci";
 
 const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
 const xLabels = [
@@ -24,7 +25,7 @@ export default function Home() {
         <Billboard />
       </div>
       <div>
-        <Charts />
+        <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
       </div>
     </div>
   );
@@ -53,17 +54,24 @@ function Billboard() {
   );
 }
 
-function Charts(){
+function Charts({title, numbers, color}:{title:string, numbers:string | number, color:string}){
   return (
-    <div>
-      <ChartContainer
-        width={500}
-        height={300}
-        series={[{ data: uData, label: "uv", type: "bar" }]}
-        xAxis={[{ scaleType: "band", data: xLabels }]}
-      >
-        <BarPlot />
-      </ChartContainer>
+    <div className="flex justify-between w-1/3 shadow-xl p-5 rounded-xmd">
+      <div className="flex flex-col item-center justify-between ">
+        <h1 className="text-black text-l">{title}</h1>
+        <h1 className="text-6xl font-bold">{numbers}</h1>
+      </div>
+
+      <div className="flex  ">
+        <ChartContainer
+          width={160}
+          height={130}
+          series={[{ data: uData, label: "uv", type: "bar" }]}
+          xAxis={[{ scaleType: "band", data: xLabels }]}
+        >
+          <BarPlot className="h-full" />
+        </ChartContainer>
+      </div>
     </div>
   );
 
