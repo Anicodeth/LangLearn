@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Card,
-  Typography,
-  List,
-  ListItem,
-  ListItemPrefix,
-} from "@material-tailwind/react";
+import { Card, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
 
 import { CiPen, CiHome, CiChat1, CiUser } from "react-icons/ci";
 import { PiExamThin } from "react-icons/pi";
@@ -14,35 +8,35 @@ import Image from "next/image";
 
 import Link from "next/link";
 import langLogo from "../../assets/langlearn2.png";
-import { styled } from '@mui/material/styles';
-import Badge from '@mui/material/Badge';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
+import { styled } from "@mui/material/styles";
+import Badge from "@mui/material/Badge";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
-  '& .MuiBadge-badge': {
-    backgroundColor: '#44b700',
-    color: '#44b700',
+  "& .MuiBadge-badge": {
+    backgroundColor: "#44b700",
+    color: "#44b700",
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    '&::after': {
-      position: 'absolute',
+    "&::after": {
+      position: "absolute",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      borderRadius: '50%',
-      animation: 'ripple 1.2s infinite ease-in-out',
-      border: '1px solid currentColor',
+      width: "100%",
+      height: "100%",
+      borderRadius: "50%",
+      animation: "ripple 1.2s infinite ease-in-out",
+      border: "1px solid currentColor",
       content: '""',
     },
   },
-  '@keyframes ripple': {
-    '0%': {
-      transform: 'scale(.8)',
+  "@keyframes ripple": {
+    "0%": {
+      transform: "scale(.8)",
       opacity: 1,
     },
-    '100%': {
-      transform: 'scale(2.4)',
+    "100%": {
+      transform: "scale(2.4)",
       opacity: 0,
     },
   },
@@ -100,12 +94,11 @@ export default function DashboardLayout({
           placeholder={undefined}
         >
           <div className="mb-2 p-4 flex justify-center items-center">
-            {/* <Typography variant="h5" color="blue-gray" placeholder={undefined}>
-              Lang Learn
-            </Typography> */}
             <Image src={langLogo} alt="LangLearn" width="200" height="100" />
           </div>
+
           <List placeholder={undefined}>
+            <h1 className="font-bold">Student</h1>
             {menuItems.map((item, index) => (
               <Link key={index} href={item.link}>
                 <ListItem
@@ -134,7 +127,6 @@ export default function DashboardLayout({
             <div className="h-fit flex items-center justify-between self-end w-full p-1">
               <BadgeAvatars />
               <h5>Ananya Fekeremariam</h5>
-
             </div>
           </div>
         </Card>
@@ -146,8 +138,7 @@ export default function DashboardLayout({
   );
 }
 
-
- function BadgeAvatars() {
+function BadgeAvatars() {
   return (
     <Stack direction="row" spacing={2}>
       <StyledBadge
@@ -155,9 +146,8 @@ export default function DashboardLayout({
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         variant="dot"
       >
-        <Avatar alt="Remy Sharp"  />
+        <Avatar alt="Remy Sharp" />
       </StyledBadge>
-      
     </Stack>
   );
 }
