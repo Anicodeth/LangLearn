@@ -21,10 +21,12 @@ const xLabels = [
 export default function Home() {
   return (
     <div className="w-full h-screen flex flex-col p-10">
-      <div className="w-full h-fit mb-3">
+      <div className="w-full justify-between h-fit mb-3">
         <Billboard />
       </div>
-      <div>
+      <div className = "flex w-full justify-between">
+        <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
+        <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
       </div>
     </div>
@@ -56,7 +58,7 @@ function Billboard() {
 
 function Charts({title, numbers, color}:{title:string, numbers:string | number, color:string}){
   return (
-    <div className="flex justify-between w-1/3 shadow-xl p-5 rounded-xmd">
+    <div className="flex justify-between w-92 shadow-xl p-5 rounded-xmd">
       <div className="flex flex-col item-center justify-between ">
         <h1 className="text-black text-l">{title}</h1>
         <h1 className="text-6xl font-bold">{numbers}</h1>
