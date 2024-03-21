@@ -130,11 +130,13 @@ export default function DashboardLayout({
               height="100"
             />
           </div>
-          <div>
- <BadgeAvatars />
- 
+          <div className="h-full  flex p-1">
+            <div className="h-fit flex items-center justify-between self-end w-full p-1">
+              <BadgeAvatars />
+              <h5>Ananya Fekeremariam</h5>
+
+            </div>
           </div>
-         
         </Card>
       </div>
       <div className="border-0 w-full h-full flex justify-center items-center ">
