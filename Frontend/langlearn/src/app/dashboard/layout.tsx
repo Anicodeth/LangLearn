@@ -12,6 +12,7 @@ import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
+import bookShelf from "../../assets/bookshelf.svg";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -87,54 +88,54 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="h-screen border-0 flex items-center justify-center">
-      <div className="w-fir h-full flex justify-center items-center">
-        <Card
-          className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5"
-          placeholder={undefined}
-        >
-          <div className="mb-2 p-4 flex justify-center items-center">
-            <Image src={langLogo} alt="LangLearn" width="200" height="100" />
-          </div>
-
-          <List placeholder={undefined}>
-            <h1 className="font-bold">Student</h1>
-            {menuItems.map((item, index) => (
-              <Link key={index} href={item.link}>
-                <ListItem
-                  className="hover:bg-mainlighter"
-                  placeholder={undefined}
-                  key={index}
-                >
-                  <ListItemPrefix placeholder={undefined}>
-                    <item.icon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  {item.text}
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-          <div className="flex justify-center items-center w-full h-30 bg-mainlighter rounded-lg">
-            <Image
-              className="fill-red-50"
-              src="/bookShelf.svg"
-              alt="Book Shelf"
-              width="100"
-              height="100"
-            />
-          </div>
-          <div className="h-full  flex p-1">
-            <div className="h-fit flex items-center justify-between self-end w-full p-1">
-              <BadgeAvatars />
-              <h5>Ananya Fekeremariam</h5>
+      <div className="h-screen border-0 flex items-center justify-center ">
+        <div className="w-fir h-full flex justify-center items-center">
+          <Card
+            className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5"
+            placeholder={undefined}
+          >
+            <div className="mb-2 p-4 flex justify-center items-center">
+              <Image src={langLogo} alt="LangLearn" width="200" height="100" />
             </div>
-          </div>
-        </Card>
+
+            <List placeholder={undefined}>
+              <h1 className="font-bold">Student</h1>
+              {menuItems.map((item, index) => (
+                <Link key={index} href={item.link}>
+                  <ListItem
+                    className="hover:bg-mainlighter"
+                    placeholder={undefined}
+                    key={index}
+                  >
+                    <ListItemPrefix placeholder={undefined}>
+                      <item.icon className="h-5 w-5" />
+                    </ListItemPrefix>
+                    {item.text}
+                  </ListItem>
+                </Link>
+              ))}
+            </List>
+            <div className="flex justify-center items-center w-full h-30 bg-mainlighter rounded-lg">
+              <Image
+                className="fill-red-50"
+                src={bookShelf}
+                alt="Book Shelf"
+                width="100"
+                height="100"
+              />
+            </div>
+            <div className="h-full  flex p-1">
+              <div className="h-fit flex items-center justify-between self-end w-full p-1">
+                <BadgeAvatars />
+                <h5>Ananya Fekeremariam</h5>
+              </div>
+            </div>
+          </Card>
+        </div>
+        <div className=" w-full h-full flex justify-center items-center ">
+          {children}
+        </div>
       </div>
-      <div className="border-0 w-full h-full flex justify-center items-center ">
-        {children}
-      </div>
-    </div>
   );
 }
 

@@ -20,22 +20,22 @@ const xLabels = [
 
 export default function Home() {
   return (
-    <div className="w-full h-screen flex flex-col p-10">
+    <div className="w-full h-screen flex flex-col p-10 overflow-y-scroll">
       <div className="w-full justify-between h-fit mb-3">
         <Billboard />
       </div>
-      <div className = "flex w-full justify-between mt-1">
+      <div className="flex w-full justify-between mt-1">
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
         <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
       </div>
-      <div className = "flex border-2 justify-between flex-row items-center">
-        <div className = "p-10">
-          <Image height={200} width={200} src={manPng} alt={""}/>
-         </div>
-         <div className ="w-2/3">
-            <BasicLineChart />
-          </div> 
+      <div className="flex justify-between flex-row items-center">
+        <div className="p-10">
+          <Image height={200} width={200} src={manPng} alt={""} />
+        </div>
+        <div className="w-2/3 flex justify-between flex-row items-center">
+          <BasicLineChart />
+        </div>
       </div>
     </div>
   );
