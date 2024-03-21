@@ -1,3 +1,6 @@
+import langLogo from "../../assets/langlearn2.png";
+import Image from "next/image";
+
 export default function Home() {
   return (
     <div className="w-full h-screen flex justify-center items-start p-10">
@@ -11,12 +14,14 @@ export default function Home() {
 
 function Billboard() {
   return (
-    <div className="w-full h-60 flex flex-col justify-start items-start border-2 p-10 shadow-m rounded-xmd">
+    <div className="w-full h-60 flex flex-row justify-between items-start p-10 shadow-xl rounded-xmd bg-mainlighter">
       <div>
-        <h1>Welcome to Lang Learn</h1>
+        <h1 className = "text-2xl font-bold type-writer">Welcome to Lang Learn</h1>
         <p>- Epherata</p>
       </div>
-      <
+      <div>
+        <Image src={langLogo} alt="LangLearn" width="200" height="100" />
+      </div>
     </div>
   );
 }
