@@ -1,4 +1,5 @@
-import langLogo from "../../assets/langlearn2.png";
+import { Button } from "../../components/ui/button";
+import astroLogo from "../../assets/astro.png";
 import Image from "next/image";
 
 export default function Home() {
@@ -15,12 +16,22 @@ export default function Home() {
 function Billboard() {
   return (
     <div className="w-full h-60 flex flex-row justify-between items-start p-10 shadow-xl rounded-xmd bg-mainlighter">
-      <div>
-        <h1 className="text-2xl font-bold typewriter">Welcome to Lang Learn</h1>
-        <p>- Epherata</p>
+      <div className = "flex h-full flex-col justify-between">
+        <div>
+          <h1 className="text-2xl font-bold typewriter font-mono">
+            Welcome to Lang Learn
+          </h1>
+          <p>- Epherata</p>
+        </div>
+        <div>
+          <p>
+            Learn a language now
+          </p>
+          <Button>Learn a language</Button>
+        </div>
       </div>
       <div>
-        <Image src={langLogo} alt="LangLearn" width="200" height="100" />
+        <Image src={astroLogo} alt="LangLearn" width="140" height="140" />
       </div>
     </div>
   );
