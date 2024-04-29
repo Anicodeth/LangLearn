@@ -6,8 +6,8 @@ const scoreSchema = new mongoose.Schema({
         ref: "User",
     },
     quizDetails: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course",
+        type: String,
+        required: true,
     },
     score: {
         type: Number,
