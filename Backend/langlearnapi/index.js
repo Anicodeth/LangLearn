@@ -45,7 +45,7 @@ const authRoutes = require('./routes/authRoutes');
 VERSION = "v1";
 app.use(`/api/${VERSION}/users`, userRoutes);
 app.use(`/api/${VERSION}/ai`, aiRoutes);
-app.use(`/api/${vERSION}/users`, authRoutes);
+app.use(`/api/${VERSION}/auth`, authRoutes);
 
 app.listen(4000, () => {
   console.log("Connected");

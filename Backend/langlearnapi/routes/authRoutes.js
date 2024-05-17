@@ -25,7 +25,7 @@
 
 /**
  * @swagger
- * /auth/signup:
+ * /api/v1/auth/signup:
  *   post:
  *     summary: Sign up a new user
  *     tags: [Auth]
@@ -44,7 +44,7 @@
 
 /**
  * @swagger
- * /auth/login:
+ * /api/v1/auth/login:
  *   post:
  *     summary: Log in a user
  *     tags: [Auth]
@@ -64,7 +64,7 @@
 const router = require("express").Router();
 const authController = require("../controllers/authController");
 
-router.post("/auth/signup", authController.createUser);
-router.post("/auth/login", authController.loginUser);
+router.post("/signup", authController.createUser);
+router.post("/login", authController.loginUser);
 
 module.exports = router;
