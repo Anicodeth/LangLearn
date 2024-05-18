@@ -26,8 +26,10 @@ exports.loginUser = async function (email, password) {
        
       throw new Error("Password incorrect");
     }
-    const token = jwt.sign({ email: email }, process.env.JWT_SECRET);
-    return token;
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    //remove user password from response
+    user.password = undefined;
+    return {token, user};
   } catch (error) {
     throw error;
   }
