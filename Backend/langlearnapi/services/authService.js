@@ -8,6 +8,7 @@ exports.createUser = async function (name, email, password) {
       email: email,
       password: password,
     });
+    await user.save();
     return user;
   } catch (error) {
     throw error;
