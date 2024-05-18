@@ -12,7 +12,15 @@ import { signUp } from "@/service/authService";
 import { toast } from "sonner";
 
 export default function SignUp() {
-  const { mutate, isLoading, error } = useMutation(signUp);
+  const { mutate, isLoading } = useMutation(signUp, {
+    onSuccess: () => {
+      toast("Signup successful");
+    },
+    onError: (error: any) => {
+      toast(error.response.data.error);
+      console.error("Error signing up:", error.response.data.error);
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
