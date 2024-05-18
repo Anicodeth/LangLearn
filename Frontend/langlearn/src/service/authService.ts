@@ -13,7 +13,7 @@ export const signUp = async (user: any) => {
 
 export const signIn = async (user: any) => {
   try {
-    const response = await axios.post(`${apiUrl}/signin`, user);
+    const response = await axios.post(`${apiUrl}/login`, user);
     return response.data;
   } catch (error) {
     throw error;
