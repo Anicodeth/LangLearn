@@ -1,3 +1,4 @@
+// components/SignUp.tsx
 "use client";
 import React from "react";
 import { Label } from "../../../components/ui/label";
@@ -6,12 +7,23 @@ import { cn } from "@/utils/cn";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useMutation } from "react-query";
+import { signUp } from "@/service/authService";
 
 export default function SignUp() {
+  const { mutate, isLoading, error } = useMutation(signUp)
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("firstname") as string + " " + formData.get("lastname") as string,
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
+    mutate(data);
   };
+
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
@@ -26,28 +38,57 @@ export default function SignUp() {
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="Tyler" type="text" />
+            <Input
+              id="firstname"
+              name="firstname"
+              placeholder="Tyler"
+              type="text"
+            />
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Durden" type="text" />
+            <Input
+              id="lastname"
+              name="lastname"
+              placeholder="Durden"
+              type="text"
+            />
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input
+            id="email"
+            name="email"
+            placeholder="projectmayhem@fc.com"
+            type="email"
+          />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input
+            id="password"
+            name="password"
+            placeholder="••••••••"
+            type="password"
+          />
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="confirmpassword">Confirm password</Label>
-          <Input id="confirmpassword" placeholder="••••••••" type="password" />
+          <Input
+            id="confirmpassword"
+            name="confirmpassword"
+            placeholder="••••••••"
+            type="password"
+          />
         </LabelInputContainer>
 
-        <Button className="w-full hover:text-black font-bold">
-          Sign up &rarr;
+        <Button
+          className="w-full hover:text-black font-bold"
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Signing up..." : "Sign up →"}
           <BottomGradient />
         </Button>
 

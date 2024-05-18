@@ -10,3 +10,12 @@ export const signUp = async (user: any) => {
     throw error;
   }
 };
+
+export const signIn = async (user: any) => {
+  try {
+    const response = await axios.post(`${apiUrl}/signin`, user);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
