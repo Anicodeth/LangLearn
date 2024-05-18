@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "https://lang-learn-api.vercel.app/api/v1/users";
+const apiUrl = "https://lang-learn-api.vercel.app/api/v1/auth";
 
 export const signUp = async (user: any) => {
   try {

@@ -9,15 +9,18 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useMutation } from "react-query";
 import { signUp } from "@/service/authService";
+import { toast } from "sonner";
 
 export default function SignUp() {
-  const { mutate, isLoading, error } = useMutation(signUp)
+  const { mutate, isLoading, error } = useMutation(signUp);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = {
-      name: formData.get("firstname") as string + " " + formData.get("lastname") as string,
+      name: ((formData.get("firstname") as string) +
+        " " +
+        formData.get("lastname")) as string,
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     };

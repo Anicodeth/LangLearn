@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { Providers } from "@/providers/providers";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -16,9 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <QueryClientProvider client={new QueryClient()}>
-        <body className={inter.className}>{children}</body>
-      </QueryClientProvider>
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
+        <Toaster />
+      </body>
     </html>
   );
 }
