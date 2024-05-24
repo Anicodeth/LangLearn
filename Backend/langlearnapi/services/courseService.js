@@ -1,4 +1,5 @@
 const Course = require("../models/Course");
+const Slide = require("../models/Slide");
 
 exports.createCourse = async function (course) {
   try {
@@ -53,6 +54,45 @@ exports.deleteCourse = async function (id) {
 exports.getCourseByTitle = async function (title) {
   try {
     const course = await Course.findOne({ courseTitle: title });
+    return course;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.addSlidesToCourse = async function (courseId, slides) {
+  try {
+    const course = await Course.findById(courseId);
+    slides.forEach((slide) => {
+      let slideObj = new Slide(slide);
+      course.slides.push(slideObj);
+      slideObj.save();
+    });
+    await course.save();
+    return course;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.addSlideToCourse = async function (courseId, slide) {
+  try {
+    const course = await Course.findById(courseId);
+    let slideObj = new Slide(slide);
+    course.slides.push(slideObj);
+    await slideObj.save();
+    await course.save();
+    return course;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.removeSlideFromCourse = async function (courseId, slideId) {
+  try {
+    const course = await Course.findById(courseId);
+    course.slides.pull(slideId);
+    await course.save();
     return course;
   } catch (error) {
     throw error;
