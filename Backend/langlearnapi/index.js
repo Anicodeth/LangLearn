@@ -40,12 +40,14 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const userRoutes = require("./routes/userRoutes");
 const aiRoutes = require('./routes/aiRoutes');
 const authRoutes = require('./routes/authRoutes');
+const languageRoutes = require('./routes/languageRoutes');
 
 // Route definitions
 VERSION = "v1";
 app.use(`/api/${VERSION}/users`, userRoutes);
 app.use(`/api/${VERSION}/ai`, aiRoutes);
 app.use(`/api/${VERSION}/auth`, authRoutes);
+app.use(`/api/${VERSION}/languages`, languageRoutes);
 
 app.listen(4000, () => {
   console.log("Connected");
