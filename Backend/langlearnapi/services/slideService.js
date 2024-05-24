@@ -1,4 +1,4 @@
-const Slide  = require ('../models/Slide');
+const Slide  = require('../models/Slide');
 
 exports.createSlide = async function(slide){
     try {
