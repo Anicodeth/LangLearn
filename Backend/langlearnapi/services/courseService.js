@@ -91,7 +91,9 @@ exports.addSlideToCourse = async function (courseId, slide) {
 exports.removeSlideFromCourse = async function (courseId, slideId) {
   try {
     const course = await Course.findById(courseId);
-    course.slides.pull(slideId);
+
+    course.slides.filter((slide) => slide.toString() !== slideId);
+
     await course.save();
     return course;
   } catch (error) {
@@ -102,6 +104,9 @@ exports.removeSlideFromCourse = async function (courseId, slideId) {
 exports.getCourseSlides = async function (courseId) {
   try {
     const course = await Course.findById(courseId);
+    if (!course) {
+      throw new Error("Course not found");
+    }
     const slides = await Promise.all(
       course.slides.map(async (slideId) => {
         return await Slide.findById(slideId.toString());
