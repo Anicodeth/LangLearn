@@ -96,7 +96,7 @@ exports.removeSlideFromCourse = async function (courseId, slideId) {
 
     course.slides = course.slides.filter((id) => id.toString() !== slideId);
     await course.save();
-    return course;
+    return { message: "Slide removed from course" };
   } catch (error) {
     throw error;
   }
