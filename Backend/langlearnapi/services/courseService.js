@@ -98,3 +98,18 @@ exports.removeSlideFromCourse = async function (courseId, slideId) {
     throw error;
   }
 };
+
+exports.getCourseSlides = async function (courseId) {
+  try {
+    const course = await Course.findById(courseId);
+    const slides = await Promise.all(
+      course.slides.map(async (slideId) => {
+        return await Slide.findById(slideId.toString());
+      })
+    );
+
+    return slides;
+  } catch (error) {
+    throw error;
+  }
+};
