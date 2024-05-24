@@ -49,4 +49,17 @@ exports.deleteLanguage = async function (id) {
     throw error;
   }
 };
+
+exports.addCourseToLanguage = async function (id, course) {
+   try{
+    const language = await Language.findById(id);
+    language.courses.push(course);
+    await language.save();
+    return language;
+   }
+   catch(error){
+    throw error
+   }
+
+}
 // Path: LangLearn/Backend/langlearnapi/services/languageService.js
