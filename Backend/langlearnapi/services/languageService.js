@@ -43,7 +43,6 @@ exports.updateLanguage = async function (id, language) {
 exports.deleteLanguage = async function (id) {
   try {
     const language = await Language.findByIdAndDelete(id);
-    await language.save();
     return language;
   } catch (error) {
     throw error;
