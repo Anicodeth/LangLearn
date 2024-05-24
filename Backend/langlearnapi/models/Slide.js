@@ -27,6 +27,9 @@ const slideSchema = new mongoose.Schema({
     slideQuestion: {
         type: String,
     },
+    slideChoices: {
+        type: String,
+    },
     slideCorrectAnswer: {
         type: String,
     },
