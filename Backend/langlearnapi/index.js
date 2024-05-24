@@ -38,10 +38,11 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Route imports
 const userRoutes = require("./routes/userRoutes");
-const aiRoutes = require('./routes/aiRoutes');
-const authRoutes = require('./routes/authRoutes');
-const languageRoutes = require('./routes/languageRoutes');
-const courseRoutes = require('./routes/courseRoutes');
+const aiRoutes = require("./routes/aiRoutes");
+const authRoutes = require("./routes/authRoutes");
+const languageRoutes = require("./routes/languageRoutes");
+const courseRoutes = require("./routes/courseRoutes");
+const slideRoutes = require("./routes/slideRoutes");
 
 // Route definitions
 VERSION = "v1";
@@ -50,6 +51,7 @@ app.use(`/api/${VERSION}/ai`, aiRoutes);
 app.use(`/api/${VERSION}/auth`, authRoutes);
 app.use(`/api/${VERSION}/languages`, languageRoutes);
 app.use(`/api/${VERSION}/courses`, courseRoutes);
+app.use(`/api/${VERSION}/slides`, slideRoutes);
 
 app.listen(4000, () => {
   console.log("Connected");
