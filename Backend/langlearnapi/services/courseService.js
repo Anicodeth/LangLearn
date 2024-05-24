@@ -92,8 +92,9 @@ exports.removeSlideFromCourse = async function (courseId, slideId) {
   try {
     const course = await Course.findById(courseId);
 
-    course.slides.filter((slide) => slide.toString() !== slideId);
+    await Slide.findByIdAndDelete(slideId);
 
+    course.slides = course.slides.filter((id) => id.toString() !== slideId);
     await course.save();
     return course;
   } catch (error) {

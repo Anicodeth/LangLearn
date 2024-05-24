@@ -82,7 +82,7 @@ exports.removeSlideFromCourse = async function (req, res) {
   try {
     const course = await courseService.removeSlideFromCourse(
       req.params.id,
-      req.body.slideId
+      req.params.slideId
     );
     return res.status(200).json(course);
   } catch (error) {
