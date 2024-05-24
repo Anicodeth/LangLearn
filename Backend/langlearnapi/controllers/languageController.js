@@ -52,10 +52,33 @@ exports.addCourseToLanguage = async function (req, res) {
   try {
     const language = await languageService.addCourseToLanguage(
       req.params.id,
-      req.body.course
+      req.body
     );
     return res.status(200).json(language);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
+
+exports.removeCourseFromLanguage = async function (req, res) {
+  try {
+    const language = await languageService.removeCourseFromLanguage(
+      req.params.id,
+      req.body.courseId
+    );
+    return res.status(200).json(language);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+exports.getLanguageCourses = async function (req, res) {
+  try {
+    const courses = await languageService.getLanguageCourses(req.params.id);
+    return res.status(200).json(courses);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+// Path: LangLearn/Backend/langlearnapi/services/languageService.js
