@@ -218,7 +218,7 @@
 
 /**
  * @swagger
- * /api/v1/courses/{id}/slides:
+ * /api/v1/courses/{id}/slide:
  *   post:
  *     summary: Add a slide to a course
  *     tags: [Courses]
@@ -247,20 +247,114 @@
  *       200:
  *         description: The slide was successfully added to the course
  *       400:
- *        description: Bad request
- *      404:
- *       description: Course or slide not found
+ *         description: Bad request
+ *       404:
+ *         description: Course or slide not found
  */
 
-router.get("/", courseController.getAllCourses);
+/**
+ * @swagger
+ * /api/v1/courses/{id}/slides:
+ *   post:
+ *     summary: Add multiple slides to a course
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The course ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               slideIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   description: The ID of a slide to add
+ *             required:
+ *               - slideIds
+ *             example:
+ *               slideIds: ["60d0fe4f5311236168a109cb", "60d0fe4f5311236168a109cc"]
+ *     responses:
+ *       200:
+ *         description: The slides were successfully added to the course
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Course or slides not found
+ */
+
+/**
+ * @swagger
+ * /api/v1/courses/{id}/slides/{slideId}:
+ *   delete:
+ *     summary: Remove a slide from a course
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The course ID
+ *       - in: path
+ *         name: slideId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the slide to remove
+ *     responses:
+ *       200:
+ *         description: The slide was successfully removed from the course
+ *       404:
+ *         description: Course or slide not found
+ */
+
+/**
+ * @swagger
+ * /api/v1/courses/{id}/slides:
+ *   get:
+ *     summary: Get all slides of a course
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The course ID
+ *     responses:
+ *       200:
+ *         description: A list of slides in the course
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/SlideResponse'
+ *       404:
+ *         description: Course not found
+ */
+
+const express = require("express");
+const router = express.Router();
+const courseController = require("../controllers/courseController");
+
+router.get("/", courseController.getCourses);
 router.post("/", courseController.createCourse);
 router.get("/:id", courseController.getCourse);
 router.put("/:id", courseController.updateCourse);
 router.delete("/:id", courseController.deleteCourse);
 router.get("/title/:title", courseController.getCourseByTitle);
 router.post("/:id/slide", courseController.addSlideToCourse);
-router.post("/:id/slides", courseController.addSlideToCourse);
+router.post("/:id/slides", courseController.addSlidesToCourse);
 router.delete("/:id/slides/:slideId", courseController.removeSlideFromCourse);
-router.get("/:id/slides", courseController.getSlidesForCourse);
+router.get("/:id/slides", courseController.getCourseSlides);
 
 module.exports = router;

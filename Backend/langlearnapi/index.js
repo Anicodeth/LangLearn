@@ -41,6 +41,7 @@ const userRoutes = require("./routes/userRoutes");
 const aiRoutes = require('./routes/aiRoutes');
 const authRoutes = require('./routes/authRoutes');
 const languageRoutes = require('./routes/languageRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 
 // Route definitions
 VERSION = "v1";
@@ -48,6 +49,7 @@ app.use(`/api/${VERSION}/users`, userRoutes);
 app.use(`/api/${VERSION}/ai`, aiRoutes);
 app.use(`/api/${VERSION}/auth`, authRoutes);
 app.use(`/api/${VERSION}/languages`, languageRoutes);
+app.use(`/api/${VERSION}/courses`, courseRoutes);
 
 app.listen(4000, () => {
   console.log("Connected");

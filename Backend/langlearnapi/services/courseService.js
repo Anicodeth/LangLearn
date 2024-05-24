@@ -82,7 +82,7 @@ exports.addSlideToCourse = async function (courseId, slide) {
     course.slides.push(slideObj);
     await slideObj.save();
     await course.save();
-    return course;
+    return { message: "Slide added successfully" };
   } catch (error) {
     throw error;
   }
