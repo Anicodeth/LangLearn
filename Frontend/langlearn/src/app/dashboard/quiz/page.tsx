@@ -32,25 +32,6 @@ import {
 } from "@/components/ui/select";
 import { getQuiz } from "@/service/aiService";
 
-const questions = [
-  {
-    question: "How do you say 'hello' in Spanish?",
-    choices: ["Adios", "Grasias", "Hola", "Amigos"],
-    answer: "Hola",
-  },
-  {
-    question: "How do you say 'hello' in Spanish?",
-    choices: ["Adios", "Grasias", "Hola", "Amigos"],
-    answer: "Hola",
-  },
-  {
-    question: "How do you say 'hello' in Spanish?",
-    choices: ["Adios", "Grasias", "Hola", "Amigos"],
-    answer: "Hola",
-  },
-  // Add more questions here
-];
-
 const languages = [
   "Amharic",
   "English",
@@ -135,36 +116,38 @@ export default function Quiz() {
 
 function Questions({ language, difficulty }: any) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState(Array(questions.length).fill(null));
-  const { data, isLoading, error } = useQuery("quiz", () =>
-    getQuiz(language, difficulty),
+  const [answers, setAnswers] = useState(Array(10).fill(null));
+
+  const { data, isLoading, error } = useQuery(
+    "quiz",
+    () => getQuiz(language, difficulty),
     {
       onSuccess: (data) => {
         console.log(data);
       },
       onError: (error) => {
         console.log(error);
-      }
+      },
     }
   );
 
   if (isLoading) {
-    return <Bars
-  height="80"
-  width="80"
-  color="#000000"
-  ariaLabel="bars-loading"
-  wrapperStyle={{}}
-  wrapperClass=""
-  visible={true}
-  />;
+    return (
+      <Bars
+        height="80"
+        width="80"
+        color="#000000"
+        ariaLabel="bars-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
+    );
   }
 
   if (error) {
     return <div>Error</div>;
   }
-
-  
 
   const handleAnswer = (index: any, answer: any) => {
     const newAnswers = [...answers];
@@ -176,14 +159,14 @@ function Questions({ language, difficulty }: any) {
     <div className="w-full p-0 h-full flex flex-col items-center justify-center">
       <Carousel className="w-1/2">
         <CarouselContent>
-          {data.map((q:any, index:number) => (
+          {data.map((q: any, index: number) => (
             <CarouselItem key={index}>
               <div>
                 <h1 className="flex justify-center items-center font-bold">
                   {q.question}
                 </h1>
                 <div className="flex flex-col justify-center items-center ">
-                  {q.choices.map((choice:string, choiceIndex:number) => (
+                  {q.choices.map((choice: string, choiceIndex: number) => (
                     <Button
                       key={choiceIndex}
                       className={`mb-1 h-10 p-4 mt-1 w-full ${answers[index] === choice ? "bg-blue-500" : ""}`}
@@ -200,8 +183,8 @@ function Questions({ language, difficulty }: any) {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <div className="flex justify-center mt-4">
-        {questions.map((_, index) => (
+      <div className="flex w-full justify-center mt-4">
+        {data.map((_, index) => (
           <div
             key={index}
             className={`h-4 w-4 rounded-full mx-2 ${answers[index] ? "bg-green-500" : "bg-gray-300"}`}
