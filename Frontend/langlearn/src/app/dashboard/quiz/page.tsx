@@ -20,8 +20,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Bars } from "react-loader-spinner";
+
 import {
   Select,
   SelectContent,
@@ -35,17 +36,17 @@ const questions = [
   {
     question: "How do you say 'hello' in Spanish?",
     choices: ["Adios", "Grasias", "Hola", "Amigos"],
-    correct: "Hola",
+    answer: "Hola",
   },
   {
     question: "How do you say 'hello' in Spanish?",
     choices: ["Adios", "Grasias", "Hola", "Amigos"],
-    correct: "Hola",
+    answer: "Hola",
   },
   {
     question: "How do you say 'hello' in Spanish?",
     choices: ["Adios", "Grasias", "Hola", "Amigos"],
-    correct: "Hola",
+    answer: "Hola",
   },
   // Add more questions here
 ];
@@ -136,8 +137,34 @@ function Questions({ language, difficulty }: any) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
   const { data, isLoading, error } = useQuery("quiz", () =>
-    getQuiz(language, difficulty)
+    getQuiz(language, difficulty),
+    {
+      onSuccess: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    }
   );
+
+  if (isLoading) {
+    return <Bars
+  height="80"
+  width="80"
+  color="#000000"
+  ariaLabel="bars-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  visible={true}
+  />;
+  }
+
+  if (error) {
+    return <div>Error</div>;
+  }
+
+  
 
   const handleAnswer = (index: any, answer: any) => {
     const newAnswers = [...answers];
@@ -149,14 +176,14 @@ function Questions({ language, difficulty }: any) {
     <div className="w-full p-0 h-full flex flex-col items-center justify-center">
       <Carousel className="w-1/2">
         <CarouselContent>
-          {questions.map((q, index) => (
+          {data.map((q:any, index:number) => (
             <CarouselItem key={index}>
               <div>
                 <h1 className="flex justify-center items-center font-bold">
                   {q.question}
                 </h1>
                 <div className="flex flex-col justify-center items-center ">
-                  {q.choices.map((choice, choiceIndex) => (
+                  {q.choices.map((choice:string, choiceIndex:number) => (
                     <Button
                       key={choiceIndex}
                       className={`mb-1 h-10 p-4 mt-1 w-full ${answers[index] === choice ? "bg-blue-500" : ""}`}

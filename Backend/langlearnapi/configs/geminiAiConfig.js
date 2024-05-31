@@ -15,6 +15,7 @@ const generationConfig = {
   topK: 1,
   topP: 1,
   maxOutputTokens: 2048,
+  response_mime_type: "text/plain",
 };
 
 const safetySettings = [
