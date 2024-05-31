@@ -29,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getQuiz } from "@/service/aiService";
 
 const questions = [
   {
@@ -71,69 +72,72 @@ const dificulty = ["Easy", "Medium", "Hard"];
 export default function Quiz() {
   const [language, setLanguage] = useState("");
   const [difficulty, setDifficulty] = useState("");
-  
-  //use query 
-  const { data, isLoading,  error } = useQuery("quiz", async () => {});
+  const [started, setStarted] = useState(false);
 
   function handleStart() {
-    console.log("Start");
-    console.log(language, difficulty);
+    setStarted(true);
+  }
+  if (!started) {
+    return (
+      <Card className="w-[350px]">
+        <CardHeader>
+          <CardTitle>Quiz Time!</CardTitle>
+          <CardDescription>
+            Choose a language and difficulty to learn and test your knowledge.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form>
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="language">Language</Label>
+                <Select value={language} onValueChange={setLanguage}>
+                  <SelectTrigger id="language">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    {languages.map((lang: string, index: number) => (
+                      <SelectItem key={index} value={lang}>
+                        {lang}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>{" "}
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="difficulty">Difficulty</Label>
+                <Select value={difficulty} onValueChange={setDifficulty}>
+                  <SelectTrigger id="difficulty">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    {dificulty.map((diff: string, index: number) => (
+                      <SelectItem key={index} value={diff}>
+                        {diff}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button onClick={handleStart}>Start</Button>
+        </CardFooter>
+      </Card>
+    );
   }
 
-  return (
-    <Card className="w-[350px]">
-      <CardHeader>
-        <CardTitle>Quiz Time!</CardTitle>
-        <CardDescription>
-          Choose a language and difficulty to learn and test your knowledge.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="language">Language</Label>
-              <Select value={language} onValueChange={setLanguage}>
-                <SelectTrigger id="language">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  {languages.map((lang: string, index: number) => (
-                    <SelectItem key={index} value={lang}>
-                      {lang}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>{" "}
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="difficulty">Difficulty</Label>
-              <Select value={difficulty} onValueChange={setDifficulty}>
-                <SelectTrigger id="difficulty">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  {dificulty.map((diff: string, index: number) => (
-                    <SelectItem key={index} value={diff}>
-                      {diff}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button onClick={handleStart}>Start</Button>
-      </CardFooter>
-    </Card>
-  );
+  return <Questions language={language} difficulty={difficulty} />;
 }
 
-function Questions() {
+function Questions({ language, difficulty }: any) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+  const { data, isLoading, error } = useQuery("quiz", () =>
+    getQuiz(language, difficulty)
+  );
 
   const handleAnswer = (index: any, answer: any) => {
     const newAnswers = [...answers];
