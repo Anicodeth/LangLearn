@@ -184,7 +184,7 @@ function Questions({ language, difficulty }: any) {
         <CarouselNext />
       </Carousel>
       <div className="flex w-full justify-center mt-4">
-        {data.map((_, index) => (
+        {data.map((_:any, index:number) => (
           <div
             key={index}
             className={`h-4 w-4 rounded-full mx-2 ${answers[index] ? "bg-green-500" : "bg-gray-300"}`}
