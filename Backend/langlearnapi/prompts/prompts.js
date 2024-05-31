@@ -5,7 +5,14 @@ function quizPrompt(language, difficulty) {
   they must be multiple choice questions.
   the question is always english. the choices are the specified language.
   this are language learning questions.
-  return the answers too.`;
+  return the answers too.
+  return 10 questions.
+  return the questions in the following format:
+  [{
+    "question": "What is the capital of France?",
+    "choices": ["Paris", "London", "Berlin", "Madrid"],
+    "answer": "Paris"
+  }]`;
 }
 
 function chatPrompt(language, question) {
