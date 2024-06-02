@@ -380,7 +380,9 @@ function Result({ result, language, difficulty, setPage, userId }: any) {
           <p className="text-yellow-600">Good job! Keep practicing!</p>
         )}
         {result < 5 && (
-          <p className="text-red-600">Don't worry, practice makes perfect!</p>
+          <p className="text-red-600">
+            Don&apos;t worry, practice makes perfect!
+          </p>
         )}
       </CardContent>
       <CardFooter className="flex justify-between">
