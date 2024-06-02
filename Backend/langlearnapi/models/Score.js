@@ -5,7 +5,11 @@ const scoreSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    quizDetails: {
+    quizLanguage: {
+        type: String,
+        required: true,
+    },
+    quizDifficulty: {
         type: String,
         required: true,
     },

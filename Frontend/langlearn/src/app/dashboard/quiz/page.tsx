@@ -51,15 +51,20 @@ const languages = [
 
 const dificulty = ["Easy", "Medium", "Hard"];
 
+enum Page {
+  Selection = "Selection",
+  Quiz = "Quiz",
+  Result = "Result",
+}
+
 export default function Quiz() {
   const [language, setLanguage] = useState("");
   const [difficulty, setDifficulty] = useState("");
-  const [started, setStarted] = useState(false);
+  const [page, setPage] = useState(Page.Selection);
 
   function handleStart() {
-    setStarted(true);
-  }
-  if (!started) {
+    setPage(Page.Quiz);  }
+  if (page === Page.Selection) {
     return (
       <Card className="w-[350px]">
         <CardHeader>
@@ -111,7 +116,11 @@ export default function Quiz() {
     );
   }
 
-  return <Questions language={language} difficulty={difficulty} />;
+  else if (page === Page.Quiz) {
+      return <Questions language={language} difficulty={difficulty} />;  }
+
+  return <div>Result</div>;
+   
 }
 
 function Questions({ language, difficulty }: any) {
