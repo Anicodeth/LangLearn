@@ -20,7 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Bars } from "react-loader-spinner";
+import { Bars, Hourglass } from "react-loader-spinner";
 
 import {
   Select,
@@ -69,12 +69,11 @@ enum Page {
 export default function Quiz() {
   const [language, setLanguage] = useState("");
   const [difficulty, setDifficulty] = useState("");
-  const [page, setPage] = useState(Page.Selection);
+  const [page, setPage] = useState("");
   const [result, setResult] = useState(0);
 
   useEffect(() => {
     const storedPage = sessionStorage.getItem("page");
-    const storedAnswers = sessionStorage.getItem("answers");
 
     if (storedPage) {
       setPage(JSON.parse(storedPage));
@@ -83,10 +82,6 @@ export default function Quiz() {
 
   function handleStart() {
     setPage(Page.Quiz);
-  }
-
-  function handleQuit() {
-    setPage(Page.Selection);
   }
 
   if (page === Page.Selection) {
@@ -150,60 +145,74 @@ export default function Quiz() {
     );
   }
 
-  return <Result result={result} setPage={setPage} />;
+  else if (page === Page.Result){
+    return <Result result={result} setPage={setPage} />;
+  }
+
+  
+  return <Hourglass
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="hourglass-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      colors={["#18bbec", "#5dcff2"]}
+    />;
+
 }
 
 function Questions({ language, difficulty, setPage, setResult }: any) {
   const [answers, setAnswers] = useState(Array(10).fill(null));
   const [questions, setQuestions] = useState([]);
 
-  const sessionQuestion = sessionStorage.getItem("questions");
-  if (sessionQuestion) {
-    setQuestions(JSON.parse(sessionQuestion));
-  }
+
 
   const { data, isLoading, error } = useQuery(
     "quiz",
     () => getQuiz(language, difficulty),
     {
       enabled: !sessionStorage.getItem("questions"),
-
       onSuccess: (data) => {
         setQuestions(data);
+        sessionStorage.setItem("questions", JSON.stringify(data));
       },
       onError: (error) => {
         console.log(error);
       },
     }
+    
   );
 
   useEffect(() => {
     sessionStorage.setItem("page", JSON.stringify(Page.Quiz));
-    const questions = sessionStorage.getItem("questions");
-    if (questions) {
-      setAnswers(JSON.parse(questions));
-    }
+
     const storedAnswers = sessionStorage.getItem("answers");
     if (storedAnswers) {
       setAnswers(JSON.parse(storedAnswers));
     }
+        const questions = sessionStorage.getItem("questions");
+        if (questions) {
+          setQuestions(JSON.parse(questions));
+        }
+
   }, []);
 
   if (isLoading) {
     return (
-      <Bars
-        height="80"
-        width="80"
-        color="#000000"
-        ariaLabel="bars-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-        visible={true}
-      />
+<Hourglass
+      visible={true}
+      height="80"
+      width="80"
+      ariaLabel="hourglass-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      colors={["#18bbec", "#5dcff2"]}
+    />
+
     );
   }
 
-  sessionStorage.setItem("questions", JSON.stringify(data));
 
   if (error) {
     return <div>Error</div>;
@@ -260,7 +269,7 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
         <CarouselNext />
       </Carousel>
       <div className="flex w-full justify-center mt-4">
-        {data.map((_: any, index: number) => (
+        {questions.map((_: any, index: number) => (
           <div
             key={index}
             className={`h-4 w-4 rounded-full mx-2 ${answers[index] ? "bg-green-500" : "bg-gray-300"}`}
