@@ -51,9 +51,9 @@ exports.deleteScore = async function (id) {
   }
 };
 
-exports.addScoreToUser = async function (userId, score) {
+exports.addScoreToUser = async function (userId, scoreData) {
   try {
-    const score = await Score(score);
+    const score = await Score(scoreData);
     const user = await User.findById(userId);
     if (!score) {
       throw new Error("Score not found");
@@ -62,8 +62,7 @@ exports.addScoreToUser = async function (userId, score) {
     user.scores.push(score);
     await user.save();
     return user;
-  }
-  catch (error) {
+  } catch (error) {
     throw error;
   }
 };

@@ -242,7 +242,7 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
 
   const handleResult = () => {
     let score = 0;
-    data.forEach((q: any, index: number) => {
+    questions.forEach((q: any, index: number) => {
       if (q.answer === answers[index]) {
         score++;
       }
