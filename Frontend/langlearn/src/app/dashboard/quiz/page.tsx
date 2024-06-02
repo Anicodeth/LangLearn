@@ -187,7 +187,7 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
   const [answers, setAnswers] = useState(Array(10).fill(null));
   const [questions, setQuestions] = useState([]);
 
-  const { data, isLoading, error } = useQuery(
+  const { isLoading, error } = useQuery(
     "quiz",
     () => getQuiz(language, difficulty),
     {
@@ -215,7 +215,7 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
     }
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !questions.length) {
     return (
       <Hourglass
         visible={true}
@@ -348,13 +348,11 @@ function Result({ result, language, difficulty, setPage, userId }: any) {
     }
   );
 
-  const router = useRouter();
-
   const handleRetake = () => {
-    setPage(Page.Selection);
     sessionStorage.removeItem("answers");
     sessionStorage.setItem("page", JSON.stringify(Page.Selection));
-    router.push("/dashboard/quiz");
+    sessionStorage.removeItem("questions");
+    setPage(Page.Selection);
   };
 
   useEffect(() => {
