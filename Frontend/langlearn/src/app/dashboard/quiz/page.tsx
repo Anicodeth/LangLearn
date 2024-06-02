@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import {
   Carousel,
@@ -67,10 +67,20 @@ enum Page {
 }
 
 export default function Quiz() {
+
   const [language, setLanguage] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [page, setPage] = useState(Page.Selection);
   const [result, setResult] = useState(0);
+
+  useEffect(() => {
+    const storedPage = sessionStorage.getItem("page");
+    const storedAnswers = sessionStorage.getItem("answers");
+
+    if (storedPage) {
+      setPage(JSON.parse(storedPage));
+    }
+  }, []);
 
   function handleStart() {
     setPage(Page.Quiz);
@@ -160,6 +170,14 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
     }
   );
 
+  useEffect(() => {
+    sessionStorage.setItem("page", JSON.stringify(Page.Quiz));
+    const storedAnswers = sessionStorage.getItem("answers");
+    if (storedAnswers) {
+      setAnswers(JSON.parse(storedAnswers));
+    }
+  }, []);
+
   if (isLoading) {
     return (
       <Bars
@@ -182,6 +200,8 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
     const newAnswers = [...answers];
     newAnswers[index] = answer;
     setAnswers(newAnswers);
+
+    sessionStorage.setItem("answers", JSON.stringify(newAnswers));
   };
 
   const handleResult = () => {
@@ -194,7 +214,8 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
 
     setPage(Page.Result);
     setResult(score);
-    alert(`Your score is ${score}`);
+
+    sessionStorage.setItem("page", JSON.stringify(Page.Result));
   };
 
   return (
@@ -271,6 +292,8 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
 function Result({ result, setPage }: any) {
   const handleRetake = () => {
     setPage(Page.Selection);
+    sessionStorage.removeItem("answers");
+    sessionStorage.setItem("page", JSON.stringify(Page.Selection));
   };
 
   return (
