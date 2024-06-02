@@ -348,10 +348,13 @@ function Result({ result, language, difficulty, setPage, userId }: any) {
     }
   );
 
+  const router = useRouter();
+
   const handleRetake = () => {
     setPage(Page.Selection);
     sessionStorage.removeItem("answers");
     sessionStorage.setItem("page", JSON.stringify(Page.Selection));
+    router.push("/dashboard/quiz");
   };
 
   useEffect(() => {
