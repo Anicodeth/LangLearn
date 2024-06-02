@@ -330,6 +330,24 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
 }
 
 function Result({ result, language, difficulty, setPage, userId }: any) {
+  const scoreMutation = useMutation(
+    () =>
+      addScoreToUser(
+        {
+          userId,
+          quizLanguage: language,
+          quizDifficulty: difficulty,
+          score: result,
+        },
+        userId
+      ),
+    {
+      onSuccess: () => {
+        toast("Score added successfully");
+      },
+    }
+  );
+
   const handleRetake = () => {
     setPage(Page.Selection);
     sessionStorage.removeItem("answers");
@@ -339,6 +357,7 @@ function Result({ result, language, difficulty, setPage, userId }: any) {
   useEffect(() => {
     sessionStorage.removeItem("answers");
     sessionStorage.removeItem("questions");
+    scoreMutation.mutate();
 
     const storedResult = sessionStorage.getItem("result");
     if (storedResult) {
