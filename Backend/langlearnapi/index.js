@@ -43,6 +43,7 @@ const authRoutes = require("./routes/authRoutes");
 const languageRoutes = require("./routes/languageRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const slideRoutes = require("./routes/slideRoutes");
+const scoreRoutes = require("./routes/scoreRoutes");
 
 // Route definitions
 VERSION = "v1";
@@ -52,6 +53,7 @@ app.use(`/api/${VERSION}/auth`, authRoutes);
 app.use(`/api/${VERSION}/languages`, languageRoutes);
 app.use(`/api/${VERSION}/courses`, courseRoutes);
 app.use(`/api/${VERSION}/slides`, slideRoutes);
+app.use(`/api/${VERSION}/scores`, scoreRoutes);
 
 app.listen(4000, () => {
   console.log("Connected");
