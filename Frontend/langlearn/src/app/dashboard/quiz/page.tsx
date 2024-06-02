@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useQuery } from "react-query";
 import {
   Carousel,
@@ -31,6 +30,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getQuiz } from "@/service/aiService";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
+
 
 const languages = [
   "Amharic",
@@ -65,6 +75,10 @@ export default function Quiz() {
 
   function handleStart() {
     setPage(Page.Quiz);  }
+
+  function handleQuit() {
+    setPage(Page.Selection);  }
+
   if (page === Page.Selection) {
     return (
       <Card className="w-[350px]">
@@ -112,6 +126,7 @@ export default function Quiz() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button onClick={handleStart}>Start</Button>
+
         </CardFooter>
       </Card>
     );
@@ -208,14 +223,38 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
         <CarouselNext />
       </Carousel>
       <div className="flex w-full justify-center mt-4">
-        {data.map((_:any, index:number) => (
+        {data.map((_: any, index: number) => (
           <div
             key={index}
             className={`h-4 w-4 rounded-full mx-2 ${answers[index] ? "bg-green-500" : "bg-gray-300"}`}
           />
         ))}
       </div>
-      <Button className="bg-[#0c5e76] mt-4" onClick={handleResult}>Submit</Button>
+      <Button className="bg-[#0c5e76] mt-4 mb-4" onClick={handleResult}>
+        Submit
+      </Button>
+      <Dialog>
+        <DialogTrigger><Button>Quit</Button></DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              progress so far on this quiz.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogClose asChild>
+            <Button type="button">
+              Cancel
+            </Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button onClick={()=>{setPage(Page.Selection)}} type="button" variant="destructive">
+              Yes
+            </Button>
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
