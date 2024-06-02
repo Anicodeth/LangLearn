@@ -59,7 +59,7 @@ exports.addScoreToUser = async function (userId, scoreData) {
       throw new Error("Score not found");
     }
     await score.save();
-    user.scores.push(score);
+    user.quizzes.push(score);
     await user.save();
     return user;
   } catch (error) {
