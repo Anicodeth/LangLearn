@@ -1,4 +1,5 @@
 const Score = require("../models/Score");
+const User = require("../models/User");
 
 exports.createScore = async function (score) {
   try {
@@ -46,6 +47,23 @@ exports.deleteScore = async function (id) {
     await score.save();
     return score;
   } catch (error) {
+    throw error;
+  }
+};
+
+exports.addScoreToUser = async function (userId, score) {
+  try {
+    const score = await Score(score);
+    const user = await User.findById(userId);
+    if (!score) {
+      throw new Error("Score not found");
+    }
+    await score.save();
+    user.scores.push(score);
+    await user.save();
+    return user;
+  }
+  catch (error) {
     throw error;
   }
 };
