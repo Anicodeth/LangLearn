@@ -115,7 +115,6 @@ export default function Quiz() {
 }
 
 function Questions({ language, difficulty }: any) {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState(Array(10).fill(null));
 
   const { data, isLoading, error } = useQuery(
@@ -155,6 +154,17 @@ function Questions({ language, difficulty }: any) {
     setAnswers(newAnswers);
   };
 
+  const handleResult = () => {
+    let score = 0;
+    data.forEach((q: any, index: number) => {
+      if (q.answer === answers[index]) {
+        score++;
+      }
+    });
+    alert(`Your score is ${score}`);
+  }
+
+
   return (
     <div className="w-full p-0 h-full flex flex-col items-center justify-center">
       <Carousel className="w-1/2">
@@ -191,7 +201,7 @@ function Questions({ language, difficulty }: any) {
           />
         ))}
       </div>
-      <Button className="bg-[#0c5e76] mt-4">Submit</Button>
+      <Button className="bg-[#0c5e76] mt-4" onClick={handleResult}>Submit</Button>
     </div>
   );
 }
