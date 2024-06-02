@@ -15,10 +15,9 @@ import { useRouter } from 'next/navigation'
 
 export default function SignIn() {
   const router = useRouter();
-  const { data, mutate, isLoading } = useMutation(signIn, {
+  const {  mutate, isLoading } = useMutation(signIn, {
     onSuccess: () => {
       toast("Login successful");
-
       router.push("/dashboard");
 
     },
