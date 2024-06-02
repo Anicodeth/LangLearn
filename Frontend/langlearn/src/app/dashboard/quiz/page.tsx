@@ -41,7 +41,6 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
-
 const languages = [
   "Amharic",
   "English",
@@ -74,10 +73,12 @@ export default function Quiz() {
   const [result, setResult] = useState(0);
 
   function handleStart() {
-    setPage(Page.Quiz);  }
+    setPage(Page.Quiz);
+  }
 
   function handleQuit() {
-    setPage(Page.Selection);  }
+    setPage(Page.Selection);
+  }
 
   if (page === Page.Selection) {
     return (
@@ -126,17 +127,21 @@ export default function Quiz() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button onClick={handleStart}>Start</Button>
-
         </CardFooter>
       </Card>
     );
+  } else if (page === Page.Quiz) {
+    return (
+      <Questions
+        language={language}
+        difficulty={difficulty}
+        setPage={setPage}
+        setResult={setResult}
+      />
+    );
   }
 
-  else if (page === Page.Quiz) {
-      return <Questions language={language} difficulty={difficulty} setPage={setPage} setResult={setResult} />;  }
-
   return <Result result={result} setPage={setPage} />;
-   
 }
 
 function Questions({ language, difficulty, setPage, setResult }: any) {
@@ -188,11 +193,9 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
     });
 
     setPage(Page.Result);
-    setResult(score)
+    setResult(score);
     alert(`Your score is ${score}`);
-    
-  }
-
+  };
 
   return (
     <div className="w-full p-0 h-full flex flex-col items-center justify-center">
@@ -230,11 +233,13 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
           />
         ))}
       </div>
-      <Button className="bg-[#0c5e76] mt-4 mb-4" onClick={handleResult}>
+      <Button className="bg-[#0c5e76] w-20 mt-4 mb-4" onClick={handleResult}>
         Submit
       </Button>
       <Dialog>
-        <DialogTrigger><Button>Quit</Button></DialogTrigger>
+        <DialogTrigger>
+          <Button className="bg-[#0c5e76] w-20">Quit</Button>
+        </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -244,12 +249,16 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
             </DialogDescription>
           </DialogHeader>
           <DialogClose asChild>
-            <Button type="button">
-              Cancel
-            </Button>
+            <Button type="button">Cancel</Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button onClick={()=>{setPage(Page.Selection)}} type="button" variant="destructive">
+            <Button
+              onClick={() => {
+                setPage(Page.Selection);
+              }}
+              type="button"
+              variant="destructive"
+            >
               Yes
             </Button>
           </DialogClose>
@@ -258,7 +267,6 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
     </div>
   );
 }
-
 
 function Result({ result, setPage }: any) {
   const handleRetake = () => {
