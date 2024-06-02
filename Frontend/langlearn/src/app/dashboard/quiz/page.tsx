@@ -67,7 +67,6 @@ enum Page {
 }
 
 export default function Quiz() {
-
   const [language, setLanguage] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [page, setPage] = useState(Page.Selection);
@@ -156,13 +155,21 @@ export default function Quiz() {
 
 function Questions({ language, difficulty, setPage, setResult }: any) {
   const [answers, setAnswers] = useState(Array(10).fill(null));
+  const [questions, setQuestions] = useState([]);
+
+  const sessionQuestion = sessionStorage.getItem("questions");
+  if (sessionQuestion) {
+    setQuestions(JSON.parse(sessionQuestion));
+  }
 
   const { data, isLoading, error } = useQuery(
     "quiz",
     () => getQuiz(language, difficulty),
     {
+      enabled: !sessionStorage.getItem("questions"),
+
       onSuccess: (data) => {
-        console.log(data);
+        setQuestions(data);
       },
       onError: (error) => {
         console.log(error);
@@ -172,6 +179,10 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
 
   useEffect(() => {
     sessionStorage.setItem("page", JSON.stringify(Page.Quiz));
+    const questions = sessionStorage.getItem("questions");
+    if (questions) {
+      setAnswers(JSON.parse(questions));
+    }
     const storedAnswers = sessionStorage.getItem("answers");
     if (storedAnswers) {
       setAnswers(JSON.parse(storedAnswers));
@@ -191,6 +202,8 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
       />
     );
   }
+
+  sessionStorage.setItem("questions", JSON.stringify(data));
 
   if (error) {
     return <div>Error</div>;
@@ -222,7 +235,7 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
     <div className="w-full p-0 h-full flex flex-col items-center justify-center">
       <Carousel className="w-1/2">
         <CarouselContent>
-          {data.map((q: any, index: number) => (
+          {questions.map((q: any, index: number) => (
             <CarouselItem key={index}>
               <div>
                 <h1 className="flex justify-center items-center font-bold">
