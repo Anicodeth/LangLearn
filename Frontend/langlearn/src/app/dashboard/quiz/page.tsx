@@ -61,6 +61,7 @@ export default function Quiz() {
   const [language, setLanguage] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [page, setPage] = useState(Page.Selection);
+  const [result, setResult] = useState(0);
 
   function handleStart() {
     setPage(Page.Quiz);  }
@@ -117,13 +118,13 @@ export default function Quiz() {
   }
 
   else if (page === Page.Quiz) {
-      return <Questions language={language} difficulty={difficulty} />;  }
+      return <Questions language={language} difficulty={difficulty} setPage={setPage} setResult={setResult} />;  }
 
-  return <div>Result</div>;
+  return <Result result={result} setPage={setPage} />;
    
 }
 
-function Questions({ language, difficulty }: any) {
+function Questions({ language, difficulty, setPage, setResult }: any) {
   const [answers, setAnswers] = useState(Array(10).fill(null));
 
   const { data, isLoading, error } = useQuery(
@@ -170,7 +171,11 @@ function Questions({ language, difficulty }: any) {
         score++;
       }
     });
+
+    setPage(Page.Result);
+    setResult(score)
     alert(`Your score is ${score}`);
+    
   }
 
 
@@ -212,5 +217,35 @@ function Questions({ language, difficulty }: any) {
       </div>
       <Button className="bg-[#0c5e76] mt-4" onClick={handleResult}>Submit</Button>
     </div>
+  );
+}
+
+
+function Result({ result, setPage }: any) {
+  const handleRetake = () => {
+    setPage(Page.Selection);
+  };
+
+  return (
+    <Card className="w-[350px]">
+      <CardHeader>
+        <CardTitle>Quiz Result</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-lg font-semibold">Your Score: {result}</p>
+        {result >= 8 && (
+          <p className="text-green-600">Excellent! You did great!</p>
+        )}
+        {result >= 5 && result < 8 && (
+          <p className="text-yellow-600">Good job! Keep practicing!</p>
+        )}
+        {result < 5 && (
+          <p className="text-red-600">Don't worry, practice makes perfect!</p>
+        )}
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Button onClick={handleRetake}>Retake Quiz</Button>
+      </CardFooter>
+    </Card>
   );
 }
