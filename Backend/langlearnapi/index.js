@@ -32,7 +32,7 @@ const swaggerSpec = swaggerJsdoc({
       description: "Langlearn 1.0 API documentation",
     },
   },
-  apis: ["./routes/*.js"], // Specify the file(s) where JSDoc annotations are present
+  apis: ["./routes/*.js"], 
 });
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

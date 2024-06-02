@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import {
   Carousel,
   CarouselContent,
@@ -9,6 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import * as React from "react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -41,6 +42,8 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
+import { addScoreToUser } from "@/service/scoreService";
+
 const languages = [
   "Amharic",
   "English",
@@ -71,12 +74,21 @@ export default function Quiz() {
   const [difficulty, setDifficulty] = useState("");
   const [page, setPage] = useState("");
   const [result, setResult] = useState(0);
+  const [user, setUser] = useState<any>({});
+  const router = useRouter();
 
   useEffect(() => {
     const storedPage = sessionStorage.getItem("page");
 
     if (storedPage) {
       setPage(JSON.parse(storedPage));
+    }
+
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      router.push("/auth/signin");
     }
   }, []);
 
@@ -147,7 +159,15 @@ export default function Quiz() {
       />
     );
   } else if (page === Page.Result) {
-    return <Result result={result} setPage={setPage} />;
+    return (
+      <Result
+        result={result}
+        setPage={setPage}
+        userId={user._id}
+        language={language}
+        difficulty={difficulty}
+      />
+    );
   }
 
   return (
@@ -309,7 +329,7 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
   );
 }
 
-function Result({ result, setPage }: any) {
+function Result({ result, language, difficulty, setPage, userId }: any) {
   const handleRetake = () => {
     setPage(Page.Selection);
     sessionStorage.removeItem("answers");
@@ -324,7 +344,6 @@ function Result({ result, setPage }: any) {
     if (storedResult) {
       setPage(Page.Result);
     }
-    
   }, []);
 
   return (
