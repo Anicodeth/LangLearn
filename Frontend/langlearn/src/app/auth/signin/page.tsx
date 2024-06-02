@@ -9,11 +9,18 @@ import Link from "next/link";
 import { useMutation } from "react-query";
 import { signIn } from "@/service/authService";
 import { toast } from "sonner";
+import { useRouter } from 'next/navigation'
+ 
+ 
 
 export default function SignIn() {
-  const { mutate, isLoading } = useMutation(signIn, {
+  const router = useRouter();
+  const { data, mutate, isLoading } = useMutation(signIn, {
     onSuccess: () => {
       toast("Login successful");
+
+      router.push("/dashboard");
+
     },
     onError: (error: any) => {
       toast(error.response.data.error);

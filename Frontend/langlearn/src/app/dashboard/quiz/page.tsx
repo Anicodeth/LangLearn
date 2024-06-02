@@ -20,8 +20,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Bars, Hourglass } from "react-loader-spinner";
-
+import { Hourglass } from "react-loader-spinner";
+import { toast } from "sonner";
 import {
   Select,
   SelectContent,
@@ -82,6 +82,9 @@ export default function Quiz() {
 
   function handleStart() {
     setPage(Page.Quiz);
+    sessionStorage.setItem("page", JSON.stringify(Page.Quiz));
+    sessionStorage.removeItem("answers");
+    sessionStorage.removeItem("questions");
   }
 
   if (page === Page.Selection) {
@@ -143,14 +146,12 @@ export default function Quiz() {
         setResult={setResult}
       />
     );
-  }
-
-  else if (page === Page.Result){
+  } else if (page === Page.Result) {
     return <Result result={result} setPage={setPage} />;
   }
 
-  
-  return <Hourglass
+  return (
+    <Hourglass
       visible={true}
       height="80"
       width="80"
@@ -158,15 +159,13 @@ export default function Quiz() {
       wrapperStyle={{}}
       wrapperClass=""
       colors={["#18bbec", "#5dcff2"]}
-    />;
-
+    />
+  );
 }
 
 function Questions({ language, difficulty, setPage, setResult }: any) {
   const [answers, setAnswers] = useState(Array(10).fill(null));
   const [questions, setQuestions] = useState([]);
-
-
 
   const { data, isLoading, error } = useQuery(
     "quiz",
@@ -178,41 +177,37 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
         sessionStorage.setItem("questions", JSON.stringify(data));
       },
       onError: (error) => {
-        console.log(error);
+        toast("Error fetching quiz questions");
+        setPage(Page.Selection);
+        sessionStorage.setItem("page", JSON.stringify(Page.Selection));
       },
     }
-    
   );
 
   useEffect(() => {
-    sessionStorage.setItem("page", JSON.stringify(Page.Quiz));
-
     const storedAnswers = sessionStorage.getItem("answers");
     if (storedAnswers) {
       setAnswers(JSON.parse(storedAnswers));
     }
-        const questions = sessionStorage.getItem("questions");
-        if (questions) {
-          setQuestions(JSON.parse(questions));
-        }
-
+    const questions = sessionStorage.getItem("questions");
+    if (questions) {
+      setQuestions(JSON.parse(questions));
+    }
   }, []);
 
   if (isLoading) {
     return (
-<Hourglass
-      visible={true}
-      height="80"
-      width="80"
-      ariaLabel="hourglass-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-      colors={["#18bbec", "#5dcff2"]}
-    />
-
+      <Hourglass
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="hourglass-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        colors={["#18bbec", "#5dcff2"]}
+      />
     );
   }
-
 
   if (error) {
     return <div>Error</div>;
@@ -222,7 +217,6 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
     const newAnswers = [...answers];
     newAnswers[index] = answer;
     setAnswers(newAnswers);
-
     sessionStorage.setItem("answers", JSON.stringify(newAnswers));
   };
 
@@ -238,6 +232,7 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
     setResult(score);
 
     sessionStorage.setItem("page", JSON.stringify(Page.Result));
+    sessionStorage.setItem("result", JSON.stringify(score));
   };
 
   return (
@@ -298,6 +293,9 @@ function Questions({ language, difficulty, setPage, setResult }: any) {
             <Button
               onClick={() => {
                 setPage(Page.Selection);
+                sessionStorage.removeItem("answers");
+                sessionStorage.setItem("page", JSON.stringify(Page.Selection));
+                sessionStorage.removeItem("questions");
               }}
               type="button"
               variant="destructive"
@@ -317,6 +315,17 @@ function Result({ result, setPage }: any) {
     sessionStorage.removeItem("answers");
     sessionStorage.setItem("page", JSON.stringify(Page.Selection));
   };
+
+  useEffect(() => {
+    sessionStorage.removeItem("answers");
+    sessionStorage.removeItem("questions");
+
+    const storedResult = sessionStorage.getItem("result");
+    if (storedResult) {
+      setPage(Page.Result);
+    }
+    
+  }, []);
 
   return (
     <Card className="w-[350px]">
