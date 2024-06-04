@@ -83,6 +83,9 @@ export default function Quiz() {
     if (storedPage) {
       setPage(JSON.parse(storedPage));
     }
+    else{
+      setPage(Page.Selection)
+    }
 
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
