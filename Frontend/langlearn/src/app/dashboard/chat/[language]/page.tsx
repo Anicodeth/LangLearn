@@ -1,8 +1,71 @@
+"use client"
+import { useState } from "react";
+import axios from "axios";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-export default function ChatPage({ params }: { params: { language : string } }) {
+export default function ChatPage({ params }: { params: { language: string } }) {
+  const [messages, setMessages] = useState([
+    { text: `Chat Language: ${params.language}`, isUser: false },
+  ]);
+  const [input, setInput] = useState("");
+
+  const handleSend = async () => {
+    if (input.trim() === "") return;
+
+    const newMessages = [...messages, { text: input, isUser: true }];
+    setMessages(newMessages);
+    setInput("");
+
+    try {
+      // Replace this URL with your backend or AI model API
+      const response = await axios.post("/api/chat", {
+        message: input,
+        language: params.language,
+      });
+      setMessages([
+        ...newMessages,
+        { text: response.data.reply, isUser: false },
+      ]);
+    } catch (error) {
+      setMessages([
+        ...newMessages,
+        { text: "Error fetching response", isUser: false },
+      ]);
+    }
+  };
+
   return (
-    <div>
-      <h1>Chat Language: {params.language}</h1>
+    <div className="p-4 w-full mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Chat in {params.language}</h1>
+      <div className="border bg-[#ffffff] border-gray-300 p-4 rounded-md h-96 overflow-y-scroll">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`mb-2 ${message.isUser ? "text-right" : "text-left"}`}
+          >
+            <span
+              className={`inline-block px-4 py-2 rounded-lg ${message.isUser ? "bg-main text-white" : "bg-gray-200 text-black"}`}
+            >
+              {message.text}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="w-full flex mt-4 justify-around items-center">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="h-12 w-full p-2 border border-gray-300 rounded-md"
+        />
+        <Button
+          onClick={handleSend}
+          className="h-12 w-20 px-4 py-2 rounded-md"
+        >
+          Send
+        </Button>
+      </div>
     </div>
   );
 }

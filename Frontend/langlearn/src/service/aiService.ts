@@ -13,4 +13,15 @@ export const getQuiz = async (languge:string, difficulty:string) => {
     }
 
 
+export const getChat = async (message:string, language:string) => {
+    try {
+        const response = await axios.post(`${apiUrl}/chat`, {
+            message: message,
+            language: language
+        });
+        return response.data.reply;
+    } catch (error) {
+        throw error;
+    }
+}
 
