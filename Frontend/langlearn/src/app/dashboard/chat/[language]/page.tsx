@@ -1,38 +1,45 @@
-"use client"
+"use client";
 import { useState } from "react";
 import axios from "axios";
+import { useQuery, useQueryClient } from "react-query";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { getChat } from "@/service/aiService";
 
 export default function ChatPage({ params }: { params: { language: string } }) {
   const [messages, setMessages] = useState([
     { text: `Chat Language: ${params.language}`, isUser: false },
   ]);
   const [input, setInput] = useState("");
+  const language = params.language;
 
-  const handleSend = async () => {
+  const {
+    data: chatResponse,
+    isError,
+    refetch,
+  } = useQuery(["chatResponse", messages], () => getChat(input, language), {
+    enabled: false,
+    onSuccess: (data) => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: data, isUser: false },
+      ]);
+    },
+    onError: () => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: "Error fetching response", isUser: false },
+      ]);
+    },
+  });
+
+  const handleSend = () => {
     if (input.trim() === "") return;
 
     const newMessages = [...messages, { text: input, isUser: true }];
     setMessages(newMessages);
     setInput("");
 
-    try {
-      // Replace this URL with your backend or AI model API
-      const response = await axios.post("/api/chat", {
-        message: input,
-        language: params.language,
-      });
-      setMessages([
-        ...newMessages,
-        { text: response.data.reply, isUser: false },
-      ]);
-    } catch (error) {
-      setMessages([
-        ...newMessages,
-        { text: "Error fetching response", isUser: false },
-      ]);
-    }
+    refetch();
   };
 
   return (
@@ -59,10 +66,7 @@ export default function ChatPage({ params }: { params: { language: string } }) {
           onChange={(e) => setInput(e.target.value)}
           className="h-12 w-full p-2 border border-gray-300 rounded-md"
         />
-        <Button
-          onClick={handleSend}
-          className="h-12 w-20 px-4 py-2 rounded-md"
-        >
+        <Button onClick={handleSend} className="h-12 w-20 px-4 py-2 rounded-md">
           Send
         </Button>
       </div>
