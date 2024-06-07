@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { Button } from "@/components/ui/button";
 import { getChat } from "@/service/aiService";
 
@@ -37,9 +37,9 @@ export default function ChatPage({ params }: { params: { language: string } }) {
 
     const newMessages = [...messages, { text: input, isUser: true }];
     setMessages(newMessages);
+    refetch();
     setInput("");
 
-    refetch();
   };
 
   return (
