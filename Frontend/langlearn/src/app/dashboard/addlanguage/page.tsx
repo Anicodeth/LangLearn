@@ -7,7 +7,7 @@ import {
   updateLanguage,
   deleteLanguage,
 } from "@/service/languageService"; // Adjust the path as necessary
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent } from "@mui/material";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -72,7 +72,7 @@ export default function AddLanguage() {
                 </p>
                 <div className="flex flex-row items-center w-full h-30 bg-mainlighter rounded-lg">
                   <DeleteLanguageDialog id={language._id} />
-                  <EditLanguageDialog id={language._id} />
+                  <EditLanguageDialog id={language._id}  OldName = {language.name} OldDescription={language.description}/>
                 </div>
               </CardContent>
             </Card>
@@ -168,10 +168,10 @@ function DeleteLanguageDialog({ id }: { id: string }) {
   );
 }
 
-function EditLanguageDialog({ id }: { id: string }) {
+function EditLanguageDialog({ id, OldName, OldDescription }: { id: string, OldName: string, OldDescription: string}) {
   const queryClient = useQueryClient();
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState(OldName);
+  const [description, setDescription] = useState(OldDescription);
 
   const updateMutation = useMutation(
     () => updateLanguage(id, { name, description }),
