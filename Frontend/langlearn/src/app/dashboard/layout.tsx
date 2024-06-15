@@ -13,6 +13,10 @@ import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import bookShelf from "../../assets/bookshelf.svg";
+import { createContext, useContext } from "react";
+import { useUser } from "@/hooks/useUser";
+
+const UserContext = createContext<any>(undefined);
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -87,7 +91,11 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { user, loading } = useUser();
+  if (loading) 
+      return <div>Loading...</div>;
   return (
+    <UserContext.Provider value={user}>
     <div className="h-screen border-0 flex items-center justify-center ">
       <div className="w-fir h-full flex justify-center items-center">
         <Card
@@ -136,6 +144,7 @@ export default function DashboardLayout({
         {children}
       </div>
     </div>
+    </UserContext.Provider>
   );
 }
 
