@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { getLanguages } from "@/service/languageService";
+import { getLanguages, addCourseToLanguage, getLanguageCourses } from "@/service/languageService";
 import {
   getCourses,
   addCourse,
@@ -27,9 +27,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
 export default function AddCourse() {
-  const queryClient = useQueryClient();
   const [selectedLanguage, setSelectedLanguage] = useState("");
-  const [courseTitle, setCourseTitle] = useState("");
   const { data: languages, isLoading: languagesLoading } = useQuery(
     "languages",
     getLanguages
@@ -39,28 +37,7 @@ export default function AddCourse() {
     getCourses
   );
 
-  const addCourseMutation = useMutation(addCourse, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("courses");
-    },
-  });
 
-  const addSlideMutation = useMutation(addSlideToCourse, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("courses");
-    },
-  });
-
-  const handleAddCourse = () => {
-    addCourseMutation.mutate({
-      language: selectedLanguage,
-      title: courseTitle,
-    });
-  };
-
-  const handleAddSlide = (courseId: any, slideTitle: any) => {
-    addSlideMutation.mutate({ courseId, title: slideTitle });
-  };
 
   if (languagesLoading || coursesLoading) return <div>Loading...</div>;
 
@@ -70,31 +47,44 @@ export default function AddCourse() {
 
   return (
     <div>
-      <select
-        value={selectedLanguage}
-        onChange={handleSelectChange}
-        className="w-80"
-      >
-        {languages.map((language: any) => (
-          <option className="w-80" key={language.id} value={language.id}>
-            {language.name}
-          </option>
-        ))}
-      </select>
+      <div className="overflow-scroll w-full h-screen flex flex-row mb-2 items-center justify-between flex-wrap p-6 m-4">
+        <h1 className="text-2xl font-bold">Select Language</h1>
 
-      <AddCourseDialog languageId={languages.id} />
+        <select
+          value={selectedLanguage}
+          onChange={handleSelectChange}
+          className="w-full p-2 mb-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        >
+          {languages.map((language: any) => (
+            <option className="w-80" key={language.id} value={language.id}>
+              {language.name}
+            </option>
+          ))}
+        </select>
 
-      <Card className="h-60 w-60">
-        <CardContent className="flex flex-col items-center justify-center h-full rounded">
-          <div className="overflow-scroll flex flex-row items-center justify-between flex-wrap p-4">
+        <Button className="w-full mb-1">Get Courses</Button>
+        <AddCourseDialog languageId={languages.id} />
+
+        <div>
+          <h3 className="text-2xl font-bold">Courses</h3>
+          <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
             {courses.map((course: any) => (
-              <div className="p-4 w-40 h-40" key={course.id}>
-                <h3>{course.name}</h3>
-              </div>
+              <Card key={course.id} className="h-60 w-60">
+                <CardContent className="flex flex-col items-center justify-center h-full rounded">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=6MP1kA74ozKg&format=png&color=000000"
+                    alt="Course"
+                    className="w-16 h-16"
+                  />
+                  <h1 className="font-bold">{course.name}</h1>
+                  <p>{course.description}</p>
+                  <p>{course.difficulty}</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
