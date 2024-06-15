@@ -58,33 +58,35 @@ interface ListItems {
   link: string;
 }
 
-const menuItems: ListItems[] = [
-  {
-    icon: CiHome,
-    text: "Home",
-    link: "/dashboard",
-  },
-  {
-    icon: CiPen,
-    text: "Learn",
-    link: "/dashboard/learn",
-  },
-  {
-    icon: CiChat1,
-    text: "Chat",
-    link: "/dashboard/chat",
-  },
-  {
-    icon: PiExamThin,
-    text: "Quiz",
-    link: "/dashboard/quiz",
-  },
-  {
-    icon: CiUser,
-    text: "Profile",
-    link: "/dashboard/profile",
-  },
-];
+interface Dashboard{
+  user: ListItems[];
+  teacher: ListItems[];
+  admin: ListItems[];
+}
+
+const menuItems: Dashboard = {
+  user: [
+    { icon: CiHome, text: "Home", link: "/dashboard" },
+    { icon: CiPen, text: "Learn", link: "/dashboard/learn" },
+    { icon: CiChat1, text: "Chat", link: "/dashboard/chat" },
+    { icon: PiExamThin, text: "Quiz", link: "/dashboard/quiz" },
+    { icon: CiUser, text: "Profile", link: "/dashboard/profile" },
+  ],
+  teacher: [
+    { icon: CiHome, text: "Home", link: "/dashboard" },
+    { icon: CiPen, text: "Teach", link: "/dashboard/teach" },
+    { icon: CiChat1, text: "Chat", link: "/dashboard/chat" },
+    { icon: PiExamThin, text: "Quiz", link: "/dashboard/quiz" },
+    { icon: CiUser, text: "Profile", link: "/dashboard/profile" },
+  ],
+  admin: [
+    { icon: CiHome, text: "Add Language", link: "/dashboard/addlanguage" },
+    { icon: CiPen, text: "Add Course", link: "/dashboard/addcourse" },
+    { icon: CiChat1, text: "Chat", link: "/dashboard/chat" },
+    { icon: PiExamThin, text: "Quiz", link: "/dashboard/quiz" },
+    { icon: CiUser, text: "Profile", link: "/dashboard/profile" },
+  ],
+};
 
 export default function DashboardLayout({
   children,
@@ -94,6 +96,8 @@ export default function DashboardLayout({
   const { user, loading } = useUser();
   if (loading) 
       return <div>Loading...</div>;
+
+  if (user !== null){
   return (
     <UserContext.Provider value={user}>
     <div className="h-screen border-0 flex items-center justify-center ">
@@ -108,7 +112,7 @@ export default function DashboardLayout({
 
           <List placeholder={undefined}>
             <h1 className="font-bold">Student</h1>
-            {menuItems.map((item, index) => (
+            {menuItems[user.role].map((item, index) => (
               <Link key={index} href={item.link}>
                 <ListItem
                   className="hover:bg-mainlighter"
@@ -135,7 +139,7 @@ export default function DashboardLayout({
           <div className="h-full  flex p-1">
             <div className="h-fit flex items-center justify-between self-end w-full p-1">
               <BadgeAvatars />
-              <h5>Ananya Fekeremariam</h5>
+              <h5>{user.name}</h5>
             </div>
           </div>
         </Card>
@@ -146,6 +150,7 @@ export default function DashboardLayout({
     </div>
     </UserContext.Provider>
   );
+}
 }
 
 function BadgeAvatars() {
