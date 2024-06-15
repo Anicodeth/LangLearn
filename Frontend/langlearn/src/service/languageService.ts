@@ -28,3 +28,21 @@ export const addLanguage = async (data: any) => {
     throw error;
   }
 };
+
+export const updateLanguage = async (id: string, data: any) => {
+  try {
+    const response = await axios.put(`${apiUrl}/${id}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteLanguage = async (id: string) => {
+  try {
+    const response = await axios.delete(`${apiUrl}/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

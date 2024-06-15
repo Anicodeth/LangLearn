@@ -1,7 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { getLanguages, addLanguage } from "@/service/languageService"; // Adjust the path as necessary
+import {
+  getLanguages,
+  addLanguage,
+  updateLanguage,
+  deleteLanguage,
+} from "@/service/languageService"; // Adjust the path as necessary
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -65,9 +70,9 @@ export default function AddLanguage() {
                 <p className="font-bold bg-mainlighter w-full h-20 rounded p-2">
                   {language.description}
                 </p>
-                <div className="flex flex-col justify-center items-center w-full h-30 bg-mainlighter rounded-lg">
-                  <DeleteLanguageDialog />
-                  <EditLanguageDialog />
+                <div className="flex flex-row items-center w-full h-30 bg-mainlighter rounded-lg">
+                  <DeleteLanguageDialog id={language._id} />
+                  <EditLanguageDialog id={language._id} />
                 </div>
               </CardContent>
             </Card>
@@ -125,11 +130,20 @@ export default function AddLanguage() {
   );
 }
 
-function DeleteLanguageDialog() {
+function DeleteLanguageDialog({ id }: { id: string }) {
+  const queryClient = useQueryClient();
+  const deleteMutation = useMutation(deleteLanguage, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("languages");
+      toast.success("Language deleted successfully");
+    },
+  });
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Delete</Button>
+        <Button className="w-full mb-1" variant="destructive">
+          Delete
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -139,9 +153,14 @@ function DeleteLanguageDialog() {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button>Delete</Button>
+          <Button
+            onClick={() => deleteMutation.mutate(id)}
+            variant="destructive"
+          >
+            {deleteMutation.isLoading ? "Deleting..." : "Delete"}
+          </Button>
           <DialogClose asChild>
-            <Button>Cancel</Button>
+            <Button>Close</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
@@ -149,11 +168,29 @@ function DeleteLanguageDialog() {
   );
 }
 
-function EditLanguageDialog() {
+function EditLanguageDialog({ id }: { id: string }) {
+  const queryClient = useQueryClient();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const updateMutation = useMutation(
+    () => updateLanguage(id, { name, description }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("languages");
+        toast.success("Language updated successfully");
+      },
+    }
+  );
+
+  const handleUpdate = () => {
+    updateMutation.mutate();
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Edit</Button>
+        <Button className="w-full mb-1">Edit</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -165,19 +202,31 @@ function EditLanguageDialog() {
             <Label htmlFor="name" className="text-right">
               Language Name
             </Label>
-            <Input id="name" className="col-span-3 w-60" />
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="col-span-3 w-60"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="description" className="text-right">
               Description
             </Label>
-            <Input id="description" className="col-span-3 w-60" />
+            <Input
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="col-span-3 w-60"
+            />
           </div>
         </div>
         <DialogFooter>
-          <Button>Save</Button>
+          <Button onClick={handleUpdate}>
+            {updateMutation.isLoading ? "Updating..." : "Update"}
+          </Button>
           <DialogClose asChild>
-            <Button>Cancel</Button>
+            <Button>Close</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
