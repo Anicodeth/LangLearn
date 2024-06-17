@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const apiUrl = "https://lang-learn-api.vercel.app/api/v1/languages";
+//const apiUrl = "https://lang-learn-api.vercel.app/api/v1/languages";
+const apiUrl = "http://localhost:4000/api/v1/languages";
 
 export const getLanguages = async () => {
   try {
@@ -48,9 +49,12 @@ export const deleteLanguage = async (id: string) => {
 };
 
 
-export const addCourseToLanguage = async (id:string, data: any) => {
+export const addCourseToLanguage = async (data: any) => {
     try {
-        const response = await axios.post(`${apiUrl}/${id}/courses`, data);
+        const response = await axios.post(
+          `${apiUrl}/${data.languageId}/courses`,
+          data
+        );
         return response.data;
     } catch (error) {
         throw error;
@@ -59,7 +63,9 @@ export const addCourseToLanguage = async (id:string, data: any) => {
 
 export const getLanguageCourses = async (id: string) => {
     try {
+
         const response = await axios.get(`${apiUrl}/${id}/courses`);
+        console.log(response.data, "am here");
         return response.data;
     } catch (error) {
         throw error;

@@ -2,7 +2,11 @@
 
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { getLanguages, addCourseToLanguage, getLanguageCourses } from "@/service/languageService";
+import {
+  getLanguages,
+  addCourseToLanguage,
+  getLanguageCourses,
+} from "@/service/languageService";
 import {
   getCourses,
   addCourse,
@@ -26,15 +30,24 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
-
 export default function AddCourse() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
-  const [courses, setCourses] = useState([]);
-  const [coursesLoading, setCoursesLoading] = useState(false);
 
   const { data: languages, isLoading: languagesLoading } = useQuery(
     "languages",
     getLanguages
+  );
+
+  const {
+    data: courses,
+    isLoading: coursesLoading,
+    refetch: refetchCourses,
+  } = useQuery(
+    ["courses"],
+    () => getLanguageCourses(selectedLanguage),
+    {
+      enabled: !selectedLanguage, // Only run query if a language is selected
+    }
   );
 
   if (languagesLoading) return <div>Loading...</div>;
@@ -43,17 +56,13 @@ export default function AddCourse() {
     setSelectedLanguage(event.target.value);
   };
 
-  const handleGetCourses = async () => {
-    setCoursesLoading(true);
-    try {
-      const coursesData = await getLanguageCourses(selectedLanguage);
-      setCourses(coursesData);
-    } catch (error) {
-      console.error("Failed to fetch courses", error);
-    } finally {
-      setCoursesLoading(false);
+  const handleGetCourses = () => {
+    if (selectedLanguage) {
+      refetchCourses();
     }
   };
+
+  console.log(courses);
   return (
     <div>
       <div className="overflow-scroll w-full h-screen flex flex-row mb-2 items-center justify-between flex-wrap p-6 m-4">
@@ -80,7 +89,9 @@ export default function AddCourse() {
           <h3 className="text-2xl font-bold">Courses</h3>
           {coursesLoading ? (
             <div>Loading...</div>
-          ) : (
+          ) : ("")}
+          
+          {courses ? (
             <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
               {courses.map((course: any) => (
                 <Card key={course.id} className="h-60 w-60">
@@ -97,13 +108,13 @@ export default function AddCourse() {
                 </Card>
               ))}
             </div>
-          )}
+          ) : ("")}
         </div>
+        
       </div>
     </div>
   );
 }
-
 
 function AddCourseDialog({ languageId }: { languageId: string }) {
   const [name, setName] = useState("");
@@ -112,7 +123,7 @@ function AddCourseDialog({ languageId }: { languageId: string }) {
 
   const queryClient = useQueryClient();
 
-  const addCourseMutation = useMutation(addCourse, {
+  const addCourseMutation = useMutation(addCourseToLanguage, {
     onSuccess: () => {
       toast.success("Course added successfully");
       queryClient.invalidateQueries("courses");
