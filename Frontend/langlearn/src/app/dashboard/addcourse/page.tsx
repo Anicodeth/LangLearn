@@ -43,7 +43,7 @@ export default function AddCourse() {
     isLoading: coursesLoading,
     refetch: refetchCourses,
   } = useQuery(["courses"], () => getLanguageCourses(selectedLanguage), {
-    enabled: !selectedLanguage, // Only run query if a language is selected
+    enabled: !selectedLanguage, 
   });
 
   if (languagesLoading) return <div>Loading...</div>;
@@ -70,6 +70,7 @@ export default function AddCourse() {
           onChange={handleSelectChange}
           className="w-full p-2 mb-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
+          <option value="">Select a language</option>
           {languages.map((language: any) => (
             <option className="w-80" key={language._id} value={language._id}>
               {language.name}
@@ -80,7 +81,7 @@ export default function AddCourse() {
         <Button className="w-full mb-1" onClick={handleGetCourses}>
           Get Courses
         </Button>
-        <AddCourseDialog languageId={selectedLanguage} />
+        <AddCourseDialog />
 
         <div>
           <h3 className="text-2xl font-bold">Courses</h3>
@@ -202,6 +203,7 @@ function AddCourseDialog() {
               onChange={(e) => setSelectedLanguage(e.target.value)}
               className="col-span-3 w-60 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
+              <option value="">Select a language</option>
               {languages.map((language: any) => (
                 <option key={language._id} value={language._id}>
                   {language.name}
