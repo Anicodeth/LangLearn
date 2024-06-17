@@ -113,26 +113,30 @@ export default function AddCourse() {
         {courses ? (
           <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
             {courses.map((course: any) => (
-              <Card key={course.id} className="h-80 w-60">
-                <CardContent className="flex flex-col items-center justify-center h-full rounded">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=6MP1kA74ozKg&format=png&color=000000"
-                    alt="Course"
-                    className="w-16 h-16"
-                  />
-                  <h1 className="font-bold">{course.name}</h1>
-                  <p>{course.description}</p>
-                  <p>{course.difficulty}</p>
-                  <DeleteCourseDialog courseId={course._id} />
-                  <EditCourseDialog courseId={course._id} />
-                  <Button
-                    className="w-full"
-                    onClick={() => handleSlides(course._id)}
-                  >
-                    {"Edit Slides"}
-                  </Button>
-                </CardContent>
-              </Card>
+              <>
+              {course ? ( <Card key={course.id} className="h-80 w-60">
+                  <CardContent className="flex flex-col items-center justify-center h-full rounded">
+                    <img
+                      src="https://img.icons8.com/?size=100&id=6MP1kA74ozKg&format=png&color=000000"
+                      alt="Course"
+                      className="w-16 h-16"
+                    />
+                    {course == null ? "" : ""}
+
+                    <h1 className="font-bold">{course.name}</h1>
+                    <p>{course.description}</p>
+                    <p>{course.difficulty}</p>
+                    <DeleteCourseDialog courseId={course._id} refetch={refetchCourses}/>
+                    <EditCourseDialog courseId={course._id} refetch={refetchCourses} />
+                    <Button
+                      className="w-full"
+                      onClick={() => handleSlides(course._id)}
+                    >
+                      {"Edit Slides"}
+                    </Button>
+                  </CardContent>
+                </Card>) : ""}
+              </>
             ))}
           </div>
         ) : (
@@ -261,10 +265,11 @@ function AddCourseDialog() {
   );
 }
 
-function DeleteCourseDialog({ courseId }: { courseId: string }) {
+function DeleteCourseDialog({ courseId, refetch }: { courseId: string, refetch: any}) {
   const deleteCourseMutation = useMutation(() => deleteCourse(courseId), {
     onSuccess: () => {
       toast.success("Course deleted successfully");
+      refetch();
     },
   });
 
@@ -293,14 +298,17 @@ function DeleteCourseDialog({ courseId }: { courseId: string }) {
 }
 
 
-function EditCourseDialog ({ courseId }: { courseId: string }) {
+function EditCourseDialog ({ courseId, refetch }: { courseId: string, refetch: any}) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [difficulty, setDifficulty] = useState("");
+  const queryClient = useQueryClient();
 
   const editCourseMutation = useMutation(() => updateCourse(courseId, {name, description, difficulty}), {
     onSuccess: () => {
       toast.success("Course edited successfully");
+      queryClient.invalidateQueries("courses");
+      refetch();
     },
   });
 
