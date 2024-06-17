@@ -26,25 +26,34 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
+
 export default function AddCourse() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [courses, setCourses] = useState([]);
+  const [coursesLoading, setCoursesLoading] = useState(false);
+
   const { data: languages, isLoading: languagesLoading } = useQuery(
     "languages",
     getLanguages
   );
-  const { data: courses, isLoading: coursesLoading } = useQuery(
-    "courses",
-    getCourses
-  );
 
-
-
-  if (languagesLoading || coursesLoading) return <div>Loading...</div>;
+  if (languagesLoading) return <div>Loading...</div>;
 
   const handleSelectChange = (event: any) => {
     setSelectedLanguage(event.target.value);
   };
 
+  const handleGetCourses = async () => {
+    setCoursesLoading(true);
+    try {
+      const coursesData = await getLanguageCourses(selectedLanguage);
+      setCourses(coursesData);
+    } catch (error) {
+      console.error("Failed to fetch courses", error);
+    } finally {
+      setCoursesLoading(false);
+    }
+  };
   return (
     <div>
       <div className="overflow-scroll w-full h-screen flex flex-row mb-2 items-center justify-between flex-wrap p-6 m-4">
@@ -56,38 +65,45 @@ export default function AddCourse() {
           className="w-full p-2 mb-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
           {languages.map((language: any) => (
-            <option className="w-80" key={language.id} value={language.id}>
+            <option className="w-80" key={language._id} value={language._id}>
               {language.name}
             </option>
           ))}
         </select>
 
-        <Button className="w-full mb-1">Get Courses</Button>
-        <AddCourseDialog languageId={languages.id} />
+        <Button className="w-full mb-1" onClick={handleGetCourses}>
+          Get Courses
+        </Button>
+        <AddCourseDialog languageId={selectedLanguage} />
 
         <div>
           <h3 className="text-2xl font-bold">Courses</h3>
-          <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
-            {courses.map((course: any) => (
-              <Card key={course.id} className="h-60 w-60">
-                <CardContent className="flex flex-col items-center justify-center h-full rounded">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=6MP1kA74ozKg&format=png&color=000000"
-                    alt="Course"
-                    className="w-16 h-16"
-                  />
-                  <h1 className="font-bold">{course.name}</h1>
-                  <p>{course.description}</p>
-                  <p>{course.difficulty}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {coursesLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
+              {courses.map((course: any) => (
+                <Card key={course.id} className="h-60 w-60">
+                  <CardContent className="flex flex-col items-center justify-center h-full rounded">
+                    <img
+                      src="https://img.icons8.com/?size=100&id=6MP1kA74ozKg&format=png&color=000000"
+                      alt="Course"
+                      className="w-16 h-16"
+                    />
+                    <h1 className="font-bold">{course.name}</h1>
+                    <p>{course.description}</p>
+                    <p>{course.difficulty}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
+
 
 function AddCourseDialog({ languageId }: { languageId: string }) {
   const [name, setName] = useState("");
