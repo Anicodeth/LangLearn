@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const apiUrl = `https://lang-learn-api.vercel.app/api/v1/courses`;
+//const apiUrl = `https://lang-learn-api.vercel.app/api/v1/courses`;
+const apiUrl = `http://localhost:4000/api/v1/courses`;
 
 export const getCourses = async () => {
   try {
@@ -40,6 +41,7 @@ export const updateCourse = async (id: string, data: any) => {
 
 export const deleteCourse = async (id: string) => {
   try {
+    console.log("deleteCourse", id);
     const response = await axios.delete(`${apiUrl}/${id}`);
     return response.data;
   } catch (error) {
@@ -47,9 +49,9 @@ export const deleteCourse = async (id: string) => {
   }
 };
 
-export const addSlideToCourse = async (data: any) => {
+export const addSlideToCourse = async (courseId:string, data: any) => {
     try {
-        const response = await axios.post(`${apiUrl}/add-slide`, data);
+        const response = await axios.post(`${apiUrl}/${courseId}/slide`, data);
         return response.data;
     } catch (error) {
         throw error;
@@ -60,6 +62,17 @@ export const addSlideToCourse = async (data: any) => {
 export const addSlidesToCourse = async (data: any) => {
     try {
         const response = await axios.post(`${apiUrl}/add-slides`, data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+    }
+
+
+export const getCourseSlides = async (courseId: string) => {
+    try {
+
+        const response = await axios.get(`${apiUrl}/${courseId}/slides`);
         return response.data;
     } catch (error) {
         throw error;

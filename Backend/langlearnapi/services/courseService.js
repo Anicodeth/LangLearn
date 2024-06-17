@@ -44,7 +44,6 @@ exports.updateCourse = async function (id, course) {
 exports.deleteCourse = async function (id) {
   try {
     const course = await Course.findByIdAndDelete(id);
-    await course.save();
     return course;
   } catch (error) {
     throw error;
