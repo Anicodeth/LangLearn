@@ -42,13 +42,9 @@ export default function AddCourse() {
     data: courses,
     isLoading: coursesLoading,
     refetch: refetchCourses,
-  } = useQuery(
-    ["courses"],
-    () => getLanguageCourses(selectedLanguage),
-    {
-      enabled: !selectedLanguage, // Only run query if a language is selected
-    }
-  );
+  } = useQuery(["courses"], () => getLanguageCourses(selectedLanguage), {
+    enabled: !selectedLanguage, // Only run query if a language is selected
+  });
 
   if (languagesLoading) return <div>Loading...</div>;
 
@@ -59,10 +55,11 @@ export default function AddCourse() {
   const handleGetCourses = () => {
     if (selectedLanguage) {
       refetchCourses();
+    } else {
+      toast.error("Please select a language");
     }
   };
 
-  console.log(courses);
   return (
     <div>
       <div className="overflow-scroll w-full h-screen flex flex-row mb-2 items-center justify-between flex-wrap p-6 m-4">
@@ -87,10 +84,8 @@ export default function AddCourse() {
 
         <div>
           <h3 className="text-2xl font-bold">Courses</h3>
-          {coursesLoading ? (
-            <div>Loading...</div>
-          ) : ("")}
-          
+          {coursesLoading ? <div>Loading...</div> : ""}
+
           {courses ? (
             <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
               {courses.map((course: any) => (
@@ -108,18 +103,24 @@ export default function AddCourse() {
                 </Card>
               ))}
             </div>
-          ) : ("")}
+          ) : (
+            ""
+          )}
         </div>
-        
       </div>
     </div>
   );
 }
-
-function AddCourseDialog({ languageId }: { languageId: string }) {
+function AddCourseDialog() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [difficulty, setDifficulty] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+
+  const { data: languages, isLoading: languagesLoading } = useQuery(
+    "languages",
+    getLanguages
+  );
 
   const queryClient = useQueryClient();
 
@@ -131,13 +132,19 @@ function AddCourseDialog({ languageId }: { languageId: string }) {
   });
 
   const handleAddCourse = () => {
+    if (!name || !description || !difficulty || !selectedLanguage) {
+      toast.error("Please fill all fields");
+      return;
+    }
     addCourseMutation.mutate({
-      languageId,
+      languageId: selectedLanguage,
       name,
       description,
       difficulty,
     });
   };
+
+  if (languagesLoading) return <div>Loading languages...</div>;
 
   return (
     <Dialog>
@@ -183,6 +190,24 @@ function AddCourseDialog({ languageId }: { languageId: string }) {
               onChange={(e) => setDifficulty(e.target.value)}
               className="col-span-3 w-60"
             />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="language" className="text-right">
+              Language
+            </Label>
+            <select
+              id="language"
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+              className="col-span-3 w-60 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              {languages.map((language: any) => (
+                <option key={language._id} value={language._id}>
+                  {language.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <DialogFooter>
