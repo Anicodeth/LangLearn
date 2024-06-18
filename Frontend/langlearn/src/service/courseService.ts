@@ -78,3 +78,12 @@ export const getCourseSlides = async (courseId: string) => {
         throw error;
     }
     }
+
+export const removeSlideFromCourse = async (courseId: string, slideId: string) => {
+    try {
+        const response = await axios.delete(`${apiUrl}/${courseId}/slides/${slideId}`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+    }

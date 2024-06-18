@@ -1,6 +1,11 @@
-import { getCourseSlides } from "@/service/courseService";
+"use client";
+import {
+  getCourseSlides,
+  addSlideToCourse,
+  removeSlideFromCourse,
+} from "@/service/courseService";
 import { toast } from "sonner";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import {
   Dialog,
   DialogTrigger,
@@ -14,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+
+import { deleteSlide, updateSlide } from "@/service/slideService";
 
 export default function CourseSlidesPage({
   params,
@@ -40,15 +47,12 @@ export default function CourseSlidesPage({
   if (slidesLoading) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className="h-full w-full flex overflow-scroll flex-col p-4 ">
       <h1>Course Slides</h1>
       <AddSlideCourseDialog courseId={params.courseid} />
-      <div>
-        {slidesData?.map((slide: any) => (
-          <div key={slide.id}>
-            <h2>{slide.title}</h2>
-            <p>{slide.content}</p>
-          </div>
+      <div className="flex flex-wrap gap-4">
+        {slidesData.map((slide: any) => (
+          <Slide key={slide._id} slide={slide} />
         ))}
       </div>
     </div>
@@ -105,11 +109,40 @@ function AddSlideCourseDialog({ courseId }: { courseId: string }) {
   const [slideNewWord, setSlideNewWord] = useState("");
   const [slideVideo, setSlideVideo] = useState("");
   const [slideQuestion, setSlideQuestion] = useState("");
-  const [slideChoices, setSlideChoices] = useState([]);
+  const [slideChoices, setSlideChoices] = useState("");
   const [slideCorrectAnswer, setSlideCorrectAnswer] = useState("");
   const [slideExplanation, setSlideExplanation] = useState("");
   const [color, setColor] = useState("");
   const [font, setFont] = useState("");
+
+  const addSlideMutation = useMutation(
+    () =>
+      addSlideToCourse(courseId, {
+        slideTitle,
+        slideImage,
+        slideText,
+        slideAudio,
+        slideNewWord,
+        slideVideo,
+        slideQuestion,
+        slideChoices,
+        slideCorrectAnswer,
+        slideExplanation,
+        color,
+        font,
+      }),
+    {
+      onSuccess: () => {
+        toast.success("Slide added successfully");
+      },
+      onError: () => {
+        toast.error("Error adding slide");
+      },
+    }
+  );
+  const handleSlideAddition = async () => {
+    await addSlideMutation.mutateAsync();
+  };
 
   return (
     <Dialog>
@@ -172,12 +205,259 @@ function AddSlideCourseDialog({ courseId }: { courseId: string }) {
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Slide New Word
+              Slide Video
             </Label>
             <Input
-              id="Slide New Word"
-              value={slideNewWord}
-              onChange={(e) => setSlideNewWord(e.target.value)}
+              id="Slide Video"
+              value={slideVideo}
+              onChange={(e) => setSlideVideo(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Slide Question
+            </Label>
+            <Input
+              id="Slide Question"
+              value={slideQuestion}
+              onChange={(e) => setSlideQuestion(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Slide Choices
+            </Label>
+            <Input
+              id="Slide Choices"
+              value={slideChoices}
+              onChange={(e) => setSlideChoices(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Slide Correct Answer
+            </Label>
+            <Input
+              id="Slide Correct Answer"
+              value={slideCorrectAnswer}
+              onChange={(e) => setSlideCorrectAnswer(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Color
+            </Label>
+            <Input
+              id="Color"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Font
+            </Label>
+            <Input
+              id="Font"
+              value={font}
+              onChange={(e) => setFont(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button onClick={handleSlideAddition}>
+            {addSlideMutation.isLoading ? "Adding..." : "Add Slide"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function Slide({ slide }: { slide: any }) {
+  return (
+    <div>
+      <div
+        className="border w-80 h-96 p-4 rounded-md my-2"
+        style={{
+          fontFamily: `${slide.font}`,
+          backgroundColor: `${slide.color}`,
+        }}
+      >
+        <h1 className="w-full text-center">{slide.slideTitle}</h1>
+        {slide.slideImage && (
+          <img
+            src={slide.slideImage}
+            alt={slide.slideTitle}
+            className="w-full"
+          />
+        )}
+        <p>{slide.slideText}</p>
+        {slide.slideAudio && <audio src={slide.slideAudio} controls></audio>}
+        <p>{slide.slideNewWord}</p>
+        {slide.slideAudio && <video src={slide.slideVideo} controls></video>}
+        {slide.slideQuestion && (
+          <p className="bg-black text-white font-bold text-l p-5 rounded">
+            {slide.slideQuestion}
+          </p>
+        )}
+      </div>
+      <DeleteSlideDialog slideId={slide._id} />
+      <EditSlideDialog slide={slide} />
+    </div>
+  );
+}
+
+function DeleteSlideDialog({ slideId }: { slideId: string }) {
+  const deleteSlideMutation = useMutation(() => deleteSlide(slideId), {
+    onSuccess: () => {
+      toast.success("Slide deleted successfully");
+    },
+    onError: () => {
+      toast.error("Error deleting slide");
+    },
+  });
+
+  const handleSlideDeletion = async () => {
+    await deleteSlideMutation.mutateAsync();
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Delete</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete Slide</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to delete this slide?
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button onClick={handleSlideDeletion}>
+            {deleteSlideMutation.isLoading ? "Deleting..." : "Delete"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function EditSlideDialog({ slide }: { slide: any }) {
+  const [slideTitle, setSlideTitle] = useState(slide.slideTitle);
+  const [slideImage, setSlideImage] = useState(slide.slideImage);
+  const [slideText, setSlideText] = useState(slide.slideText);
+  const [slideAudio, setSlideAudio] = useState(slide.slideAudio);
+  const [slideNewWord, setSlideNewWord] = useState(slide.slideNewWord);
+  const [slideVideo, setSlideVideo] = useState(slide.slideVideo);
+  const [slideQuestion, setSlideQuestion] = useState(slide.slideQuestion);
+  const [slideChoices, setSlideChoices] = useState(slide.slideChoices);
+  const [slideCorrectAnswer, setSlideCorrectAnswer] = useState(
+    slide.slideCorrectAnswer
+  );
+  const [slideExplanation, setSlideExplanation] = useState(
+    slide.slideExplanation
+  );
+  const [color, setColor] = useState(slide.color);
+  const [font, setFont] = useState(slide.font);
+
+  const editSlideMutation = useMutation(
+    () =>
+      updateSlide(slide._id, {
+        slideTitle,
+        slideImage,
+        slideText,
+        slideAudio,
+        slideNewWord,
+        slideVideo,
+        slideQuestion,
+        slideChoices,
+        slideCorrectAnswer,
+        slideExplanation,
+        color,
+        font,
+      }),
+    {
+      onSuccess: () => {
+        toast.success("Slide updated successfully");
+      },
+      onError: () => {
+        toast.error("Error updating slide");
+      },
+    }
+  );
+
+  const handleSlideEdit = async () => {
+    await editSlideMutation.mutateAsync();
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Edit</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit Slide</DialogTitle>
+          <DialogDescription>Edit the slide below</DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Slide Title
+            </Label>
+            <Input
+              id="Slide Title"
+              value={slideTitle}
+              onChange={(e) => setSlideTitle(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Slide Image
+            </Label>
+            <Input
+              id="Slide Image"
+              value={slideImage}
+              onChange={(e) => setSlideImage(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Slide Text
+            </Label>
+            <Input
+              id="Slide Text"
+              value={slideText}
+              onChange={(e) => setSlideText(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Slide Audio
+            </Label>
+            <Input
+              id="Slide Audio"
+              value={slideAudio}
+              onChange={(e) => setSlideAudio(e.target.value)}
               className="col-span-3 w-60"
             />
           </div>
@@ -267,7 +547,9 @@ function AddSlideCourseDialog({ courseId }: { courseId: string }) {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={}></Button>
+          <Button onClick={handleSlideEdit}>
+            {editSlideMutation.isLoading ? "Editing..." : "Edit"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
