@@ -31,10 +31,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Hourglass } from "react-loader-spinner";
+import { useRouter } from "next/navigation";
 
 export default function AddCourse() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [fetching, setFetching] = useState(false);
+  const router = useRouter();
 
   let validCourse = 1;
   const { data: languages, isLoading: languagesLoading } = useQuery(
@@ -73,7 +75,7 @@ export default function AddCourse() {
   };
 
   const handleSlides = (courseId: string) => {
-    getCourseSlides(courseId);
+    router.push(`/dashboard/addcourse/${courseId}`);
   };
 
   if (courses)
