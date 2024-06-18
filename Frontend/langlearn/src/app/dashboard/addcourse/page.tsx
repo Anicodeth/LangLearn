@@ -8,12 +8,10 @@ import {
   getLanguageCourses,
 } from "@/service/languageService";
 import {
-  getCourses,
-  addCourse,
   addSlideToCourse,
   deleteCourse,
   updateCourse,
-  getCourseSlides
+  getCourseSlides,
 } from "@/service/courseService";
 import { Button } from "@/components/ui/button";
 
@@ -32,17 +30,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { Hourglass } from "react-loader-spinner";
 
 export default function AddCourse() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
-  const [courseId, setCourseId] = useState("");
+  const [fetching, setFetching] = useState(false);
 
-    useEffect(() => {
-      if (courseId) {
-        refetchSlides();
-      }
-    }, [courseId]);
-
+  let validCourse = 1;
   const { data: languages, isLoading: languagesLoading } = useQuery(
     "languages",
     getLanguages
@@ -53,15 +47,10 @@ export default function AddCourse() {
     isLoading: coursesLoading,
     refetch: refetchCourses,
   } = useQuery(["courses"], () => getLanguageCourses(selectedLanguage), {
-    enabled: false, 
-  });
-
-  const {
-    data: slides,
-    isLoading: slidesLoading,
-    refetch: refetchSlides,
-  } = useQuery(["slides"], () => getCourseSlides(courseId), {
-    enabled: false
+    enabled: false,
+    onSuccess: () => {
+      setFetching(false);
+    },
   });
 
   if (languagesLoading) return <div>Loading...</div>;
@@ -71,6 +60,11 @@ export default function AddCourse() {
   };
 
   const handleGetCourses = () => {
+    setFetching(true);
+    validCourse = 1;
+    if (courses) {
+      courses.splice(0, courses.length);
+    }
     if (selectedLanguage) {
       refetchCourses();
     } else {
@@ -78,11 +72,12 @@ export default function AddCourse() {
     }
   };
 
-
-
   const handleSlides = (courseId: string) => {
-    setCourseId(courseId);
-  }
+    getCourseSlides(courseId);
+  };
+
+  if (courses)
+    validCourse = courses.filter((course: any) => course != null).length;
 
   return (
     <div className="overflow-scroll w-full h-screen flex flex-col mb-2 p-6 m-4">
@@ -108,34 +103,66 @@ export default function AddCourse() {
 
       <div>
         <h3 className="text-2xl font-bold">Courses</h3>
-        {coursesLoading ? <div>Loading...</div> : ""}
+
+        {coursesLoading || fetching ? (
+          <div className="flex items-center justify-center h-full">
+            <Hourglass
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="hourglass-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              colors={["#18bbec", "#5dcff2"]}
+            />
+          </div>
+        ) : (
+          ""
+        )}
+
+        {validCourse == 0 && !fetching ? (
+          <div className="flex items-center justify-center h-full">
+            No courses found
+          </div>
+        ) : (
+          ""
+        )}
 
         {courses ? (
           <div className="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
             {courses.map((course: any) => (
               <>
-              {course ? ( <Card key={course.id} className="h-80 w-60">
-                  <CardContent className="flex flex-col items-center justify-center h-full rounded">
-                    <img
-                      src="https://img.icons8.com/?size=100&id=6MP1kA74ozKg&format=png&color=000000"
-                      alt="Course"
-                      className="w-16 h-16"
-                    />
-                    {course == null ? "" : ""}
+                {course ? (
+                  <Card key={course.id} className="h-80 w-60">
+                    <CardContent className="flex flex-col items-center justify-center h-full rounded">
+                      <img
+                        src="https://img.icons8.com/?size=100&id=6MP1kA74ozKg&format=png&color=000000"
+                        alt="Course"
+                        className="w-16 h-16"
+                      />
 
-                    <h1 className="font-bold">{course.name}</h1>
-                    <p>{course.description}</p>
-                    <p>{course.difficulty}</p>
-                    <DeleteCourseDialog courseId={course._id} refetch={refetchCourses}/>
-                    <EditCourseDialog courseId={course._id} refetch={refetchCourses} />
-                    <Button
-                      className="w-full"
-                      onClick={() => handleSlides(course._id)}
-                    >
-                      {"Edit Slides"}
-                    </Button>
-                  </CardContent>
-                </Card>) : ""}
+                      <h1 className="font-bold">{course.name}</h1>
+                      <p>{course.description}</p>
+                      <p>{course.difficulty}</p>
+                      <DeleteCourseDialog
+                        courseId={course._id}
+                        refetch={refetchCourses}
+                      />
+                      <EditCourseDialog
+                        courseId={course._id}
+                        refetch={refetchCourses}
+                      />
+                      <Button
+                        className="w-full"
+                        onClick={() => handleSlides(course._id)}
+                      >
+                        {"Show Slides"}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  ""
+                )}
               </>
             ))}
           </div>
@@ -143,19 +170,10 @@ export default function AddCourse() {
           ""
         )}
       </div>
-      <div>
-        {slidesLoading ? "Loading..." : ""}
-        {courseId && slides && (
-          <SlidesEditor
-            courseId={courseId}
-            slides={slides}
-            slidesLoading={slidesLoading}
-          />
-        )}
-      </div>
     </div>
   );
 }
+
 function AddCourseDialog() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -194,7 +212,7 @@ function AddCourseDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full mb-1" >Add Course</Button>
+        <Button className="w-full mb-1">Add Course</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -265,7 +283,13 @@ function AddCourseDialog() {
   );
 }
 
-function DeleteCourseDialog({ courseId, refetch }: { courseId: string, refetch: any}) {
+function DeleteCourseDialog({
+  courseId,
+  refetch,
+}: {
+  courseId: string;
+  refetch: any;
+}) {
   const deleteCourseMutation = useMutation(() => deleteCourse(courseId), {
     onSuccess: () => {
       toast.success("Course deleted successfully");
@@ -280,12 +304,16 @@ function DeleteCourseDialog({ courseId, refetch }: { courseId: string, refetch: 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full mb-1" variant="destructive">Delete Course</Button>
+        <Button className="w-full mb-1" variant="destructive">
+          Delete Course
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete Course</DialogTitle>
-          <DialogDescription>Are you sure you want to delete this course?</DialogDescription>
+          <DialogDescription>
+            Are you sure you want to delete this course?
+          </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button onClick={handleDeleteCourse}>
@@ -297,20 +325,110 @@ function DeleteCourseDialog({ courseId, refetch }: { courseId: string, refetch: 
   );
 }
 
+function AddSlideToCourseDialog({
+  courseId,
+  slidesLoading,
+  slides,
+}: {
+  courseId: string;
+  slidesLoading: boolean;
+  slides: any;
+}) {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [difficulty, setDifficulty] = useState("");
 
-function EditCourseDialog ({ courseId, refetch }: { courseId: string, refetch: any}) {
+  const addSlideMutation = useMutation(
+    () => addSlideToCourse(courseId, { name, description, difficulty }),
+    {
+      onSuccess: () => {
+        toast.success("Slide added successfully");
+      },
+    }
+  );
+
+  const handleAddSlide = () => {
+    addSlideMutation.mutate();
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className="w-full mb-1">Add Slide</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add Slide</DialogTitle>
+          <DialogDescription>Add a new slide below</DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Slide Name
+            </Label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">
+              Description
+            </Label>
+            <Input
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="Difficulty" className="text-right">
+              Difficulty
+            </Label>
+            <Input
+              id="Difficulty"
+              value={difficulty}
+              onChange={(e) => setDifficulty(e.target.value)}
+              className="col-span-3 w-60"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button onClick={handleAddSlide}>
+            {addSlideMutation.isLoading ? "Adding... " : "Add Slide"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function EditCourseDialog({
+  courseId,
+  refetch,
+}: {
+  courseId: string;
+  refetch: any;
+}) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const queryClient = useQueryClient();
 
-  const editCourseMutation = useMutation(() => updateCourse(courseId, {name, description, difficulty}), {
-    onSuccess: () => {
-      toast.success("Course edited successfully");
-      queryClient.invalidateQueries("courses");
-      refetch();
-    },
-  });
+  const editCourseMutation = useMutation(
+    () => updateCourse(courseId, { name, description, difficulty }),
+    {
+      onSuccess: () => {
+        toast.success("Course edited successfully");
+        queryClient.invalidateQueries("courses");
+        refetch();
+      },
+    }
+  );
 
   const handleEditCourse = () => {
     editCourseMutation.mutate();
@@ -439,7 +557,6 @@ function SlidesEditor({
   );
 }
 
-
 // function DeleteSlideDialog(){
 //   const deleteSlideMutation = useMutation(() => deleteSlide(slideId), {
 //     onSuccess: () => {
@@ -470,7 +587,6 @@ function SlidesEditor({
 //     </Dialog>
 //   );
 // }
-
 
 // function EditSlideDialog(){
 //   const [name, setName] = useState("");
