@@ -1,7 +1,7 @@
 import axios from "axios";
 
-//const apiUrl = "https://lang-learn-api.vercel.app/api/v1/languages";
-const apiUrl = "http://localhost:4000/api/v1/languages";
+const apiUrl = "https://lang-learn-api.vercel.app/api/v1/languages";
+//const apiUrl = "http://localhost:4000/api/v1/languages";
 
 export const getLanguages = async () => {
   try {
