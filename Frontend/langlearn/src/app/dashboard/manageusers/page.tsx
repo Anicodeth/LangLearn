@@ -1,5 +1,5 @@
 "use client";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getUsers, deleteUser, updateUser } from "@/service/userService";
 import { toast } from "sonner";
 import { Hourglass } from "react-loader-spinner";
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 export default function ManageUsers() {
   const { data, isLoading, error } = useQuery("users", getUsers, {
@@ -65,7 +66,7 @@ export default function ManageUsers() {
                 <TableCell align="right">{user.password}</TableCell>
                 <TableCell align="right">{user.role}</TableCell>
                 <TableCell align="right">
-                  <Button>Edit</Button>
+                  <EditUserDialog user={user} />
                   <DeleteUserDialog user={user} />
                 </TableCell>
               </TableRow>
@@ -78,9 +79,11 @@ export default function ManageUsers() {
 }
 
 function DeleteUserDialog({ user }: { user: any }) {
+  const queryClient = useQueryClient();
   const deleteUserMutation = useMutation(() => deleteUser(user._id as string), {
     onSuccess: () => {
       toast.success("User deleted successfully");
+      queryClient.invalidateQueries("users");
     },
     onError: () => {
       toast.error("Failed to delete user");
@@ -106,6 +109,85 @@ function DeleteUserDialog({ user }: { user: any }) {
             {deleteUserMutation.isLoading ? "Deleting..." : "Delete"}
           </Button>
           <Button>Cancel</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function EditUserDialog({ user }: { user: any }) {
+  const queryClient = useQueryClient();
+  const updateUserMutation = useMutation(updateUser, {
+    onSuccess: () => {
+      toast.success("User updated successfully");
+      queryClient.invalidateQueries("users");
+    },
+    onError: () => {
+      toast.error("Failed to update user");
+    },
+  });
+
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState(user.password);
+  const [role, setRole] = useState(user.role);
+
+  function handleUpdate() {
+    updateUserMutation.mutateAsync({
+      _id: user._id,
+      name,
+      email,
+      password,
+      role,
+    });
+  }
+
+  return (
+    <Dialog>
+      <DialogTrigger>
+        <Button>Edit</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit User</DialogTitle>
+        </DialogHeader>
+        <DialogFooter>
+          <div className="flex flex-col items-center w-full justify-center">
+            <div>
+              <Label>Name</Label>
+              <Input
+                defaultValue={user.name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div>
+              <Label>Email</Label>
+              <Input
+                defaultValue={user.email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <Label>Password</Label>
+              <Input
+                defaultValue={user.password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div>
+              <Label>Role</Label>
+              <Input
+                defaultValue={user.role}
+                onChange={(e) => setRole(e.target.value)}
+              />
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={handleUpdate}>
+                {updateUserMutation.isLoading ? "Updating..." : "Update"}
+              </Button>
+              <Button>Cancel</Button>
+            </div>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>
