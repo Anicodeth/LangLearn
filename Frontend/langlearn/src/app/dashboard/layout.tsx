@@ -84,6 +84,7 @@ const menuItems: Dashboard = {
     { icon: CiPen, text: "Add Course", link: "/dashboard/addcourse" },
     { icon: CiChat1, text: "Chat", link: "/dashboard/chat" },
     { icon: PiExamThin, text: "Quiz", link: "/dashboard/quiz" },
+    { icon: CiUser, text: "Manage Users", link: "/dashboard/manageusers" },
     { icon: CiUser, text: "Profile", link: "/dashboard/profile" },
   ],
 };

@@ -42,7 +42,6 @@ exports.updateUser = async function (id, user) {
 exports.deleteUser = async function (id) {
   try {
     const user = await User.findByIdAndDelete(id);
-    await user.save();
     return user;
   } catch (error) {
     throw error;
