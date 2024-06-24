@@ -292,11 +292,14 @@ function DeleteCourseDialog({
   courseId: string;
   refetch: any;
 }) {
+  const queryClient = useQueryClient();
   const deleteCourseMutation = useMutation(() => deleteCourse(courseId), {
     onSuccess: () => {
       toast.success("Course deleted successfully");
       refetch();
+      queryClient.invalidateQueries("courses");
     },
+
   });
 
   const handleDeleteCourse = () => {
