@@ -40,7 +40,7 @@ export default function Slides({ params }: { params: { courseid: string } }) {
   console.log(filteredData)
 
   return (
-    <div className="p-4 flex w-full h-full flex-row gap-4 items-center justify-center min-h-screen bg-gray-100">
+    <div className="p-4 flex w-full h-full flex-row gap-4 items-center justify-center min-h-screen">
       <div className="p-6 h-full w-1/2 bg-white shadow-md rounded-lg max-w-2xl flex flex-col">
         {filteredData.length > 0 ? (
           <>
@@ -67,13 +67,13 @@ export default function Slides({ params }: { params: { courseid: string } }) {
           <div className="text-center">No slides available</div>
         )}
       </div>
-      <div className="bg-slate-400 h-full w-1/2 rounded-lg">
+      <div className=" h-full w-1/2 rounded-lg">
         {filteredData[currentIndex]?.slideChoices &&
           filteredData[currentIndex].slideChoices
             .split(",")
             .map((choice: string, index: number) => (
-              <div key={index} className="p-4 border-b border-gray-300">
-                <h3>{choice}</h3>
+              <div key={index} className="p-4 border-b border-gray-300 flex flex-col items-stretch">
+                <div className = "p-10 font-mono text-4xl font-bold flex-grow rounded-lg bg-mainlight text-center">{choice}</div>
               </div>
             ))}
       </div>
