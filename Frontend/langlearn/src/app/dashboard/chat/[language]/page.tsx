@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import axios from "axios";
 import { useQuery } from "react-query";
 import { Button } from "@/components/ui/button";
 import { getChat } from "@/service/aiService";
@@ -37,9 +36,8 @@ export default function ChatPage({ params }: { params: { language: string } }) {
 
     const newMessages = [...messages, { text: input, isUser: true }];
     setMessages(newMessages);
-    refetch();
-    setInput("");
-
+    setInput(""); // Clear input field after sending
+    refetch(); // Trigger a new fetch for chat responses
   };
 
   return (
@@ -52,7 +50,9 @@ export default function ChatPage({ params }: { params: { language: string } }) {
             className={`mb-2 ${message.isUser ? "text-right" : "text-left"}`}
           >
             <span
-              className={`inline-block px-4 py-2 rounded-lg ${message.isUser ? "bg-main text-white" : "bg-gray-200 text-black"}`}
+              className={`inline-block px-4 py-2 rounded-lg ${
+                message.isUser ? "bg-main text-white" : "bg-gray-200 text-black"
+              }`}
             >
               {message.text}
             </span>

@@ -50,7 +50,6 @@ export const deleteLanguage = async (id: string) => {
 
 
 export const addCourseToLanguage = async (data: any) => {
-  console.log(data, "am here");
     try {
         const response = await axios.post(
           `${apiUrl}/${data.languageId}/courses`,

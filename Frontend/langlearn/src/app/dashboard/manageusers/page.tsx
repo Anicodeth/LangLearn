@@ -185,6 +185,7 @@ function EditUserDialog({ user }: { user: any }) {
               <Button onClick={handleUpdate}>
                 {updateUserMutation.isLoading ? "Updating..." : "Update"}
               </Button>
+
               <Button>Cancel</Button>
             </div>
           </div>

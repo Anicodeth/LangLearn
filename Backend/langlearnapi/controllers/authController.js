@@ -1,4 +1,3 @@
-
 const authService = require('../services/authService');
 
 exports.createUser = async function (req, res) {
