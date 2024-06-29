@@ -37,19 +37,16 @@ export default function Slides({ params }: { params: { courseid: string } }) {
     );
   };
 
-  console.log(filteredData);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="p-6 bg-white shadow-md rounded-lg w-full max-w-2xl">
+    <div className="p-4 flex w-full h-full flex-row gap-4 items-center justify-center min-h-screen bg-gray-100">
+      <div className="p-6 h-full w-1/2 bg-white shadow-md rounded-lg max-w-2xl">
         {filteredData.length > 0 ? (
           <>
             <div className="slide text-center">
-              <h2 className="text-2xl font-bold mb-4">
-                {filteredData[currentIndex]?.slideTitle}
-              </h2>
-              <p>{filteredData[currentIndex]?.slideQuestion}</p>
+                <Slide slide={filteredData[currentIndex]} />
             </div>
+
             <div className="navigation mt-6 flex justify-between">
               <Button
                 onClick={handlePrev}
@@ -67,6 +64,41 @@ export default function Slides({ params }: { params: { courseid: string } }) {
           </>
         ) : (
           <div className="text-center">No slides available</div>
+        )}
+      </div>
+      <div className="bg-slate-400 h-full w-1/2 rounded-lg">Answers</div>
+    </div>
+  );
+}
+
+
+
+function Slide({ slide }: { slide: any}) {
+  return (
+    <div>
+      <div
+        className="border w-80 h-96 p-4 rounded-md my-2"
+        style={{
+          fontFamily: `${slide.font}`,
+          backgroundColor: `${slide.color}`,
+        }}
+      >
+        <h1 className="w-full text-center">{slide.slideTitle}</h1>
+        {slide.slideImage && (
+          <img
+            src={slide.slideImage}
+            alt={slide.slideTitle}
+            className="w-full"
+          />
+        )}
+        <p>{slide.slideText}</p>
+        {slide.slideAudio && <audio src={slide.slideAudio} controls></audio>}
+        <p>{slide.slideNewWord}</p>
+        {slide.slideAudio && <video src={slide.slideVideo} controls></video>}
+        {slide.slideQuestion && (
+          <p className="bg-black text-white font-bold text-l p-5 rounded">
+            {slide.slideQuestion}
+          </p>
         )}
       </div>
     </div>

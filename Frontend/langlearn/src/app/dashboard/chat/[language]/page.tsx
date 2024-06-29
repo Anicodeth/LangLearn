@@ -15,7 +15,7 @@ export default function ChatPage({ params }: { params: { language: string } }) {
     data: chatResponse,
     isError,
     refetch,
-  } = useQuery(["chatResponse", messages], () => getChat(input, language), {
+  } = useQuery(["chatResponse"], () => getChat(input, language), {
     enabled: false,
     onSuccess: (data) => {
       setMessages((prevMessages) => [
