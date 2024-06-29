@@ -37,14 +37,15 @@ export default function Slides({ params }: { params: { courseid: string } }) {
     );
   };
 
+  console.log(filteredData)
 
   return (
     <div className="p-4 flex w-full h-full flex-row gap-4 items-center justify-center min-h-screen bg-gray-100">
-      <div className="p-6 h-full w-1/2 bg-white shadow-md rounded-lg max-w-2xl">
+      <div className="p-6 h-full w-1/2 bg-white shadow-md rounded-lg max-w-2xl flex flex-col">
         {filteredData.length > 0 ? (
           <>
-            <div className="slide text-center">
-                <Slide slide={filteredData[currentIndex]} />
+            <div className="slide text-center flex-grow">
+              <Slide slide={filteredData[currentIndex]} />
             </div>
 
             <div className="navigation mt-6 flex justify-between">
@@ -66,7 +67,16 @@ export default function Slides({ params }: { params: { courseid: string } }) {
           <div className="text-center">No slides available</div>
         )}
       </div>
-      <div className="bg-slate-400 h-full w-1/2 rounded-lg">Answers</div>
+      <div className="bg-slate-400 h-full w-1/2 rounded-lg">
+        {filteredData[currentIndex]?.slideChoices &&
+          filteredData[currentIndex].slideChoices
+            .split(",")
+            .map((choice: string, index: number) => (
+              <div key={index} className="p-4 border-b border-gray-300">
+                <h3>{choice}</h3>
+              </div>
+            ))}
+      </div>
     </div>
   );
 }
@@ -75,9 +85,9 @@ export default function Slides({ params }: { params: { courseid: string } }) {
 
 function Slide({ slide }: { slide: any}) {
   return (
-    <div>
+    <div className= "h-full">
       <div
-        className="border w-80 h-96 p-4 rounded-md my-2"
+        className="border w-full h-full p-4 rounded-md my-2"
         style={{
           fontFamily: `${slide.font}`,
           backgroundColor: `${slide.color}`,
