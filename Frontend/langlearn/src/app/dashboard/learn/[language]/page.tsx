@@ -25,10 +25,13 @@ export default function Courses({ params }: { params: { language: string } }) {
   //remove null
   const filteredData = data.filter((course: any) => course !== null);
   return (
-    <div className="p-4 grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="h-full">
+      <h1 className="p-4 font-bold text-xl">Courses</h1>
+    <div className="p-4  grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
       {filteredData.map((course: any) => (
         <Card key={course._id} className="flex justify-between flex-col">
           <CardHeader className="">
+            <img src = "https://img.icons8.com/?size=100&id=113861&format=png&color=000000"  />
             <CardTitle>{course.name}</CardTitle>
             <CardDescription>{course.description}</CardDescription>
             <CardDescription>{course.difficulty}</CardDescription>
@@ -45,5 +48,6 @@ export default function Courses({ params }: { params: { language: string } }) {
         </Card>
       ))}
     </div>
+</div>
   );
 }

@@ -25,9 +25,9 @@ export default function Home() {
         <Billboard />
       </div>
       <div className="flex w-full justify-between mt-1">
-        <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
-        <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
-        <Charts numbers={"3,345"} color={"red"} title={"Number of languages"} />
+        <Charts numbers={"3,345"} color={"red"} title={"Number of Users"} />
+        <Charts numbers={"6"} color={"red"} title={"Number of languages"} />
+        <Charts numbers={"12"} color={"red"} title={"Number of courses"} />
       </div>
       <div className="flex justify-between flex-row items-center">
         <div className="p-10">

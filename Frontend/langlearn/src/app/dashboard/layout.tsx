@@ -59,31 +59,30 @@ interface ListItems {
 }
 
 interface Dashboard{
-  user: ListItems[];
-  teacher: ListItems[];
+  student: ListItems[];
+  instructor: ListItems[];
   admin: ListItems[];
 }
 
 const menuItems: Dashboard = {
-  user: [
+  student: [
     { icon: CiHome, text: "Home", link: "/dashboard" },
     { icon: CiPen, text: "Learn", link: "/dashboard/learn" },
     { icon: CiChat1, text: "Chat", link: "/dashboard/chat" },
     { icon: PiExamThin, text: "Quiz", link: "/dashboard/quiz" },
     { icon: CiUser, text: "Profile", link: "/dashboard/profile" },
   ],
-  teacher: [
+  instructor: [
     { icon: CiHome, text: "Home", link: "/dashboard" },
-    { icon: CiPen, text: "Teach", link: "/dashboard/teach" },
-    { icon: CiChat1, text: "Chat", link: "/dashboard/chat" },
+    { icon: CiHome, text: "Create Language", link: "/dashboard/addlanguage" },
+    { icon: CiPen, text: "Create Course", link: "/dashboard/addcourse" },
     { icon: PiExamThin, text: "Quiz", link: "/dashboard/quiz" },
     { icon: CiUser, text: "Profile", link: "/dashboard/profile" },
   ],
   admin: [
-    { icon: CiHome, text: "Add Language", link: "/dashboard/addlanguage" },
-    { icon: CiPen, text: "Add Course", link: "/dashboard/addcourse" },
-    { icon: CiChat1, text: "Chat", link: "/dashboard/chat" },
-    { icon: PiExamThin, text: "Quiz", link: "/dashboard/quiz" },
+    { icon: CiHome, text: "Home", link: "/dashboard" },
+    { icon: CiHome, text: "Create Language", link: "/dashboard/addlanguage" },
+    { icon: CiPen, text: "Create Course", link: "/dashboard/addcourse" },
     { icon: CiUser, text: "Manage Users", link: "/dashboard/manageusers" },
     { icon: CiUser, text: "Profile", link: "/dashboard/profile" },
   ],
@@ -112,7 +111,7 @@ export default function DashboardLayout({
           </div>
 
           <List placeholder={undefined}>
-            <h1 className="font-bold">Student</h1>
+            <h1 className="font-bold">Admin</h1>
             {menuItems[user.role].map((item, index) => (
               <Link key={index} href={item.link}>
                 <ListItem

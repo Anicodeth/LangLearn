@@ -147,12 +147,12 @@ function AddSlideCourseDialog({ courseId }: { courseId: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full mb-1">Add Slide</Button>
+        <Button className="w-full mb-1">Create Slide</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Course</DialogTitle>
-          <DialogDescription>Add a new course below</DialogDescription>
+          <DialogTitle>Create Slide</DialogTitle>
+          <DialogDescription>Add a new slide below</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">

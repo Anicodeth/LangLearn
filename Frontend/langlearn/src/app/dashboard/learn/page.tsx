@@ -20,10 +20,14 @@ export default function Learn() {
 
   const filteredData = data.filter((language: any) => language !== null);
   return (
-    <div className="p-4 grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+    <h1 className = "p-4 font-bold text-xl">Languages</h1>
+    <div className="p-4 grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 gap-4 h-full">
+
       {filteredData.map((language: any) => (
         <Card key={language._id} className="flex justify-between flex-col">
           <CardHeader className="">
+            <img src="https://img.icons8.com/?size=100&id=6MP1kA74ozKg&format=png&color=000000" />
             <CardTitle>{language.name}</CardTitle>
             <CardDescription>{language.description}</CardDescription>
           </CardHeader>
@@ -43,6 +47,7 @@ export default function Learn() {
           </CardContent>
         </Card>
       ))}
+    </div>
     </div>
   );
 }

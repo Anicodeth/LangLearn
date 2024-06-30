@@ -52,7 +52,7 @@ export default function SignIn() {
           <Input
             id="email"
             name="email"
-            placeholder="projectmayhem@fc.com"
+            placeholder="epherata@gmail.com"
             type="email"
             required
           />
@@ -91,11 +91,11 @@ export default function SignIn() {
             type="button"
             onClick={() => console.log("Google signup")}
           >
-            <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+            {/* <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
               Google
             </span>
-            <BottomGradient />
+            <BottomGradient /> */}
           </button>
         </div>
       </form>

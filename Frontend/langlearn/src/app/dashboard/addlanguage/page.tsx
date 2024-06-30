@@ -56,6 +56,7 @@ export default function AddLanguage() {
 
   return (
     <div className="p-4  w-full h-screen flex items-center justify-center flex-col">
+      <h1 className = "p-4 font-bold text-xl">Languages</h1>
       <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 overflow-scroll">
         {data.map((language: any) => (
           <div key={language.id}>
@@ -81,11 +82,11 @@ export default function AddLanguage() {
         <div className="col-span-1">
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="h-60 w-60">Add Language</Button>
+              <Button className="h-60 w-60">Create Language</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Add New Language</DialogTitle>
+                <DialogTitle>Create New Language</DialogTitle>
                 <DialogDescription>
                   Fill in the following fields to add a new language
                 </DialogDescription>

@@ -99,7 +99,7 @@ export default function AddCourse() {
       </select>
 
       <Button className="w-full mb-1" onClick={handleGetCourses}>
-        Get Courses
+        View Courses
       </Button>
       <AddCourseDialog />
 
@@ -214,11 +214,11 @@ function AddCourseDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full mb-1">Add Course</Button>
+        <Button className="w-full mb-1">Create Course</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Course</DialogTitle>
+          <DialogTitle>Create Course</DialogTitle>
           <DialogDescription>Add a new course below</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
