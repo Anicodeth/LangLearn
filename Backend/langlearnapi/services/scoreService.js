@@ -60,6 +60,7 @@ exports.addScoreToUser = async function (userId, scoreData) {
     }
     await score.save();
     user.quizzes.push(score);
+    user.coins += score.score;
     await user.save();
     return user;
   } catch (error) {

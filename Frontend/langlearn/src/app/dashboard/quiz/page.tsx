@@ -353,6 +353,10 @@ function Result({ result, language, difficulty, setPage, userId }: any) {
     {
       onSuccess: () => {
         toast("Score added successfully");
+        sessionStorage.removeItem("result");
+        sessionStorage.removeItem("answers");
+        sessionStorage.removeItem("questions");
+        sessionStorage.setItem("page", JSON.stringify(Page.Selection));
       },
     }
   );

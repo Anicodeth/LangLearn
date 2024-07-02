@@ -79,6 +79,7 @@ const menuItems: Dashboard = {
     { icon: CiChat1, text: "Chat", link: "/dashboard/chat" },
     { icon: PiExamThin, text: "Quiz", link: "/dashboard/quiz" },
     { icon: CiUser, text: "Profile", link: "/dashboard/profile" },
+    { icon: CiUser, text: "Ranking", link: "/dashboard/peers" },
   ],
   instructor: [
     { icon: CiHome, text: "Home", link: "/dashboard" },
