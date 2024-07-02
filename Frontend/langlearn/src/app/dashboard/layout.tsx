@@ -156,7 +156,8 @@ export default function DashboardLayout({
               </div>
             </Card>
           </div>
-          <div className=" w-full h-screen overflow-scroll  bg-[#F7FDFC]">
+          <div className=" w-full h-screen overflow-scroll bg-[#F7FDFC]">
+            <DropDownMenu items={menuItems[user.role]} />
             {children}
           </div>
         </div>
@@ -181,17 +182,26 @@ function BadgeAvatars() {
 
 function DropDownMenu({ items }: { items: any }) {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <CiMenuBurger />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>Lang Learn</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {items.map((item: any, index: number) => (
-          <DropdownMenuItem key={index}>{item}</DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="h-fit w-screen p-4 bg-white  fixed top-0 left-0  sm:hidden">
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <CiMenuBurger className="font-bold text-3xl" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>
+            {" "}
+            <h1 className="w-screen font-bold text-2xl">Lang Learn</h1>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {items.map((item: any, index: number) => (
+            <Link key={index} href={item.link}>
+              <DropdownMenuItem key={index}>
+                <h1 className="w-screen font-bold text-2xl">{item.text}</h1>
+              </DropdownMenuItem>
+            </Link>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }

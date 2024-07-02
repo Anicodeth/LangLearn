@@ -31,7 +31,7 @@ export default function AuthLayout({
           />
         )}
       </div>
-      <div className="w-full sm:w-1/2 h-full flex justify-center items-center bg-mainlighter">
+      <div className="w-full sm:w-1/2 h-full flex justify-center items-center bg-mainlighter ">
         {children}
       </div>
     </div>

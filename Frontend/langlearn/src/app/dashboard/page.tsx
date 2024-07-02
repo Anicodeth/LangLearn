@@ -20,20 +20,20 @@ const xLabels = [
 
 export default function Home() {
   return (
-    <div className="w-full h-screen flex flex-col p-10 overflow-y-scroll">
+    <div className="w-full h-screen flex flex-col mt-5 sm:mt-0 p-8 sm:p-10 overflow-y-scroll">
       <div className="w-full justify-between h-fit mb-3">
         <Billboard />
       </div>
-      <div className="flex w-full justify-between mt-1">
+      <div className="flex flex-col sm:flex-row w-full justify-between mt-1">
         <Charts numbers={"3,345"} color={"red"} title={"Number of Users"} />
         <Charts numbers={"6"} color={"red"} title={"Number of languages"} />
         <Charts numbers={"12"} color={"red"} title={"Number of courses"} />
       </div>
-      <div className="flex justify-between flex-row items-center">
+      <div className="flex justify-between flex-col sm:flex-row items-center">
         <div className="p-10">
           <Image height={200} width={200} src={manPng} alt={""} />
         </div>
-        <div className="w-2/3 flex justify-between flex-row items-center">
+        <div className="w-full sm:w-2/3 flex justify-between flex-row items-center">
           <BasicLineChart />
         </div>
       </div>
@@ -43,10 +43,10 @@ export default function Home() {
 
 function Billboard() {
   return (
-    <div className="w-full h-64 flex flex-row justify-between items-start p-10 shadow-xl rounded-xmd bg-mainlighter">
+    <div className="w-full h-64 flex flex-row justify-between items-start p-8 sm:p-10 shadow-xl rounded-xmd bg-mainlighter">
       <div className="flex h-full flex-col justify-between">
         <div>
-          <h1 className="text-2xl font-bold typewriter font-mono">
+          <h1 className="font-bold text-base typewriter font-mono sm:text-2xl">
             Welcome to Lang Learn
           </h1>
           <p>- Epherata</p>
@@ -56,7 +56,7 @@ function Billboard() {
           <Button>Learn a language</Button>
         </div>
       </div>
-      <div>
+      <div className = "hidden sm:block">
         <Image src={astroLogo} alt="LangLearn" width="140" height="140" />
       </div>   
     </div>

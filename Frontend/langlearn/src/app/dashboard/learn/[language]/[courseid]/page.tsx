@@ -1,9 +1,8 @@
 "use client";
-import { getCourseSlides} from "@/service/courseService";
+import { getCourseSlides } from "@/service/courseService";
 import { useQuery } from "react-query";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-
 
 export default function Slides({ params }: { params: { courseid: string } }) {
   const { data, isError, isLoading } = useQuery("courseSlides", () =>
@@ -37,11 +36,11 @@ export default function Slides({ params }: { params: { courseid: string } }) {
     );
   };
 
-  console.log(filteredData)
+  console.log(filteredData);
 
   return (
-    <div className="p-4 flex w-full h-full flex-row gap-4 items-center justify-center min-h-screen">
-      <div className="p-6 h-full w-1/2 bg-white shadow-md rounded-lg max-w-2xl flex flex-col">
+    <div className="p-4 flex w-full mt-5 sm:mt-0 flex-col sm:flex-row gap-4 items-center justify-center min-h-screen">
+      <div className="p-6 h-screen w-full sm:w-1/2 bg-white shadow-md rounded-lg max-w-2xl flex flex-col">
         {filteredData.length > 0 ? (
           <>
             <div className="slide text-center flex-grow">
@@ -72,8 +71,13 @@ export default function Slides({ params }: { params: { courseid: string } }) {
           filteredData[currentIndex].slideChoices
             .split(",")
             .map((choice: string, index: number) => (
-              <div key={index} className="p-4 border-b border-gray-300 flex flex-col items-stretch">
-                <div className = "p-10 font-mono text-4xl font-bold flex-grow rounded-lg bg-mainlight text-center">{choice}</div>
+              <div
+                key={index}
+                className="p-4 border-b border-gray-300 flex flex-col items-stretch"
+              >
+                <div className="p-10 font-mono text-xl sm:text-4xl font-bold flex-grow rounded-lg bg-mainlight text-center">
+                  {choice}
+                </div>
               </div>
             ))}
       </div>
@@ -81,11 +85,9 @@ export default function Slides({ params }: { params: { courseid: string } }) {
   );
 }
 
-
-
-function Slide({ slide }: { slide: any}) {
+function Slide({ slide }: { slide: any }) {
   return (
-    <div className= "h-full">
+    <div className="h-full">
       <div
         className="border w-full h-full p-4 rounded-md my-2"
         style={{
