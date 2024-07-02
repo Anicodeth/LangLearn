@@ -8,7 +8,7 @@ interface User {
   quizzes: string[];
   progress: string[];
   coins: number;
-  role: "user" | "teacher" | "admin";
+  role: "student" | "instructor" | "admin";
 }
 
 export function useUser() {

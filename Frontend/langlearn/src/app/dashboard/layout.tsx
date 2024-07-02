@@ -58,7 +58,7 @@ interface ListItems {
   link: string;
 }
 
-interface Dashboard{
+interface Dashboard {
   student: ListItems[];
   instructor: ListItems[];
   admin: ListItems[];
@@ -94,63 +94,67 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const { user, loading } = useUser();
-  if (loading) 
-      return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
-  if (user !== null){
-  return (
-    <UserContext.Provider value={user}>
-    <div className="h-screen border-0 flex items-center justify-center ">
-      <div className="w-fir h-full flex justify-center items-center">
-        <Card
-          className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5"
-          placeholder={undefined}
-        >
-          <div className="mb-2 p-4 flex justify-center items-center">
-            <Image src={langLogo} alt="LangLearn" width="200" height="100" />
-          </div>
+  if (user !== null) {
+    return (
+      <UserContext.Provider value={user}>
+        <div className="h-screen border-0 flex items-center justify-center ">
+          <div className="w-fir h-full flex justify-center items-center">
+            <Card
+              className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5"
+              placeholder={undefined}
+            >
+              <div className="mb-2 p-4 flex justify-center items-center">
+                <Image
+                  src={langLogo}
+                  alt="LangLearn"
+                  width="200"
+                  height="100"
+                />
+              </div>
 
-          <List placeholder={undefined}>
-            <h1 className="font-bold">Admin</h1>
-            {menuItems[user.role].map((item, index) => (
-              <Link key={index} href={item.link}>
-                <ListItem
-                  className="hover:bg-mainlighter"
-                  placeholder={undefined}
-                  key={index}
-                >
-                  <ListItemPrefix placeholder={undefined}>
-                    <item.icon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  {item.text}
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-          <div className="flex justify-center items-center w-full h-30 bg-mainlighter rounded-lg">
-            <Image
-              className="fill-red-50"
-              src={bookShelf}
-              alt="Book Shelf"
-              width="100"
-              height="100"
-            />
+              <List placeholder={undefined}>
+                <h1 className="font-bold">Admin</h1>
+                {menuItems[user.role].map((item, index) => (
+                  <Link key={index} href={item.link}>
+                    <ListItem
+                      className="hover:bg-mainlighter"
+                      placeholder={undefined}
+                      key={index}
+                    >
+                      <ListItemPrefix placeholder={undefined}>
+                        <item.icon className="h-5 w-5" />
+                      </ListItemPrefix>
+                      {item.text}
+                    </ListItem>
+                  </Link>
+                ))}
+              </List>
+              <div className="flex justify-center items-center w-full h-30 bg-mainlighter rounded-lg">
+                <Image
+                  className="fill-red-50"
+                  src={bookShelf}
+                  alt="Book Shelf"
+                  width="100"
+                  height="100"
+                />
+              </div>
+              <div className="h-full  flex p-1">
+                <div className="h-fit flex items-center justify-between self-end w-full p-1">
+                  <BadgeAvatars />
+                  <h5>{user.name}</h5>
+                </div>
+              </div>
+            </Card>
           </div>
-          <div className="h-full  flex p-1">
-            <div className="h-fit flex items-center justify-between self-end w-full p-1">
-              <BadgeAvatars />
-              <h5>{user.name}</h5>
-            </div>
+          <div className=" w-full h-full flex justify-center items-center bg-[#F7FDFC]">
+            {children}
           </div>
-        </Card>
-      </div>
-      <div className=" w-full h-full flex justify-center items-center bg-[#F7FDFC]">
-        {children}
-      </div>
-    </div>
-    </UserContext.Provider>
-  );
-}
+        </div>
+      </UserContext.Provider>
+    );
+  }
 }
 
 function BadgeAvatars() {
