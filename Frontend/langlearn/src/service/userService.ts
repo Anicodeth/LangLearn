@@ -29,3 +29,13 @@ export const deleteUser = async (userId: string) => {
   return response.data;
 };
 
+export const addCoins = async (userId: string, coins: number) => {
+  const response = await axios.put(`${apiUrl}/${userId}/coins`, { coins });
+  return response.data;
+};
+
+export const deductCoins = async (userId: string, coins: number) => {
+  const response = await axios.put(`${apiUrl}/${userId}/deductcoins`, { coins });
+  return response.data;
+};
+
