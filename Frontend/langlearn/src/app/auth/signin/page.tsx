@@ -10,14 +10,12 @@ import { useMutation } from "react-query";
 import { signIn } from "@/service/authService";
 import { toast } from "sonner";
 import { useRouter } from 'next/navigation'
- 
-export default function SignIn() {
+ export default function SignIn() {
   const router = useRouter();
-  const {  mutate, isLoading } = useMutation(signIn, {
+  const { mutate, isLoading } = useMutation(signIn, {
     onSuccess: () => {
       toast("Login successful");
       router.push("/dashboard");
-
     },
     onError: (error: any) => {
       toast(error.response.data.error);
@@ -41,7 +39,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
+    <div className="max-w-md w-full mx-auto p-4 md:p-8 shadow-input bg-white dark:bg-black rounded-none md:rounded-2xl">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Welcome Back to Lang Learn
       </h2>
@@ -87,7 +85,7 @@ export default function SignIn() {
 
         <div className="flex flex-col space-y-4">
           <button
-            className="relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
+            className="relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="button"
             onClick={() => console.log("Google signup")}
           >
@@ -120,7 +118,7 @@ const LabelInputContainer = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col space-y-2 w-full", className)}>
+    <div className={`flex flex-col space-y-2 w-full ${className}`}>
       {children}
     </div>
   );
