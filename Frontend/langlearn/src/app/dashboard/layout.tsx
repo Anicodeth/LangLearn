@@ -2,7 +2,7 @@
 
 import { Card, List, ListItem, ListItemPrefix } from "@material-tailwind/react";
 
-import { CiPen, CiHome, CiChat1, CiUser } from "react-icons/ci";
+import { CiPen, CiHome, CiChat1, CiUser, CiMenuBurger } from "react-icons/ci";
 import { PiExamThin } from "react-icons/pi";
 import Image from "next/image";
 
@@ -15,6 +15,14 @@ import Stack from "@mui/material/Stack";
 import bookShelf from "../../assets/bookshelf.svg";
 import { createContext, useContext } from "react";
 import { useUser } from "@/hooks/useUser";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const UserContext = createContext<any>(undefined);
 
@@ -99,8 +107,8 @@ export default function DashboardLayout({
   if (user !== null) {
     return (
       <UserContext.Provider value={user}>
-        <div className="h-screen border-0 flex items-center justify-center ">
-          <div className="w-fir h-full flex justify-center items-center">
+        <div className="h-screen border-0 flex items-center justify-center">
+          <div className="w-fit h-full hidden justify-center items-center sm:flex">
             <Card
               className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5"
               placeholder={undefined}
@@ -148,7 +156,7 @@ export default function DashboardLayout({
               </div>
             </Card>
           </div>
-          <div className=" w-full h-full flex justify-center items-center bg-[#F7FDFC]">
+          <div className=" w-full h-screen overflow-scroll  bg-[#F7FDFC]">
             {children}
           </div>
         </div>
@@ -168,5 +176,22 @@ function BadgeAvatars() {
         <Avatar alt="Remy Sharp" />
       </StyledBadge>
     </Stack>
+  );
+}
+
+function DropDownMenu({ items }: { items: any }) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <CiMenuBurger />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Lang Learn</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {items.map((item: any, index: number) => (
+          <DropdownMenuItem key={index}>{item}</DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

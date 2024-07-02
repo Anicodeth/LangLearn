@@ -104,6 +104,7 @@ export default function Quiz() {
 
   if (page === Page.Selection) {
     return (
+      <div className = "flex items-center justify-center h-full">
       <Card className="w-[350px]">
         <CardHeader>
           <CardTitle>Quiz Time!</CardTitle>
@@ -151,18 +152,22 @@ export default function Quiz() {
           <Button onClick={handleStart}>Start</Button>
         </CardFooter>
       </Card>
+    </div>
     );
   } else if (page === Page.Quiz) {
     return (
+      <div className = "flex items-center justify-center h-full">
       <Questions
         language={language}
         difficulty={difficulty}
         setPage={setPage}
         setResult={setResult}
       />
+    </div>
     );
   } else if (page === Page.Result) {
     return (
+      <div className = "flex items-center justify-center h-full">
       <Result
         result={result}
         setPage={setPage}
@@ -170,6 +175,7 @@ export default function Quiz() {
         language={language}
         difficulty={difficulty}
       />
+    </div>
     );
   }
 
