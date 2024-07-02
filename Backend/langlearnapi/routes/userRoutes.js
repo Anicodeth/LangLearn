@@ -1,7 +1,5 @@
-
 const userController = require("../controllers/userController");
 const router = require("express").Router();
-
 
 /**
  * @swagger
@@ -36,8 +34,6 @@ const router = require("express").Router();
  *           type: string
  *           description: The role of the user
  */
-
-
 
 //GET /users/:id
 /**
@@ -177,10 +173,77 @@ router.delete("/:id", userController.deleteUser);
  */
 router.get("/", userController.getUsers);
 
+//POST /users/:id/addCoins
+/**
+ * @swagger
+ * /api/v1/users/{id}/addCoins:
+ *  post:
+ *    summary: Add coins to a user by id
+ *    tags: [Users]
+ *    description: Add coins to a user by id
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        description: The user id
+ *        schema:
+ *          type: string
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              coins:
+ *                type: number
+ *    responses:
+ *      200:
+ *        description: Coins were added
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/User'
+ *      404:
+ *        description: The user was not found
+ */
+router.post("/:id/addCoins", userController.addCoins);
+
+//POST /users/:id/deductCoins
+/**
+ * @swagger
+ * /api/v1/users/{id}/deductCoins:
+ *  post:
+ *    summary: Deduct coins from a user by id
+ *    tags: [Users]
+ *    description: Deduct coins from a user by id
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        description: The user id
+ *        schema:
+ *          type: string
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              coins:
+ *                type: number
+ *    responses:
+ *      200:
+ *        description: Coins were deducted
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/User'
+ *      404:
+ *        description: The user was not found
+ */
+
+router.post("/:id/deductCoins", userController.deductCoins);
+
 module.exports = router;
-
-
-
-
-
-

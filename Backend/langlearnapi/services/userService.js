@@ -47,3 +47,26 @@ exports.deleteUser = async function (id) {
     throw error;
   }
 };
+
+exports.addCoins = async function (id, coins) {
+  try {
+    const user = await User.findById(id);
+    user.coins += coins;
+    await user.save();
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+exports.deductCoins = async function (id, coins) {
+  try {
+    const user = await User.findById(id);
+    user.coins -= coins;
+    await user.save();
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}

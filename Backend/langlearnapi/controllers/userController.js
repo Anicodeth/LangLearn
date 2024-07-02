@@ -4,6 +4,8 @@ const {
   updateUser,
   deleteUser,
   getUsers,
+  deductCoins,
+  addCoins,
 } = require("../services/userService");
 
 exports.createUser = async function (req, res) {
@@ -50,3 +52,21 @@ exports.deleteUser = async function (req, res) {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.addCoins = async function (req, res) {
+  try {
+    const user = await addCoins(req.params.id, req.body.coins);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+exports.deductCoins = async function (req, res) {
+  try {
+    const user = await deductCoins(req.params.id, req.body.coins);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
