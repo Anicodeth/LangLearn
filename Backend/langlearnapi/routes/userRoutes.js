@@ -246,35 +246,6 @@ router.post("/:id/addCoins", userController.addCoins);
 
 router.post("/:id/deductCoins", userController.deductCoins);
 
-//Get /users/:id/coins
-
-/**
- * @swagger
- * /api/v1/users/{id}/coins:
- * get:
- * summary: Get coins by user id
- * tags: [Users]
- * description: Get coins by user id
- * parameters:
- * - in: path
- * name: id
- * required: true
- * description: The user id
- * schema:
- * type: string
- * responses:
- * 200:
- * description: A user's coins
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * coins:
- * type: number
- * 404:
- * description: The user was not found
- */
-router.get("/:id/coins", userController.getCoins);
+router.get("/:id/coins", userController.getCoinBalance);
 
 module.exports = router;

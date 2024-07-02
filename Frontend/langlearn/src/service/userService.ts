@@ -1,8 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
 const apiUrl = "https://lang-learn-api.vercel.app/api/v1/users";
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-
 
 export const getUser = async (userId: string) => {
   const response = await axios.get(`${apiUrl}/${userId}`);
@@ -35,12 +33,13 @@ export const addCoins = async (userId: string, coins: number) => {
 };
 
 export const deductCoins = async (userId: string, coins: number) => {
-  const response = await axios.put(`${apiUrl}/${userId}/deductcoins`, { coins });
+  const response = await axios.put(`${apiUrl}/${userId}/deductcoins`, {
+    coins,
+  });
   return response.data;
 };
 
 export const getCoinBalance = async (userId: string) => {
   const response = await axios.get(`${apiUrl}/${userId}/coins`);
   return response.data;
-}
-
+};
