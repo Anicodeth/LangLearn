@@ -70,3 +70,12 @@ exports.deductCoins = async function (req, res) {
     res.status(500).json({ error: error.message });
   }
 }
+
+exports.getCoinBalance = async function (req, res) {
+  try {
+    const coins = await getUser(req.params.id);
+    res.status(200).json({ coins: coins });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

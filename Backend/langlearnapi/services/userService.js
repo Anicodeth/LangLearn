@@ -70,3 +70,12 @@ exports.deductCoins = async function (id, coins) {
     throw error;
   }
 }
+
+exports.getCoinBalance = async function (id) {
+  try {
+    const user = await User.findById(id);
+    return user.coins;
+  } catch (error) {
+    throw error;
+  }
+}

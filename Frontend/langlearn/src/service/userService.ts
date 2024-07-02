@@ -39,3 +39,8 @@ export const deductCoins = async (userId: string, coins: number) => {
   return response.data;
 };
 
+export const getCoinBalance = async (userId: string) => {
+  const response = await axios.get(`${apiUrl}/${userId}/coins`);
+  return response.data;
+}
+
